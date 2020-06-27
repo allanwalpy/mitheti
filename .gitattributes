@@ -1,0 +1,16 @@
+## EOL setting
+* text eol=lf
+
+## txt files
+*.log text
+*.txt text
+*.cs text
+*.cshtml text
+*.csproj text
+*.sln text
+*.json text
+*.config text
+
+## diffs
+*.cs diff=csharp
+*.cspoj diff=html
