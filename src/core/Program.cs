@@ -7,7 +7,8 @@ namespace Mitheti.Core
         public static void Main(string[] args)
         {
             //Test1();
-            Test2();
+            //Test2();
+            Test3();
         }
 
         public static void Test1()
@@ -38,6 +39,15 @@ namespace Mitheti.Core
                 }
 
                 Console.WriteLine($"Detected window {title}");
+            }
+        }
+
+        public static void Test3()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                System.Threading.Thread.Sleep(10000);
+                Console.WriteLine(Test3Class.Test());
             }
         }
     }
