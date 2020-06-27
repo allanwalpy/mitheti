@@ -1,35 +1,129 @@
-title: mitheti://src\core\Test3Class.cs;
+title: mitheti://src\core\WinApiAdapter.cs;
 name: Code;
-uptime: 00:01:31.8437500;
-total: 00:02:46.6875000;
-startTime: 6/27/2020 9:54:25 PM;
-
+uptime: 00:00:12.4687500;
+total: 00:00:22.7343750;
+startTime: 6/28/2020 1:43:50 AM;
 session: 1;
 isResponding: True;
-id: 2156;
+id: 8172;
 isExited: False;
 basePriority: 8;
 machineName: .;
 ---- end -----
 
-title: [BadComedian] - Невский: НАЧАЛО (Красный Змей) - YouTube - Google Chrome;
+title: GitHub - allan-walpy/mitheti - Google Chrome;
 name: chrome;
-uptime: 00:02:54.6875000;
-total: 00:04:30.0937500;
-startTime: 6/27/2020 9:43:40 PM;
-
+uptime: 00:00:10.6250000;
+total: 00:00:17.2500000;
+startTime: 6/28/2020 1:46:20 AM;
 session: 1;
 isResponding: True;
-id: 8404;
+id: 8164;
 isExited: False;
 basePriority: 8;
 machineName: .;
 ---- end -----
 
-title: [BadComedian] - Невский: НАЧАЛО (Красный Змей) - YouTube - Google Chrome;
-name: chrome;
-uptime: 00:02:55.5156250;
-total: 00:04:31.3281250;
-startTime: 6/27/2020 9:43:40 PM;
-
+title: GeForce NOW;
+name: GeForceNOW;
+uptime: 00:00:01.8281250;
+total: 00:00:04.2656250;
+startTime: 6/28/2020 1:59:55 AM;
 session: 1;
+isResponding: True;
+id: 10980;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
+
+title: GeForce NOW;
+name: GeForceNOW;
+uptime: 00:00:01.9531250;
+total: 00:00:04.6406250;
+startTime: 6/28/2020 1:59:55 AM;
+session: 1;
+isResponding: True;
+id: 10980;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
+
+title: GeForce NOW;
+name: GeForceNOW;
+uptime: 00:00:02.2968750;
+total: 00:00:05.3437500;
+startTime: 6/28/2020 1:59:55 AM;
+session: 1;
+isResponding: True;
+id: 10980;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
+
+title: mitheti://src\core\WinApiAdapter.cs;
+name: Code;
+uptime: 00:00:12.7500000;
+total: 00:00:23.1875000;
+startTime: 6/28/2020 1:43:50 AM;
+session: 1;
+isResponding: True;
+id: 8172;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
+
+title: GeForce NOW;
+name: GeForceNOW;
+uptime: 00:00:02.3593750;
+total: 00:00:05.6406250;
+startTime: 6/28/2020 1:59:55 AM;
+session: 1;
+isResponding: True;
+id: 10980;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
+
+title: Task Manager;
+name: Taskmgr;
+uptime: 00:00:00.9843750;
+total: 00:00:03.5625000;
+startTime: 6/28/2020 2:01:22 AM;
+session: 1;
+isResponding: True;
+id: 5652;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
+
+title: ;
+name: SearchUI;
+uptime: 00:00:04.0468750;
+total: 00:00:05.7656250;
+startTime: 6/28/2020 1:44:20 AM;
+session: 1;
+isResponding: True;
+id: 3004;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
+
+title: ;
+name: explorer;
+uptime: 00:00:05.8906250;
+total: 00:00:15.7656250;
+startTime: 6/28/2020 1:43:12 AM;
+session: 1;
+isResponding: True;
+id: 3568;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
