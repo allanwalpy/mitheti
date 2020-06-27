@@ -18,6 +18,11 @@ namespace Mitheti.Core
             StringBuilder result = new StringBuilder();
             Process process = GetActiveProcess();
 
+            if (process == null)
+            {
+                return "no process specified \n";
+            }
+
             result.AppendLine($"title: {process.MainWindowTitle};");
             result.AppendLine($"name: {process.ProcessName};");
             result.AppendLine($"uptime: {process.UserProcessorTime};");
