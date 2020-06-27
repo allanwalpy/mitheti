@@ -27,7 +27,7 @@ namespace Mitheti.Core
             result.AppendLine($"name: {process.ProcessName};");
             result.AppendLine($"uptime: {process.UserProcessorTime};");
             result.AppendLine($"total: {process.TotalProcessorTime};");
-            result.AppendLine($"startTime: {process.StartTime};\n");
+            result.AppendLine($"startTime: {process.StartTime};");
             result.AppendLine($"session: {process.SessionId};");
             result.AppendLine($"isResponding: {process.Responding};");
             result.AppendLine($"id: {process.Id};");
@@ -42,7 +42,7 @@ namespace Mitheti.Core
         private static Process GetActiveProcess()
         {
             IntPtr hwnd = GetForegroundWindow();
-            return hwnd == null ? GetProcessByHandle(hwnd) : null;
+            return hwnd == null ? null : GetProcessByHandle(hwnd);
         }
 
         private static Process GetProcessByHandle(IntPtr hwnd)
