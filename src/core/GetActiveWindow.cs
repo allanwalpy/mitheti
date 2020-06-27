@@ -41,7 +41,7 @@ namespace Mitheti.Core
 
         private bool Callback(IntPtr hwnd, int lParam)
         {
-            bool isContinue = this.Handle != hwnd && (GetWindowLongA(hwnd, GWL_STYLE) & TARGET_WINDOW) == TARGET_WINDOW;
+            bool isContinue = true; //(GetWindowLongA(hwnd, GWL_STYLE) & TARGET_WINDOW) == TARGET_WINDOW;
             if (!isContinue)
             {
                 return true;
