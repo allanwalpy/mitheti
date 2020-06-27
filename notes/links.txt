@@ -3,3 +3,4 @@ https://www.cyberforum.ru/csharp-beginners/thread1670250.html
 http://www.pinvoke.net/default.aspx/user32.getforegroundwindow
 https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getforegroundwindow?redirectedfrom=MSDN
 https://stackoverflow.com/questions/4372055/detect-active-window-changed-using-c-sharp-without-polling
+http://www.blackwasp.co.uk/GetActiveProcess.aspx

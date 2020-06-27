@@ -1,0 +1,35 @@
+title: mitheti://src\core\Test3Class.cs;
+name: Code;
+uptime: 00:01:31.8437500;
+total: 00:02:46.6875000;
+startTime: 6/27/2020 9:54:25 PM;
+
+session: 1;
+isResponding: True;
+id: 2156;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
+
+title: [BadComedian] - Невский: НАЧАЛО (Красный Змей) - YouTube - Google Chrome;
+name: chrome;
+uptime: 00:02:54.6875000;
+total: 00:04:30.0937500;
+startTime: 6/27/2020 9:43:40 PM;
+
+session: 1;
+isResponding: True;
+id: 8404;
+isExited: False;
+basePriority: 8;
+machineName: .;
+---- end -----
+
+title: [BadComedian] - Невский: НАЧАЛО (Красный Змей) - YouTube - Google Chrome;
+name: chrome;
+uptime: 00:02:55.5156250;
+total: 00:04:31.3281250;
+startTime: 6/27/2020 9:43:40 PM;
+
+session: 1;
