@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": "core://launch",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -16,7 +16,17 @@
             "stopAtEntry": false
         },
         {
-            "name": ".NET Core Attach",
+            "name": "core://launch/no-build",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/out/bin/Debug/net5.0/Mitheti.Core.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/out/bin/Debug/net5.0/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "attach://",
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
