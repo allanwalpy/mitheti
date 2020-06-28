@@ -1,7 +1,8 @@
 {
     "recommendations": [
         "ms-dotnettools.csharp",
-        "wayou.vscode-todo-highlight"
+        "wayou.vscode-todo-highlight",
+        "aaron-bond.better-comments"
     ],
     "unwantedRecommendations": []
 }
