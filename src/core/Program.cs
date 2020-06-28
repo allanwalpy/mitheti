@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Mitheti.Core.Database;
+using Mitheti.Core.Watcher;
+
 //TODO: add logging;
 
 namespace Mitheti.Core
@@ -31,8 +34,9 @@ namespace Mitheti.Core
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton<Database.ConnectionService>();
-                    services.AddHostedService<Watcher.Worker>();
+                    services.AddSingleton<ConnectionService>();
+                    services.AddSingleton<ISavingService, SavingService>();
+                    services.AddHostedService<Worker>();
                 });
     }
 }

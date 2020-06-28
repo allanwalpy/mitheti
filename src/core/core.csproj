@@ -37,7 +37,7 @@
     <!-- build scripts; -->
     <Target Name="BeforeBuildScript" BeforeTargets="Build">
         <Exec Command="if not exist $(SolutionDir)out\ mkdir $(SolutionDir)out\bin\$(Configuration)\$(TargetFramework)\" />
-        <Exec Command="xcopy $(SolutionDir)config $(SolutionDir)out\bin\$(Configuration)\$(TargetFramework)" />
+        <Exec Command="xcopy $(SolutionDir)config $(SolutionDir)out\bin\$(Configuration)\$(TargetFramework) /Y" />
     </Target>
 
     <!-- debug configuration; -->
