@@ -2,11 +2,11 @@ using System;
 using System.Diagnostics;
 using System.Text;
 
-namespace Mitheti.Core
+namespace Mitheti.Core.Watcher
 {
     public class ProcessInfo
     {
-        public ProcessType Type { get; }
+        public Category Category { get; }
         public string Name { get; }
         public int Id { get;}
         public string WindowTitle { get; }
@@ -21,7 +21,7 @@ namespace Mitheti.Core
                 uptime      : TimeSpan.MinValue,
                 startedAt   : DateTime.Now)
         {
-            this.Type = ProcessType.Null;
+            this.Category = Category.Null;
         }
 
         public ProcessInfo(Process info)
@@ -32,7 +32,7 @@ namespace Mitheti.Core
                 uptime      : info.TotalProcessorTime,
                 startedAt   : info.StartTime)
         {
-            this.Type = ProcessType.Defined;
+            this.Category = Category.Defined;
         }
 
         private ProcessInfo(string name, int id, string windowTitle, TimeSpan uptime, DateTime startedAt)
@@ -48,8 +48,8 @@ namespace Mitheti.Core
         {
             StringBuilder result = new StringBuilder();
 
-            result.Append($"{nameof(Type)}={this.Type.ToString()};");
-            if (this.Type == ProcessType.Null)
+            result.Append($"{nameof(Category)}={this.Category.ToString()};");
+            if (this.Category == Category.Null)
             {
                 return result.ToString();
             }

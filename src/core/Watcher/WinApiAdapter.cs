@@ -1,9 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace Mitheti.Core
+namespace Mitheti.Core.Watcher
 {
     public static class WinApiAdapter
     {

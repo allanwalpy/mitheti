@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Mitheti.Core
 {
-    public class Program
+    public static class Program
     {
         public const string ConfigurationFile = "setting.core.json";
 
@@ -15,6 +15,7 @@ namespace Mitheti.Core
 
         public static IHostBuilder CreateHostBuilder(string[] args)
             => Host.CreateDefaultBuilder(args)
+                .UseWindowsService()
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config
@@ -25,7 +26,7 @@ namespace Mitheti.Core
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<Worker>();
+                    services.AddHostedService<Watcher.Worker>();
                 });
     }
 }
