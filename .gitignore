@@ -1,7 +1,8 @@
-# build files
-[Oo]bj
-[Oo]ut
-[Bb]in
+# confidential files
+*.hide
+*.hide.*
+*.secret
+*.secret.*
 
 # build files
 [Oo]bj

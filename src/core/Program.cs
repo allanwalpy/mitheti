@@ -1,13 +1,20 @@
-using System;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Mitheti.Core
 {
-    public static class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Dummy is here...");
+            CreateHostBuilder(args).Build().Run();
         }
 
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<Worker>();
+                });
     }
 }

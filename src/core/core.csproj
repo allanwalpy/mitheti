@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <!-- assembly config; -->
     <PropertyGroup>
@@ -43,5 +43,10 @@
     <PropertyGroup>
         <NoWarn>1591;1573;</NoWarn>
     </PropertyGroup>
+
+    <!-- system dependancy; -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0-preview.6.*" />
+    </ItemGroup>
 
 </Project>

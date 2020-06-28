@@ -3,7 +3,6 @@ using System.Diagnostics;
 
 namespace Mitheti.Core
 {
-
     public class ProcessInfo
     {
         public ProcessType Type { get; }
