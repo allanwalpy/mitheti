@@ -5,7 +5,7 @@ namespace Mitheti.Core.Database
 {
     public class ConnectionService
     {
-        public const string ConnectionStringKey = "database";
+        public const string ConnectionStringKey = "local";
         private string _connectionString;
 
         public Context Context
