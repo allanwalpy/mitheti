@@ -26,7 +26,7 @@ namespace Mitheti.Core.Database
             const string hourCode = "hh";
             const string dayCode = "dd";
             const string monthCode = "mm";
-            const string yearCode = "year";
+            const string yearCode = "yyyy";
             const string weekdayCode = "dw";
 
             string template = $"datepart({{0}}, [{AppTimeSpanModel.TimeColumnName}])";
