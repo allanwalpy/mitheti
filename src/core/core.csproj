@@ -56,7 +56,13 @@
         <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="5.0.0-preview.6.*" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-preview.6.*" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0-preview.6.*" />
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.*" />
+    </ItemGroup>
+
+    <!-- 3rd party dependancy; -->
+    <ItemGroup>
+        <!--TODO: replace with `Pomelo.EntityFrameworkCore.MySql` or `Pomelo.EntityFrameworkCore.MySql` once support .net 5 be inrolled; -->
+        <!--FIXME: although history change claims it addet support for .net 5, it still need 3.* libraries of ef core; -->
+        <PackageReference Include="Devart.Data.MySql.EFCore" Version="8.*" />
     </ItemGroup>
 
 </Project>

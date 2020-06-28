@@ -8,7 +8,7 @@ namespace Mitheti.Core.Database
     {
         public DbSet<AppTimeSpanModel> AppTimeSpans { get; set; }
 
-        public Context(DbContextOptions<Context> options)
+        public Context(DbContextOptions options)
             : base(options)
         {
             this.Database.EnsureCreated();

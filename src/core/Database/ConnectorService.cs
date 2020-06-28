@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Mitheti.Core.Database
 {
@@ -12,7 +13,7 @@ namespace Mitheti.Core.Database
         {
             get
             {
-                var builder = new DbContextOptionsBuilder<Context>();
+                var builder = new DbContextOptionsBuilder();
 
                 var options = builder
                     .UseMySql(this._connectionString)
