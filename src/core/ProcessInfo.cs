@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace Mitheti.Core
 {
@@ -41,6 +42,25 @@ namespace Mitheti.Core
             this.WindowTitle = windowTitle;
             this.Uptime = uptime;
             this.StartedAt = startedAt;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder();
+
+            result.Append($"{nameof(Type)}={this.Type.ToString()};");
+            if (this.Type == ProcessType.Null)
+            {
+                return result.ToString();
+            }
+
+            result.Append($"{nameof(Name)        }={this.Name        };");
+            result.Append($"{nameof(Id)          }={this.Id          };");
+            result.Append($"{nameof(WindowTitle) }={this.WindowTitle };");
+            result.Append($"{nameof(Uptime)      }={this.Uptime      };");
+            result.Append($"{nameof(StartedAt)   }={this.StartedAt   };");
+
+            return result.ToString();
         }
     }
 

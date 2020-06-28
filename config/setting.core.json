@@ -1,7 +1,10 @@
 {
     "log": {
         "message": {
-            "iteration": "worker has been up for"
+            "iteration": "[{0}] service iteration; info: \n {1} \nend;"
         }
+    },
+    "service": {
+        "delay": 3000
     }
 }

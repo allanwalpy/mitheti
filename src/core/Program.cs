@@ -19,10 +19,9 @@ namespace Mitheti.Core
                 {
                     config
                         .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-                        .AddJsonFile(ConfigurationFile, optional: false, reloadOnChange: true)
+                        .AddJsonFile(ConfigurationFile, optional: false, reloadOnChange: false)
                         .AddEnvironmentVariables()
                         .AddCommandLine(args);
-
                 })
                 .ConfigureServices((hostContext, services) =>
                 {

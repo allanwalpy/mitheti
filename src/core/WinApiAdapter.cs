@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Mitheti.Core
 {
-    public class WinApiAdapter
+    public static class WinApiAdapter
     {
         [DllImport("user32")]
         private static extern IntPtr GetForegroundWindow();
@@ -13,7 +13,7 @@ namespace Mitheti.Core
         [DllImport("user32")]
         private static extern Int32 GetWindowThreadProcessId(IntPtr windowHandle, out uint processId);
 
-        public ProcessInfo GetFocusedWindowInfo()
+        public static ProcessInfo GetFocusedWindowInfo()
         {
             IntPtr windowHandle = GetForegroundWindow();
             Process process = (windowHandle == null) ? null : GetProcessByHandle(windowHandle);

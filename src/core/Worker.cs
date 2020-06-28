@@ -12,25 +12,29 @@ namespace Mitheti.Core
         private readonly ILogger<Worker> _logger;
         private readonly IConfiguration _config;
 
+        private readonly int _delay;
+
         public Worker(ILogger<Worker> logger, IConfiguration config)
         {
-            _logger = logger;
-            _config = config;
+            this._logger = logger;
+            this._config = config;
+
+            this._delay = this._config.GetValue<int>("service:delay");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                //TODO:replace with actuall worker stuff you know;
-                _logger.LogInformation($"{_config["Log:Message:Iteration"]}: {DateTimeOffset.Now}");
-                await Task.Delay(1000, stoppingToken);
+                var result = WinApiAdapter.GetFocusedWindowInfo();
+                _logger.LogInformation(this._config["log:message:iteration"], DateTimeOffset.Now, result);
+                await Task.Delay(this._delay, stoppingToken);
             }
         }
 
         public override void Dispose()
         {
-            //TODO:implement flushing changes or smth; i dunno;
+            //TODO: implement flushing changes or smth; i dunno;
         }
     }
 }
