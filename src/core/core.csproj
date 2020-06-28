@@ -34,12 +34,18 @@
         <IncludeSource>true</IncludeSource>
     </PropertyGroup>
 
+    <!-- build scripts; -->
+    <Target Name="BeforeBuildScript" BeforeTargets="Build">
+        <Exec Command="if not exist $(SolutionDir)out\ mkdir $(SolutionDir)out\bin\$(Configuration)\$(TargetFramework)\" />
+        <Exec Command="xcopy $(SolutionDir)config $(SolutionDir)out\bin\$(Configuration)\$(TargetFramework)" />
+    </Target>
+
     <!-- debug configuration; -->
     <PropertyGroup Condition="$(Configuration)=='Debug'">
         <DefineConstants>DEBUG;</DefineConstants>
     </PropertyGroup>
 
-    <!-- TODO:TMP: turn off documentation warnings; -->
+    <!-- turn off documentation warnings; -->
     <PropertyGroup>
         <NoWarn>1591;1573;</NoWarn>
     </PropertyGroup>
