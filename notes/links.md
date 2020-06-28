@@ -21,3 +21,11 @@
 - [link2](https://habr.com/ru/company/microsoft/blog/480222/);
 
 - [link3](https://devblogs.microsoft.com/aspnet/net-core-workers-as-windows-services/?WT.mc_id=-blog-scottha);
+
+## ef core & database
+
+- [link1](https://entityframeworkcore.com/);
+
+- [link2](https://learnentityframeworkcore5.com/);
+
+- [link3](https://stackoverflow.com/questions/1114307/extracting-hours-from-a-datetime-sql-server-2005);
