@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Mitheti.Core.Watcher
 {
+    //TODO: remove irrelevant fields;
     public class ProcessInfo
     {
         public Category Category { get; }

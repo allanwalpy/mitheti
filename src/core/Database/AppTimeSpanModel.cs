@@ -12,27 +12,31 @@ namespace Mitheti.Core.Database
         public const string TimeColumnName = nameof(Time);
 
         [Key]
-        public int Id { get; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(NameMaxLength)]
-        public string AppName { get; }
+        public string AppName { get; set; }
 
         [Required]
-        public uint TimeSpan { get; }
+        public int TimeSpan { get; set; }
 
         [Required]
-        public DateTime Time { get; }
+        public DateTime Time { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Hour { get; }
+        public int Hour { get; set; }
 
-        public int Day { get; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int Day { get; set; }
 
-        public int Month { get; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int Month { get; set; }
 
-        public int Year { get; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int Year { get; set; }
 
-        public int DayOfWeek { get; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int DayOfWeek { get; set; }
     }
 }

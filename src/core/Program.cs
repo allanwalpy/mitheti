@@ -1,12 +1,16 @@
+using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+//TODO: add logging;
 
 namespace Mitheti.Core
 {
     public static class Program
     {
-        public const string ConfigurationFile = "setting.core.json";
+        public const string ConfigFile = "setting.core.json";
+        public const string DatabaseConfigFile = "setting.database.secret.json";
 
         public static void Main(string[] args)
         {
@@ -19,13 +23,15 @@ namespace Mitheti.Core
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config
-                        .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-                        .AddJsonFile(ConfigurationFile, optional: false, reloadOnChange: false)
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile(ConfigFile, optional: false, reloadOnChange: false)
+                        .AddJsonFile(DatabaseConfigFile, optional: false, reloadOnChange: false)
                         .AddEnvironmentVariables()
                         .AddCommandLine(args);
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddSingleton<Database.ConnectionService>();
                     services.AddHostedService<Watcher.Worker>();
                 });
     }

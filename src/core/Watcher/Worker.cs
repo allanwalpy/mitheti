@@ -1,25 +1,27 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+
+using Mitheti.Core.Database;
 
 namespace Mitheti.Core.Watcher
 {
     public class Worker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        public const string DelayConfigKey = "service:delay";
+
         private readonly IConfiguration _config;
+        private readonly ISavingService _database;
 
         private readonly int _delay;
 
-        public Worker(ILogger<Worker> logger, IConfiguration config)
+        public Worker(IConfiguration config, ISavingService database)
         {
-            this._logger = logger;
             this._config = config;
+            this._database = database;
 
-            this._delay = this._config.GetValue<int>("service:delay");
+            this._delay = this._config.GetValue<int>(DelayConfigKey);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -27,7 +29,9 @@ namespace Mitheti.Core.Watcher
             while (!stoppingToken.IsCancellationRequested)
             {
                 var result = WinApiAdapter.GetFocusedWindowInfo();
-                _logger.LogInformation(this._config["log:message:iteration"], DateTimeOffset.Now, result);
+
+                this._database.AddRecordedTime(result);
+
                 await Task.Delay(this._delay, stoppingToken);
             }
         }
