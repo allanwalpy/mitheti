@@ -22,10 +22,8 @@ namespace Mitheti.Core.Database
         private void ConfigureAppTimeSpans(ModelBuilder builder)
         {
             builder.Entity<AppTimeSpanModel>()
-                .Property(x => x.Guid)
-                .HasValueGenerator(typeof(GuidGenerator))
-                .ValueGeneratedOnAdd()
-                .HasDefaultValue(GuidGenerator.DefaultGuid);
+                .HasIndex(x => x.Id)
+                .IsUnique();
         }
     }
 }

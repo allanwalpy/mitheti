@@ -13,7 +13,7 @@ namespace Mitheti.Core.Database
 
         // TODO: set exact length;
         [Key]
-        public string Guid { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(NameMaxLength)]
