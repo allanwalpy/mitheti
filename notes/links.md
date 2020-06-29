@@ -31,3 +31,7 @@
 - [link3](https://stackoverflow.com/questions/1114307/extracting-hours-from-a-datetime-sql-server-2005);
 
 - [link4](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql);
+
+## wpf core
+
+- [link1](https://docs.microsoft.com/en-us/visualstudio/get-started/csharp/tutorial-wpf?view=vs-2019);

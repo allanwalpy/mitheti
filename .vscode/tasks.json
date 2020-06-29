@@ -7,6 +7,18 @@
             "type": "process",
             "args": [
                 "build",
+                "${workspaceFolder}/src/gui/gui.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build.core",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
                 "${workspaceFolder}/src/core/core.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
@@ -19,7 +31,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/core/core.csproj",
+                "${workspaceFolder}/src/gui.gui.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +44,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/core/core.csproj",
+                "${workspaceFolder}/src/gui/gui.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
