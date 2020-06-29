@@ -1,8 +1,3 @@
-using System;
-using Microsoft.Extensions.Configuration;
-
-using Mitheti.Core.Watcher;
-
 namespace Mitheti.Core.Database
 {
     //TODO: flash changes every n seconds;
@@ -25,11 +20,16 @@ namespace Mitheti.Core.Database
                 return;
             }
 
+            this.SaveRecordToContext(_databaseService.Context, data);
+        }
+
+        private void SaveRecordToContext(Context context, AppTimeSpanModel data)
+        {
             //TODO: accumulate;
-            _databaseService.Context.AppTimeSpans.Add(data);
+            context.Add(data);
 
             //TODO: do less often;
-            _databaseService.Context.SaveChanges();
+            context.SaveChanges();
         }
     }
 }
