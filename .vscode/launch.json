@@ -2,10 +2,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "core://launch/",
+            "name": "core://build&run/",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
+            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Core.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "core://run/",
+            "type": "coreclr",
+            "request": "launch",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Core.dll",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
