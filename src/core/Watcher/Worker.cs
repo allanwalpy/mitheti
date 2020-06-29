@@ -33,6 +33,7 @@ namespace Mitheti.Core.Watcher
 
                 _database.AddRecordedTime(result);
 
+                // TODO: make timer;
                 await Task.Delay(_delay, stoppingToken);
             }
         }

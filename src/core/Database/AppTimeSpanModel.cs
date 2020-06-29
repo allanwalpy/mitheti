@@ -11,8 +11,9 @@ namespace Mitheti.Core.Database
         public const int NameMaxLength = 255;  //? see https://www.google.com/search?q=windows+max+process+name+length;
         public const string TimeColumnName = nameof(Time);
 
+        // TODO: set exact length;
         [Key]
-        public int Id { get; set; }
+        public string Guid { get; set; }
 
         [Required]
         [MaxLength(NameMaxLength)]

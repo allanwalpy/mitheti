@@ -11,5 +11,21 @@ namespace Mitheti.Core.Database
         {
             this.Database.EnsureCreated();
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            this.ConfigureAppTimeSpans(builder);
+        }
+
+        private void ConfigureAppTimeSpans(ModelBuilder builder)
+        {
+            builder.Entity<AppTimeSpanModel>()
+                .Property(x => x.Guid)
+                .HasValueGenerator(typeof(GuidGenerator))
+                .ValueGeneratedOnAdd()
+                .HasDefaultValue(GuidGenerator.DefaultGuid);
+        }
     }
 }
