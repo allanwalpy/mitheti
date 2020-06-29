@@ -3,7 +3,7 @@
     <!-- assembly config; -->
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <LangVersion>latest</LangVersion>
         <RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
         <AssemblyName>Mitheti.Core</AssemblyName>
@@ -36,8 +36,8 @@
 
     <!-- build scripts; -->
     <Target Name="BeforeBuildScript" BeforeTargets="Build">
-        <Exec Command="if not exist $(SolutionDir)out\ mkdir $(SolutionDir)out\bin\$(Configuration)\$(TargetFramework)\" />
-        <Exec Command="xcopy $(SolutionDir)config $(SolutionDir)out\bin\$(Configuration)\$(TargetFramework) /Y" />
+        <Exec Command="if not exist ..\..\out\ mkdir ..\..\out\bin\$(Configuration)\$(TargetFramework)\" />
+        <Exec Command="xcopy ..\..\config ..\..\out\bin\$(Configuration)\$(TargetFramework) /Y" />
     </Target>
 
     <!-- debug configuration; -->

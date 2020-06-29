@@ -5,19 +5,10 @@
             "name": "core://launch/",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/out/bin/Debug/net5.0/Mitheti.Core.dll",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Core.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/out/bin/Debug/net5.0/",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "core://launch/old",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "${workspaceFolder}/out/bin/Debug/netstandard2.1/Mitheti.Core.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/out/bin/Debug/net5.0/",
+            "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
             "console": "internalConsole",
             "stopAtEntry": false
         },
