@@ -3,6 +3,7 @@ namespace Mitheti.Core.Database
     //TODO: flash changes every n seconds;
     //TODO: add IDosposable;
     //TODO: add class or method with optimization of DB by same Hour, Day, Year, ProcessName;
+    //TODO: add whitelist for appnames;
     public class SavingService : ISavingService
     {
         private ConnectionService _databaseService;
