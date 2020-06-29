@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,7 @@ namespace Mitheti.Core.Watcher
         private readonly ISavingService _database;
 
         private readonly int _delay;
+        private readonly List<string> _appList;
 
         public Worker(IConfiguration config, ISavingService database)
         {
@@ -23,6 +25,7 @@ namespace Mitheti.Core.Watcher
             _database = database;
 
             _delay = _config.GetValue<int>(DelayConfigKey);
+            _appList = _config.GetValue<List<string>>(Program.AppListConfigKey);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -31,7 +34,10 @@ namespace Mitheti.Core.Watcher
             {
                 var result = WinApiAdapter.GetFocusedWindowInfo().ToDatabaseModel(_delay);
 
-                _database.AddRecordedTime(result);
+                if (_appList.Contains(result.AppName))
+                {
+                    _database.AddRecordedTime(result);
+                }
 
                 // TODO: make timer;
                 await Task.Delay(_delay, stoppingToken);
