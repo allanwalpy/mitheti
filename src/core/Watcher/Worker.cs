@@ -18,10 +18,10 @@ namespace Mitheti.Core.Watcher
 
         public Worker(IConfiguration config, ISavingService database)
         {
-            this._config = config;
-            this._database = database;
+            _config = config;
+            _database = database;
 
-            this._delay = this._config.GetValue<int>(DelayConfigKey);
+            _delay = _config.GetValue<int>(DelayConfigKey);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -30,9 +30,9 @@ namespace Mitheti.Core.Watcher
             {
                 var result = WinApiAdapter.GetFocusedWindowInfo();
 
-                this._database.AddRecordedTime(result);
+                _database.AddRecordedTime(result);
 
-                await Task.Delay(this._delay, stoppingToken);
+                await Task.Delay(_delay, stoppingToken);
             }
         }
 

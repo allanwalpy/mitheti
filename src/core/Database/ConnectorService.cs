@@ -15,7 +15,7 @@ namespace Mitheti.Core.Database
                 var builder = new DbContextOptionsBuilder();
 
                 var options = builder
-                    .UseMySQL(this._connectionString)
+                    .UseMySQL(_connectionString)
                     .Options;
 
                 return new Context(options);
@@ -25,9 +25,9 @@ namespace Mitheti.Core.Database
         public ConnectionService(IConfiguration config)
         {
             #if DEBUG
-                this._connectionString = config.GetConnectionString(ConnectionStringKey + "debug");
+                _connectionString = config.GetConnectionString(ConnectionStringKey + "debug");
             #else
-                this._connectionString = config.GetConnectionString(ConnectionStringName);
+                _connectionString = config.GetConnectionString(ConnectionStringName);
             #endif
         }
     }

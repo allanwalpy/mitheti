@@ -7,6 +7,7 @@ namespace Mitheti.Core.Database
 {
     //TODO: flash changes every n seconds;
     //TODO: add IDosposable;
+    //TODO: add class or method with optimization of DB by same Hour, Day, Year, ProcessName;
     public class SavingService : ISavingService
     {
         private ConnectionService _databaseService;
@@ -14,8 +15,8 @@ namespace Mitheti.Core.Database
 
         public SavingService(IConfiguration config, ConnectionService databaseService)
         {
-            this._databaseService = databaseService;
-            this._watcherDelay = config.GetValue<int>(Worker.DelayConfigKey);
+            _databaseService = databaseService;
+            _watcherDelay = config.GetValue<int>(Worker.DelayConfigKey);
         }
 
         //TODO: refactor;
@@ -27,7 +28,7 @@ namespace Mitheti.Core.Database
             }
 
             //TODO: add methods to parse between AppTimeSpanModel & ProcessInfo;
-            this._databaseService.Context.AppTimeSpans.Add(
+            _databaseService.Context.AppTimeSpans.Add(
                 new AppTimeSpanModel
                 {
                     AppName = info.Name,
@@ -37,7 +38,7 @@ namespace Mitheti.Core.Database
             );
 
             //TODO: do less often;
-            this._databaseService.Context.SaveChanges();
+            _databaseService.Context.SaveChanges();
         }
     }
 }

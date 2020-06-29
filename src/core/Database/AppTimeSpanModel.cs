@@ -8,7 +8,7 @@ namespace Mitheti.Core.Database
     public class AppTimeSpanModel
     {
         public const string TableName = "AppTimeSpanSource";
-        public const int NameMaxLength = 260;  //? see https://www.google.com/search?q=windows+max+process+name+length;
+        public const int NameMaxLength = 255;  //? see https://www.google.com/search?q=windows+max+process+name+length;
         public const string TimeColumnName = nameof(Time);
 
         [Key]
@@ -25,18 +25,18 @@ namespace Mitheti.Core.Database
         public DateTime Time { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Hour { get; set; }
+        public int Hour => Time.Hour;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Day { get; set; }
+        public int Day => Time.Day;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Month { get; set; }
+        public int Month => Time.Month;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Year { get; set; }
+        public int Year => Time.Year;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int DayOfWeek { get; set; }
+        public int DayOfWeek => (int)Time.DayOfWeek;
     }
 }
