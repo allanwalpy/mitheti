@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 using Mitheti.Core.Database;
+using Mitheti.Core.Extensions;
 
 namespace Mitheti.Core.Watcher
 {
@@ -28,7 +29,7 @@ namespace Mitheti.Core.Watcher
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var result = WinApiAdapter.GetFocusedWindowInfo();
+                var result = WinApiAdapter.GetFocusedWindowInfo().ToDatabaseModel(_delay);
 
                 _database.AddRecordedTime(result);
 

@@ -1,5 +1,3 @@
-using Mitheti.Core.Watcher;
-
 namespace Mitheti.Core.Database
 {
     public interface ISavingService
@@ -8,6 +6,6 @@ namespace Mitheti.Core.Database
         /// register delay milliseconds of <paramref name="info" /> process;
         /// <para> delay fetched from watcher configs;</para>
         /// </summary>
-        public void AddRecordedTime(ProcessInfo info);
+        public void AddRecordedTime(AppTimeSpanModel info);
     }
 }

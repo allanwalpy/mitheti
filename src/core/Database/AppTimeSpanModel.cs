@@ -7,7 +7,7 @@ namespace Mitheti.Core.Database
     [Table(TableName)]
     public class AppTimeSpanModel
     {
-        public const string TableName = "AppTimeSpanSource";
+        public const string TableName = "AppTime_Source_v1";
         public const int NameMaxLength = 255;  //? see https://www.google.com/search?q=windows+max+process+name+length;
         public const string TimeColumnName = nameof(Time);
 

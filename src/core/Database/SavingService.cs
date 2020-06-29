@@ -11,31 +11,22 @@ namespace Mitheti.Core.Database
     public class SavingService : ISavingService
     {
         private ConnectionService _databaseService;
-        private int _watcherDelay;
 
-        public SavingService(IConfiguration config, ConnectionService databaseService)
+        public SavingService(ConnectionService databaseService)
         {
             _databaseService = databaseService;
-            _watcherDelay = config.GetValue<int>(Worker.DelayConfigKey);
         }
 
         //TODO: refactor;
-        public void AddRecordedTime(ProcessInfo info)
+        public void AddRecordedTime(AppTimeSpanModel data)
         {
-            if (info == null)
+            if (data == null)
             {
                 return;
             }
 
-            //TODO: add methods to parse between AppTimeSpanModel & ProcessInfo;
-            _databaseService.Context.AppTimeSpans.Add(
-                new AppTimeSpanModel
-                {
-                    AppName = info.Name,
-                    TimeSpan = _watcherDelay,
-                    Time = DateTime.Now
-                }
-            );
+            //TODO: accumulate;
+            _databaseService.Context.AppTimeSpans.Add(data);
 
             //TODO: do less often;
             _databaseService.Context.SaveChanges();

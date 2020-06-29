@@ -12,11 +12,10 @@ namespace Mitheti.Core.Watcher
         [DllImport("user32")]
         private static extern Int32 GetWindowThreadProcessId(IntPtr windowHandle, out uint processId);
 
-        public static ProcessInfo GetFocusedWindowInfo()
+        public static Process GetFocusedWindowInfo()
         {
             IntPtr windowHandle = GetForegroundWindow();
-            Process process = (windowHandle == null) ? null : GetProcessByHandle(windowHandle);
-            return new ProcessInfo(process);
+            return (windowHandle == null) ? null : GetProcessByHandle(windowHandle);
         }
 
         private static Process GetProcessByHandle(IntPtr windowHandle)
