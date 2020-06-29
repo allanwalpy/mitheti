@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Mitheti.Core.Database
 {
     //TODO: flash changes every n seconds;
@@ -32,5 +34,15 @@ namespace Mitheti.Core.Database
             //TODO: do less often;
             context.SaveChanges();
         }
+
+        private AppTimeSpanModel GetExactAppTime(Context context, AppTimeSpanModel data)
+            => context.AppTimeSpans
+                .Where((item) =>
+                    (item.Hour == data.Hour)
+                    && (item.Day == data.Day)
+                    && (item.Month == data.Month)
+                    && (item.AppName == data.AppName)
+                    && (item.Year == data.Year))
+                    .First();
     }
 }

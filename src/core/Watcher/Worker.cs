@@ -34,7 +34,8 @@ namespace Mitheti.Core.Watcher
             {
                 var result = WinApiAdapter.GetFocusedWindowInfo().ToDatabaseModel(_delay);
 
-                if (_appList.Contains(result.AppName))
+                // TODO: add class for filtering;
+                if (_appList.Contains(result.AppName.ToLower()))
                 {
                     _database.AddRecordedTime(result);
                 }

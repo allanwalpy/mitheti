@@ -11,12 +11,12 @@ namespace Mitheti.Core.Database
         public const int NameMaxLength = 255;  //? see https://www.google.com/search?q=windows+max+process+name+length;
         public const string TimeColumnName = nameof(Time);
 
-        // TODO: set exact length;
         [Key]
         public int Id { get; set; }
 
         [Required]
         [MaxLength(NameMaxLength)]
+        //TODO: always add as lowercase;
         public string AppName { get; set; }
 
         [Required]

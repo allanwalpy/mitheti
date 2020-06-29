@@ -12,7 +12,7 @@ namespace Mitheti.Core.Extensions
                 ? null
                 : new AppTimeSpanModel
                 {
-                    AppName = info.ProcessName,
+                    AppName = info.ProcessName.ToLower(),
                     TimeSpan = duration,
                     Time = DateTime.Now
                 };
