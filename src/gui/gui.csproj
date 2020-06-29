@@ -15,7 +15,7 @@
     <PropertyGroup>
         <AssemblyTitle>Mitheti.Gui</AssemblyTitle>
         <PackageId>Mitheti.Gui</PackageId>
-        <Version>0.1.0-alpha</Version>
+        <Version>0.2.0-alpha</Version>
         <Authors>allan_walpy aka Andrey Lysenkov</Authors>
         <NeutralLanguage>en-US</NeutralLanguage>
         <Description>counting active windows time</Description>
@@ -30,7 +30,7 @@
     <PropertyGroup>
         <OutputPath>../../out/bin/$(Configuration)/</OutputPath>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <DocumentationFile>../../out/bin/$(Configuration)/$(TargetFramework)/docs/core.xml</DocumentationFile>
+        <DocumentationFile>../../out/bin/$(Configuration)/$(TargetFramework)/docs/gui.xml</DocumentationFile>
         <DebugSymbols>false</DebugSymbols>
         <IncludeSource>true</IncludeSource>
     </PropertyGroup>

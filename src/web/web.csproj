@@ -1,7 +1,58 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+    <!-- assembly config; -->
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
+        <AssemblyName>Mitheti.Web</AssemblyName>
+        <RootNamespace>Mitheti.Web</RootNamespace>
+    </PropertyGroup>
+
+    <!-- package info; -->
+    <PropertyGroup>
+        <AssemblyTitle>Mitheti.Web</AssemblyTitle>
+        <PackageId>Mitheti.Web</PackageId>
+        <Version>0.2.0-alpha</Version>
+        <Authors>allan_walpy aka Andrey Lysenkov</Authors>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <Description>counting active windows time</Description>
+        <PackageProjectUrl>https://github.com/allan-walpy/mitheti</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/allan-walpy/mitheti/blob/master/license</PackageLicenseUrl>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/allan-walpy/mitheti</RepositoryUrl>
+    </PropertyGroup>
+
+    <!-- compilation config; -->
+    <PropertyGroup>
+        <OutputPath>../../out/bin/$(Configuration)/</OutputPath>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DocumentationFile>../../out/bin/$(Configuration)/$(TargetFramework)/docs/web.xml</DocumentationFile>
+        <DebugSymbols>false</DebugSymbols>
+        <IncludeSource>true</IncludeSource>
+    </PropertyGroup>
+
+    <!-- build scripts; -->
+    <Target Name="BeforeBuildScript" BeforeTargets="Build">
+        <Exec Command="if not exist ..\..\out\ mkdir ..\..\out\bin\$(Configuration)\$(TargetFramework)\" />
+        <Exec Command="xcopy ..\..\config ..\..\out\bin\$(Configuration)\$(TargetFramework) /Y" />
+    </Target>
+
+    <!-- debug configuration; -->
+    <PropertyGroup Condition="$(Configuration)=='Debug'">
+        <DefineConstants>DEBUG;</DefineConstants>
+    </PropertyGroup>
+
+    <!-- turn off documentation warnings; -->
+    <PropertyGroup>
+        <NoWarn>1591;1573;</NoWarn>
+    </PropertyGroup>
+
+    <!-- 3rd party dependancy; -->
+    <ItemGroup>
+      <ProjectReference Include="..\core\core.csproj" />
+    </ItemGroup>
 
 </Project>

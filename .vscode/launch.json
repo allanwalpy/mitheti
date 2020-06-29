@@ -2,10 +2,31 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "web://build&run/",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build.web",
+            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Web.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "web://run/",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Web.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": "gui://build&run/",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build.gui",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Gui.exe",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
@@ -26,7 +47,7 @@
             "name": "core://build&run/",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build.core",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Core.dll",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
