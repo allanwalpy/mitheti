@@ -21,9 +21,31 @@ namespace Mitheti.Core.Database
 
         private void ConfigureAppTimeSpans(ModelBuilder builder)
         {
+            const string time = AppTimeSpanModel.TimeColumnName;
+
             builder.Entity<AppTimeSpanModel>()
                 .HasIndex(x => x.Id)
                 .IsUnique();
+
+            builder.Entity<AppTimeSpanModel>()
+                .Property(x => x.Hour)
+                .HasComputedColumnSql($"hour({time})");
+
+            builder.Entity<AppTimeSpanModel>()
+                .Property(x => x.Day)
+                .HasComputedColumnSql($"day({time})");
+
+            builder.Entity<AppTimeSpanModel>()
+                .Property(x => x.Month)
+                .HasComputedColumnSql($"month({time})");
+
+            builder.Entity<AppTimeSpanModel>()
+                .Property(x => x.Year)
+                .HasComputedColumnSql($"year({time})");
+
+            builder.Entity<AppTimeSpanModel>()
+                .Property(x => x.DayOfWeek)
+                .HasComputedColumnSql($"dayofweek({time})");
         }
     }
 }

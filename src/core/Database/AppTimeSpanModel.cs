@@ -25,19 +25,19 @@ namespace Mitheti.Core.Database
         [Required]
         public DateTime Time { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Hour => Time.Hour;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Hour { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Day => Time.Day;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Day { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Month => Time.Month;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Month { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int Year => Time.Year;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Year { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int DayOfWeek => (int)Time.DayOfWeek;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int DayOfWeek { get; set; }
     }
 }
