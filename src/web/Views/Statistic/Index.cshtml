@@ -1,0 +1,9 @@
+@model StatisticModel
+
+@{
+    ViewData["Title"] = "statistic/";
+}
+
+<h1>Статистика</h1>
+
+@(Html.Partial("_AppTimeView", Model.Result))

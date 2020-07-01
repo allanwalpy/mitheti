@@ -11,7 +11,7 @@ using Microsoft.Extensions.Hosting;
 
 using Mitheti.Core.Database;
 using Mitheti.Core.Watcher;
-using Mitheti.Web.Service;
+using Mitheti.Web.Services;
 
 namespace Mitheti.Web
 {
@@ -36,6 +36,7 @@ namespace Mitheti.Web
 
             //? web module services;
             services.AddSingleton<ILauncherService, LauncherService>();
+            services.AddSingleton<IStatisticService, StatisticService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

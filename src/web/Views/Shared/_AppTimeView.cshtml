@@ -1,0 +1,44 @@
+@using Mitheti.Core.Database
+
+@model List<AppTimeModel>
+
+<!-- TODO: replace AppTimeModel from database with some own view model;-->
+
+@if (Model.Count > 0)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Приложение</th>
+                <th>Проведённое время</th>
+                <th>Дата </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @(item.AppName)
+                </td>
+                <td>
+                    @{
+                        int minutes = item.Duration / (1000 * 60);
+                        string result0 = $"{minutes}мин.";
+                        @(result0)
+                    }
+                </td>
+                <td>
+                    @{
+                        string result1 = $"{item.Day}.{item.Month}.{item.Year}";
+                        @(result1)
+                    }
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Записей нет</p>
+}

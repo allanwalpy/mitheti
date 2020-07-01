@@ -1,4 +1,4 @@
-using Mitheti.Web.Service;
+using Mitheti.Web.Services;
 
 namespace Mitheti.Web.Models
 {

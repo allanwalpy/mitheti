@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Mitheti.Core.Extensions;
 using Mitheti.Core.Watcher;
 
-namespace Mitheti.Web.Service
+namespace Mitheti.Web.Services
 {
     public class LauncherService : ILauncherService
     {

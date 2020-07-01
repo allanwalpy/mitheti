@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using Mitheti.Web.Models;
-using Mitheti.Web.Service;
+using Mitheti.Web.Services;
 
 namespace Mitheti.Web.Controllers
 {

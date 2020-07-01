@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Mitheti.Web.Service
+namespace Mitheti.Web.Services
 {
     public interface ILauncherService
     {
