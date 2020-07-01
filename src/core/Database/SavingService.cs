@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -15,10 +16,11 @@ namespace Mitheti.Core.Database
 
         private readonly ILogger<SavingService> _logger;
         private IConnectionService _databaseService;
-        private Timer _timer;
+        private CancellationTokenSource _stopFlashingToken;
 
         private readonly object _lock = new object();
         private List<AppTimeModel> _accumulated = new List<AppTimeModel>();
+        private Task _flashingTask;
 
         public SavingService(ILogger<SavingService> logger, IConfiguration config, IConnectionService databaseService)
         {
@@ -26,8 +28,11 @@ namespace Mitheti.Core.Database
             _databaseService = databaseService;
 
             var delay = TimeSpan.FromMinutes(config.GetValue<int>(RecordDelayConfigKey)).Milliseconds;
-            _logger.LogDebug($"setting timer for {nameof(SavingService)} with delay of {delay} milliseconds");
-            _timer = new Timer(this.FlashingToDatabase, null, 0, delay );
+            _stopFlashingToken = new CancellationTokenSource();
+
+            _flashingTask = Task.Run(() => this.FlashingTask(_stopFlashingToken.Token, delay));
+
+            _logger.LogDebug($"setted task for {nameof(SavingService)} with delay of {delay} milliseconds");
         }
 
         public void AddRecordedTime(AppTimeModel data)
@@ -35,6 +40,15 @@ namespace Mitheti.Core.Database
             lock (_lock)
             {
                 this._accumulated.AddAppTime(data);
+            }
+        }
+
+        private async void FlashingTask(CancellationToken stoppingToken, int delay)
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                this.FlashingToDatabase(null);
+                await Task.Delay(delay, stoppingToken);
             }
         }
 
@@ -68,7 +82,12 @@ namespace Mitheti.Core.Database
         {
             _logger.LogDebug($"disposing of {nameof(SavingService)}");
 
-            _timer.Dispose();
+            //? stop flashing to database task;
+            _stopFlashingToken.Cancel();
+            _flashingTask.Wait();
+            _flashingTask.Dispose();
+
+            //? flash to database that is left;
             this.FlashingToDatabase(null);
         }
     }
