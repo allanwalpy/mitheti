@@ -1,5 +1,8 @@
 {
     "service": {
         "delay": 3000
+    },
+    "database": {
+        "delay": 3
     }
 }

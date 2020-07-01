@@ -25,25 +25,25 @@ namespace Mitheti.Core.Watcher
             _database = database;
 
             _delay = config.GetValue<int>(DelayConfigKey);
-            _appList = config.GetList<string>(Helper.AppListConfigKey);
+            _appList = config.GetList<string>(Helper.AppListConfigKey).ToLowerAll();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // TODO: add localization;
             _logger.LogInformation($"{nameof(WatcherService)} is started;");
 
             while (!stoppingToken.IsCancellationRequested)
             {
                 var result = WinApiAdapter.GetFocusedWindowInfo().ToDatabaseModel(_delay);
 
-                // TODO: add class for filtering;
-                if (_appList.Contains(result.AppName.ToLower()))
+                _logger.LogTrace("adding app time {0}", result);
+
+                if (result != null
+                    && _appList.Contains(result.AppName))
                 {
                     _database.AddRecordedTime(result);
                 }
 
-                // TODO: make timer;
                 await Task.Delay(_delay, stoppingToken);
             }
         }

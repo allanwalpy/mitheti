@@ -7,20 +7,19 @@ namespace Mitheti.Core.Database
     [Table(TableName)]
     public class AppTimeModel
     {
-        public const string TableName = "AppTime_Source_v1";
-        public const int NameMaxLength = 255;  //? see https://www.google.com/search?q=windows+max+process+name+length;
+        public const string TableName = "appTime_source_v1";
+        public const int AppNameMaxLength = 255;
         public const string TimeColumnName = nameof(Time);
 
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(NameMaxLength)]
-        //TODO: always add as lowercase;
+        [MaxLength(AppNameMaxLength)]
         public string AppName { get; set; }
 
         [Required]
-        public int TimeSpan { get; set; }
+        public int Duration { get; set; }
 
         [Required]
         public DateTime Time { get; set; }
@@ -39,5 +38,8 @@ namespace Mitheti.Core.Database
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DayOfWeek { get; set; }
+
+        public override string ToString()
+            => $"{AppName}://{Duration}?at={Time.ToString()};";
     }
 }

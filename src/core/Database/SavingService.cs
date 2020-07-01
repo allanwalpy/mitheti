@@ -1,48 +1,75 @@
+using System;
 using System.Linq;
+using System.Threading;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+
+using Mitheti.Core.Extensions;
 
 namespace Mitheti.Core.Database
 {
-    //TODO: flash changes every n seconds;
-    //TODO: add IDosposable;
-    //TODO: add class or method with optimization of DB by same Hour, Day, Year, ProcessName;
-    //TODO: add whitelist for appnames;
-    public class SavingService : ISavingService
+    public class SavingService : ISavingService, IDisposable
     {
-        private IConnectionService _databaseService;
+        public const string RecordDelayConfigKey = "database:delay";
 
-        public SavingService(IConnectionService databaseService)
+        private readonly ILogger _logger;
+        private IConnectionService _databaseService;
+        private Timer _timer;
+
+        private readonly object _lock = new object();
+        private List<AppTimeModel> _accumulated = new List<AppTimeModel>();
+
+        public SavingService(ILogger logger, IConfiguration config, IConnectionService databaseService)
         {
+            _logger = logger;
             _databaseService = databaseService;
+
+            var delay = TimeSpan.FromMinutes(config.GetValue<int>(RecordDelayConfigKey)).Milliseconds;
+            _logger.LogDebug($"setting timer for {nameof(SavingService)} with delay of {delay} milliseconds");
+            _timer = new Timer(this.FlashingToDatabase, null, 0, delay );
         }
 
-        //TODO: refactor;
         public void AddRecordedTime(AppTimeModel data)
         {
-            if (data == null)
+            lock (_lock)
             {
-                return;
+                this._accumulated.AddAppTime(data);
             }
-
-            this.SaveRecordToContext(_databaseService.Context, data);
         }
 
-        private void SaveRecordToContext(DatabaseContext context, AppTimeModel data)
+        private void FlashingToDatabase(object state)
         {
-            //TODO: accumulate;
-            context.Add(data);
+            lock (_lock)
+            {
+                _logger.LogTrace($"flashing accumulated etries of {_accumulated.Count} items to database;");
 
-            //TODO: do less often;
-            context.SaveChanges();
+                if (!_accumulated.Any())
+                {
+                    return;
+                }
+
+                this.SaveRecordsToContext();
+
+                _accumulated.Clear();
+            }
         }
 
-        private AppTimeModel GetExactAppTime(DatabaseContext context, AppTimeModel data)
-            => context.AppTimes
-                .Where((item) =>
-                    (item.Hour == data.Hour)
-                    && (item.Day == data.Day)
-                    && (item.Month == data.Month)
-                    && (item.AppName == data.AppName)
-                    && (item.Year == data.Year))
-                    .First();
+        private void SaveRecordsToContext()
+        {
+            using (var context = _databaseService.Context)
+            {
+                context.AddRange(_accumulated);
+                context.SaveChanges();
+            }
+        }
+
+        public void Dispose()
+        {
+            _logger.LogDebug($"disposing of {nameof(SavingService)}");
+
+            _timer.Dispose();
+            this.FlashingToDatabase(null);
+        }
     }
 }
