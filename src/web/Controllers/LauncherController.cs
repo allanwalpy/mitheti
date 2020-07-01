@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,19 +6,19 @@ using Mitheti.Web.Service;
 
 namespace Mitheti.Web.Controllers
 {
-    public class WatcherController : Controller
+    public class LauncherController : Controller
     {
-        private ILauncherService _worker { get; }
-        public WatcherController(ILauncherService worker)
+        private ILauncherService _launcher { get; }
+        public LauncherController(ILauncherService launcher)
         {
-            _worker = worker;
+            _launcher = launcher;
         }
 
         public IActionResult Index()
         {
-            return View(new WorkerModel()
+            return View(new LauncherModel()
             {
-                Status = _worker.State
+                Status = _launcher.State
             });
         }
 
@@ -31,13 +26,13 @@ namespace Mitheti.Web.Controllers
         {
             //TODO: add events for run and stop;
             //TODO: or pass task of action;
-            _worker.StartAsync();
+            _launcher.StartAsync();
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Stop()
         {
-            _worker.StopAsync();
+            _launcher.StopAsync();
             return RedirectToAction(nameof(Index));
         }
     }

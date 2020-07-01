@@ -20,6 +20,7 @@ namespace Mitheti.Core
 
         public static IHostBuilder CreateHostBuilder(string[] args)
             => Host.CreateDefaultBuilder(args)
+                .UseWindowsService()
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config
@@ -32,7 +33,8 @@ namespace Mitheti.Core
                 {
                     services.AddSingleton<IConnectionService, ConnectionService>();
                     services.AddSingleton<ISavingService, SavingService>();
-                    services.AddHostedService<WatcherService>();
+                    services.AddSingleton<WatcherService>();
+                    services.AddHostedService<Worker>();
                 });
 
     }

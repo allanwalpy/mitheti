@@ -7,8 +7,8 @@ namespace Mitheti.Web.Service
         bool IsRunning { get; }
         bool IsProcessing { get; }
         LauncherServiceState State { get; }
-        Task StartAsync();
-        Task StopAsync();
+        void StartAsync();
+        void StopAsync();
     }
 
     public enum LauncherServiceState

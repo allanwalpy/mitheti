@@ -1,65 +1,72 @@
+using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 
 using Mitheti.Core.Extensions;
-using Mitheti.Core.Service;
 using Mitheti.Core.Watcher;
 
 namespace Mitheti.Web.Service
 {
-    // TODO: more elegant;
-    // TODO: add blocking!!!;
     public class LauncherService : ILauncherService
     {
-        private WatcherService _worker;
+        private readonly object _lock = new object();
+        private IWatcherService _watcher;
+        private Task _watcherTask;
+        private CancellationTokenSource _stoppingTokenSource;
+
         public bool IsRunning { get; private set; }
         public bool IsProcessing { get; private set; }
+
         public LauncherServiceState State
             => (LauncherServiceState)(this.IsRunning.ToInt() * 1 + this.IsProcessing.ToInt() * 2);
 
-        public LauncherService(IConfiguration config, ISavingService database)
+        public LauncherService(IConfiguration config, IWatcherService watcher)
         {
-            _worker = new WatcherService(config, database);
+            _stoppingTokenSource = new CancellationTokenSource();
+            _watcher = watcher;
+            _watcherTask = null;
 
             this.IsRunning = false;
             this.IsProcessing = false;
         }
 
-        public Task StartAsync()
+        public void StartAsync()
         {
-            if (IsProcessing)
+            lock (_lock)
             {
-                return null;
+                this.IsProcessing = true;
+
+                Task.Run(() =>
+                {
+                    _watcherTask = _watcher.Run(_stoppingTokenSource.Token);
+
+                    this.IsRunning = true;
+                    this.IsProcessing = false;
+                });
             }
-
-            this.IsProcessing = true;
-
-            return Task.Run(async () =>
-            {
-                await _worker.StartAsync();
-                this.IsRunning = true;
-                this.IsProcessing = false;
-            });
-
-
         }
 
-        public Task StopAsync()
+        public void StopAsync()
         {
-            if (this.IsProcessing)
+            lock (_lock)
             {
-                return null;
+                this.IsProcessing = true;
+
+                Task.Run(async () =>
+                {
+                    _stoppingTokenSource.Cancel();
+                    await Task.Run(() =>
+                    {
+                        while (!_watcherTask.IsCompleted)
+                        {
+                            Thread.Sleep(100);
+                        }
+                    });
+
+                    this.IsRunning = false;
+                    this.IsProcessing = false;
+                });
             }
-
-            this.IsProcessing = true;
-
-            return Task.Run(async () =>
-            {
-                await _coreHost.StopAsync();
-                this.IsRunning = false;
-                this.IsProcessing = false;
-            });
         }
     }
 }

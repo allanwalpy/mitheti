@@ -87,6 +87,7 @@ namespace Mitheti.Core.Database
             _stopFlashingToken.Cancel();
             _flashingTask.Wait();
             _flashingTask.Dispose();
+            _stopFlashingToken.Dispose();
 
             //? flash to database leftovers;
             this.FlashingToDatabase(null);

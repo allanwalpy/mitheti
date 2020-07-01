@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Mitheti.Core.Database;
@@ -10,7 +9,7 @@ using Mitheti.Core.Extensions;
 
 namespace Mitheti.Core.Watcher
 {
-    public class WatcherService : BackgroundService
+    public class WatcherService : IWatcherService
     {
         public const string DelayConfigKey = "service:delay";
 
@@ -29,7 +28,7 @@ namespace Mitheti.Core.Watcher
             _appList = config.GetList<string>(Helper.AppListConfigKey).ToLowerAll();
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        public async Task Run(CancellationToken stoppingToken)
         {
             _logger.LogInformation($"{nameof(WatcherService)} is started;");
 

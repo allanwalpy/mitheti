@@ -9,7 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Mitheti.Core.Service;
+using Mitheti.Core.Database;
+using Mitheti.Core.Watcher;
 using Mitheti.Web.Service;
 
 namespace Mitheti.Web
@@ -25,8 +26,15 @@ namespace Mitheti.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ConnectionService>();
+            //? system services;
+            services.AddControllersWithViews();
+
+            //? core module services;
+            services.AddSingleton<IConnectionService, ConnectionService>();
             services.AddSingleton<ISavingService, SavingService>();
+            services.AddSingleton<IWatcherService, WatcherService>();
+
+            //? web module services;
             services.AddSingleton<ILauncherService, LauncherService>();
         }
 
@@ -44,8 +52,6 @@ namespace Mitheti.Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
