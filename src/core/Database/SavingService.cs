@@ -13,6 +13,7 @@ namespace Mitheti.Core.Database
     public class SavingService : ISavingService, IDisposable
     {
         public const string RecordDelayConfigKey = "database:delay";
+        public const int MillisecondsInMinute = 1000 * 60;
 
         private readonly ILogger<SavingService> _logger;
         private IConnectionService _databaseService;
@@ -27,7 +28,7 @@ namespace Mitheti.Core.Database
             _logger = logger;
             _databaseService = databaseService;
 
-            var delay = TimeSpan.FromMinutes(config.GetValue<int>(RecordDelayConfigKey)).Milliseconds;
+            var delay = config.GetValue<int>(RecordDelayConfigKey) * MillisecondsInMinute;
             _stopFlashingToken = new CancellationTokenSource();
 
             _flashingTask = Task.Run(() => this.FlashingTask(_stopFlashingToken.Token, delay));
@@ -87,7 +88,7 @@ namespace Mitheti.Core.Database
             _flashingTask.Wait();
             _flashingTask.Dispose();
 
-            //? flash to database that is left;
+            //? flash to database leftovers;
             this.FlashingToDatabase(null);
         }
     }
