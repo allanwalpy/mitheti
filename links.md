@@ -32,6 +32,8 @@
 
 - [link4](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql);
 
-## wpf core
+## wpf core & aspnet core
 
 - [link1](https://docs.microsoft.com/en-us/visualstudio/get-started/csharp/tutorial-wpf?view=vs-2019);
+
+- [link2](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/);

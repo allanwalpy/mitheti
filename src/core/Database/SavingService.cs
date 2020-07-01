@@ -8,15 +8,15 @@ namespace Mitheti.Core.Database
     //TODO: add whitelist for appnames;
     public class SavingService : ISavingService
     {
-        private ConnectionService _databaseService;
+        private IConnectionService _databaseService;
 
-        public SavingService(ConnectionService databaseService)
+        public SavingService(IConnectionService databaseService)
         {
             _databaseService = databaseService;
         }
 
         //TODO: refactor;
-        public void AddRecordedTime(AppTimeSpanModel data)
+        public void AddRecordedTime(AppTimeModel data)
         {
             if (data == null)
             {
@@ -26,7 +26,7 @@ namespace Mitheti.Core.Database
             this.SaveRecordToContext(_databaseService.Context, data);
         }
 
-        private void SaveRecordToContext(Context context, AppTimeSpanModel data)
+        private void SaveRecordToContext(DatabaseContext context, AppTimeModel data)
         {
             //TODO: accumulate;
             context.Add(data);
@@ -35,8 +35,8 @@ namespace Mitheti.Core.Database
             context.SaveChanges();
         }
 
-        private AppTimeSpanModel GetExactAppTime(Context context, AppTimeSpanModel data)
-            => context.AppTimeSpans
+        private AppTimeModel GetExactAppTime(DatabaseContext context, AppTimeModel data)
+            => context.AppTimes
                 .Where((item) =>
                     (item.Hour == data.Hour)
                     && (item.Day == data.Day)

@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mitheti.Core.Database
 {
-    public class Context : DbContext
+    public class DatabaseContext : DbContext
     {
-        public DbSet<AppTimeSpanModel> AppTimeSpans { get; set; }
+        public DbSet<AppTimeModel> AppTimes { get; set; }
 
-        public Context(DbContextOptions options)
+        public DatabaseContext(DbContextOptions options)
             : base(options)
         {
             this.Database.EnsureCreated();
@@ -21,29 +21,29 @@ namespace Mitheti.Core.Database
 
         private void ConfigureAppTimeSpans(ModelBuilder builder)
         {
-            const string time = AppTimeSpanModel.TimeColumnName;
+            const string time = AppTimeModel.TimeColumnName;
 
-            builder.Entity<AppTimeSpanModel>()
+            builder.Entity<AppTimeModel>()
                 .HasIndex(x => x.Id)
                 .IsUnique();
 
-            builder.Entity<AppTimeSpanModel>()
+            builder.Entity<AppTimeModel>()
                 .Property(x => x.Hour)
                 .HasComputedColumnSql($"hour({time})");
 
-            builder.Entity<AppTimeSpanModel>()
+            builder.Entity<AppTimeModel>()
                 .Property(x => x.Day)
                 .HasComputedColumnSql($"day({time})");
 
-            builder.Entity<AppTimeSpanModel>()
+            builder.Entity<AppTimeModel>()
                 .Property(x => x.Month)
                 .HasComputedColumnSql($"month({time})");
 
-            builder.Entity<AppTimeSpanModel>()
+            builder.Entity<AppTimeModel>()
                 .Property(x => x.Year)
                 .HasComputedColumnSql($"year({time})");
 
-            builder.Entity<AppTimeSpanModel>()
+            builder.Entity<AppTimeModel>()
                 .Property(x => x.DayOfWeek)
                 .HasComputedColumnSql($"dayofweek({time})");
         }

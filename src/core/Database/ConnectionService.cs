@@ -3,12 +3,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace Mitheti.Core.Database
 {
-    public class ConnectionService
+    public class ConnectionService : IConnectionService
     {
         public const string ConnectionStringKey = "local";
         private string _connectionString;
 
-        public Context Context
+        public DatabaseContext Context
         {
             get
             {
@@ -18,7 +18,7 @@ namespace Mitheti.Core.Database
                     .UseMySQL(_connectionString)
                     .Options;
 
-                return new Context(options);
+                return new DatabaseContext(options);
             }
         }
 

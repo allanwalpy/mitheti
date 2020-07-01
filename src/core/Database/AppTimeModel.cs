@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Mitheti.Core.Database
 {
     [Table(TableName)]
-    public class AppTimeSpanModel
+    public class AppTimeModel
     {
         public const string TableName = "AppTime_Source_v1";
         public const int NameMaxLength = 255;  //? see https://www.google.com/search?q=windows+max+process+name+length;

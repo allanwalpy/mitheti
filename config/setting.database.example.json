@@ -5,6 +5,5 @@
     },
     "commentary0": "copy this file to 'setting.database.secret.json'",
     "commentary1": "replace 'ConnectionStrings.local' with login info",
-    "commentary2": "use mysql: https://dev.mysql.com/downloads/installer/",
-    "commentary3": "to create database in mysql command line 'create database ___db_name___';"
+    "commentary2": "use mysql: https://dev.mysql.com/downloads/installer/"
 }
