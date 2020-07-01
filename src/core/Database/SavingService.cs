@@ -13,14 +13,14 @@ namespace Mitheti.Core.Database
     {
         public const string RecordDelayConfigKey = "database:delay";
 
-        private readonly ILogger _logger;
+        private readonly ILogger<SavingService> _logger;
         private IConnectionService _databaseService;
         private Timer _timer;
 
         private readonly object _lock = new object();
         private List<AppTimeModel> _accumulated = new List<AppTimeModel>();
 
-        public SavingService(ILogger logger, IConfiguration config, IConnectionService databaseService)
+        public SavingService(ILogger<SavingService> logger, IConfiguration config, IConnectionService databaseService)
         {
             _logger = logger;
             _databaseService = databaseService;

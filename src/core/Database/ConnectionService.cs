@@ -7,7 +7,7 @@ namespace Mitheti.Core.Database
     public class ConnectionService : IConnectionService
     {
         public const string ConnectionStringKey = "local";
-        private readonly ILogger _logger;
+        private readonly ILogger<ConnectionService> _logger;
         private string _connectionString;
 
         public DatabaseContext Context
@@ -26,7 +26,7 @@ namespace Mitheti.Core.Database
             }
         }
 
-        public ConnectionService(ILogger logger, IConfiguration config)
+        public ConnectionService(ILogger<ConnectionService> logger, IConfiguration config)
         {
             #if DEBUG
                 _connectionString = config.GetConnectionString(ConnectionStringKey + "debug");

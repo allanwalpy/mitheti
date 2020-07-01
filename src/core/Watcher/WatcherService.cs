@@ -14,14 +14,15 @@ namespace Mitheti.Core.Watcher
     {
         public const string DelayConfigKey = "service:delay";
 
-        private readonly ILogger _logger;
+        private readonly ILogger<WatcherService> _logger;
         private readonly ISavingService _database;
 
         private readonly int _delay;
         private readonly List<string> _appList;
 
-        public WatcherService(ILogger logger, IConfiguration config, ISavingService database)
+        public WatcherService(ILogger<WatcherService> logger, IConfiguration config, ISavingService database)
         {
+            _logger = logger;
             _database = database;
 
             _delay = config.GetValue<int>(DelayConfigKey);
