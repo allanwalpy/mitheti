@@ -44,6 +44,12 @@
         <NoWarn>1591;1573;</NoWarn>
     </PropertyGroup>
 
+    <!-- FIXME: for some reason not copied on default - so tmp solution below; -->
+    <Target Name="FIXMEwwwroot" AfterTargets="Build">
+        <Exec Command="if not exist ..\..\out\bin\$(Configuration)\$(TargetFramework)\wwwroot mkdir ..\..\out\bin\$(Configuration)\$(TargetFramework)\wwwroot " />
+        <Exec Command="xcopy ..\..\src\web\wwwroot ..\..\out\bin\$(Configuration)\$(TargetFramework)\wwwroot /Y /E" />
+    </Target>
+
     <!-- 3rd party dependancy; -->
     <ItemGroup>
         <ProjectReference Include="..\core\core.csproj" />

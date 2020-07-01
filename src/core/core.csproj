@@ -34,11 +34,10 @@
         <IncludeSource>true</IncludeSource>
     </PropertyGroup>
 
-    <!-- build scripts; -->
-    <Target Name="BeforeBuildScript" BeforeTargets="Build">
-        <Exec Command="if not exist ..\..\out\ mkdir ..\..\out\bin\$(Configuration)\$(TargetFramework)\" />
-        <Exec Command="xcopy ..\..\config ..\..\out\bin\$(Configuration)\$(TargetFramework) /Y" />
-    </Target>
+    <!-- additional files; -->
+    <ItemGroup>
+        <Content Include="../../config/**" CopyToOutputDirectory="Always" />
+    </ItemGroup>
 
     <!-- debug configuration; -->
     <PropertyGroup Condition="$(Configuration)=='Debug'">
