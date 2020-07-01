@@ -14,7 +14,7 @@
     <PropertyGroup>
         <AssemblyTitle>Mitheti.Core</AssemblyTitle>
         <PackageId>Mitheti.Core</PackageId>
-        <Version>0.2.0-alpha</Version>
+        <Version>0.2.1-alpha</Version>
         <Authors>allan_walpy aka Andrey Lysenkov</Authors>
         <NeutralLanguage>en-US</NeutralLanguage>
         <Description>counting active windows time</Description>
