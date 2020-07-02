@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
     <!-- assembly config; -->
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
+        <OutputType>WinExe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UseWPF>true</UseWPF>
         <LangVersion>latest</LangVersion>
         <RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
         <AssemblyName>Mitheti.Web</AssemblyName>
@@ -12,12 +13,12 @@
 
     <!-- package info; -->
     <PropertyGroup>
-        <AssemblyTitle>Mitheti.Web</AssemblyTitle>
-        <PackageId>Mitheti.Web</PackageId>
+        <AssemblyTitle>Mitheti.Wpf</AssemblyTitle>
+        <PackageId>Mitheti.Wpf</PackageId>
         <Version>0.2.2-alpha</Version>
         <Authors>allan_walpy aka Andrey Lysenkov</Authors>
         <NeutralLanguage>en-US</NeutralLanguage>
-        <Description>displaing statistic from database</Description>
+        <Description>gui controlling app</Description>
         <PackageProjectUrl>https://github.com/allan-walpy/mitheti</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/allan-walpy/mitheti/blob/master/license</PackageLicenseUrl>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -29,7 +30,7 @@
     <PropertyGroup>
         <OutputPath>../../out/bin/$(Configuration)/</OutputPath>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <DocumentationFile>../../out/bin/$(Configuration)/$(TargetFramework)/docs/web.xml</DocumentationFile>
+        <DocumentationFile>../../out/bin/$(Configuration)/$(TargetFramework)/docs/wpf.xml</DocumentationFile>
         <DebugSymbols>false</DebugSymbols>
         <IncludeSource>true</IncludeSource>
     </PropertyGroup>
@@ -44,15 +45,10 @@
         <NoWarn>1591;1573;</NoWarn>
     </PropertyGroup>
 
-    <!-- FIXME: for some reason not copied on default - so tmp solution below; -->
-    <Target Name="FIXMEwwwroot" AfterTargets="Build">
-        <Exec Command="if not exist ..\..\out\bin\$(Configuration)\$(TargetFramework)\wwwroot mkdir ..\..\out\bin\$(Configuration)\$(TargetFramework)\wwwroot " />
-        <Exec Command="xcopy ..\..\src\web\wwwroot ..\..\out\bin\$(Configuration)\$(TargetFramework)\wwwroot /Y /E" />
-    </Target>
-
     <!-- inner solution dependancy; -->
     <ItemGroup>
         <ProjectReference Include="..\core\core.csproj" />
+        <ProjectReference Include="..\web\web.csproj" />
     </ItemGroup>
 
 </Project>
