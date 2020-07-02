@@ -7,8 +7,8 @@
         <UseWPF>true</UseWPF>
         <LangVersion>latest</LangVersion>
         <RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
-        <AssemblyName>Mitheti.Web</AssemblyName>
-        <RootNamespace>Mitheti.Web</RootNamespace>
+        <AssemblyName>Mitheti.Wpf</AssemblyName>
+        <RootNamespace>Mitheti.Wpf</RootNamespace>
     </PropertyGroup>
 
     <!-- package info; -->
