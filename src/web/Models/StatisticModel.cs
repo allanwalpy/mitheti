@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-using Mitheti.Core.Database;
+using Mitheti.Web.Models;
 
 namespace Mitheti.Web.Models
 {
     public class StatisticModel
     {
-        public List<AppTimeModel> Result { get; set; }
+        public List<AppTimeViewModel> Result { get; set; }
     }
 }

@@ -8,3 +8,6 @@
 [Oo]bj
 [Oo]ut
 [Bb]in
+
+# visual studio files
+.vs

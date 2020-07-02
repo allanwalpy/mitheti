@@ -33,9 +33,8 @@ namespace Mitheti.Core
                 {
                     services.AddSingleton<IConnectionService, ConnectionService>();
                     services.AddSingleton<ISavingService, SavingService>();
-                    services.AddSingleton<WatcherService>();
+                    services.AddSingleton<IWatcherService, WatcherService>();
                     services.AddHostedService<Worker>();
                 });
-
     }
 }

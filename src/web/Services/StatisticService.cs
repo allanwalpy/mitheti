@@ -1,7 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 
 using Mitheti.Core.Database;
+using Mitheti.Web.Models;
+using Mitheti.Web.Extensions;
 
 namespace Mitheti.Web.Services
 {
@@ -14,11 +15,11 @@ namespace Mitheti.Web.Services
             _connectionService = connectionService;
         }
 
-        public List<AppTimeModel> GetAppTimes()
+        public List<AppTimeViewModel> GetAppTimes()
         {
             using (var context = _connectionService.Context)
             {
-                return Normalize(context.AppTimes);
+                return Normalize(context.AppTimes).ItemsToView();
             }
         }
 
