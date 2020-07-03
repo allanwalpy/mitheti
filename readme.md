@@ -8,4 +8,4 @@ program under [mit license](./license);
 
 using:
 
-- time icon from [bqlqn on flaticon.com](https://www.flaticon.com/authors/bqlqn);
+- web interface icon, wpf interface icon from [bqlqn on flaticon.com](https://www.flaticon.com/authors/bqlqn);

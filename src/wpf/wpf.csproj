@@ -50,4 +50,9 @@
         <ProjectReference Include="..\web\web.csproj" />
     </ItemGroup>
 
+    <!-- add resources; -->
+    <ItemGroup>
+        <Resource Include="Resource/appIcon.png" />
+    </ItemGroup>
+
 </Project>
