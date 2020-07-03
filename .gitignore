@@ -8,6 +8,7 @@
 [Oo]bj
 [Oo]ut
 [Bb]in
+*_wpftmp.csproj
 
 # visual studio files
 .vs

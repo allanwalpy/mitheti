@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Mitheti.Wpf"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+        <Image x:Key="trayIcon" Source="/Mitheti.Wpf;component/Resources/trayIcon.png" />
     </Application.Resources>
 </Application>

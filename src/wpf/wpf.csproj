@@ -5,6 +5,7 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
         <LangVersion>latest</LangVersion>
         <RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
         <AssemblyName>Mitheti.Wpf</AssemblyName>
@@ -34,6 +35,18 @@
         <IncludeSource>true</IncludeSource>
     </PropertyGroup>
 
+    <!-- additional files; -->
+    <ItemGroup>
+        <Content Include="./Resources/**" CopyToOutputDirectory="Always" />
+    </ItemGroup>
+
+    <!--TODO:FIXME: firgure out how to treat resources;-->
+
+    <!-- add resources; -->
+    <ItemGroup>
+        <Resource Include="Resources/appIcon.png" />
+    </ItemGroup>
+
     <!-- debug configuration; -->
     <PropertyGroup Condition="$(Configuration)=='Debug'">
         <DefineConstants>DEBUG;</DefineConstants>
@@ -48,11 +61,6 @@
     <ItemGroup>
         <ProjectReference Include="..\core\core.csproj" />
         <ProjectReference Include="..\web\web.csproj" />
-    </ItemGroup>
-
-    <!-- add resources; -->
-    <ItemGroup>
-        <Resource Include="Resources/appIcon.png" />
     </ItemGroup>
 
 </Project>
