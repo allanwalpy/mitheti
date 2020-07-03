@@ -28,9 +28,7 @@ namespace Mitheti.Core.Extensions
         /// Parse <see cref="Process" /> to <see cref="AppTimeModel" /> specifying <paramref name="duration" /> millisecods apptime;
         /// </summary>
         public static AppTimeModel ToDatabaseModel(this Process info, int duration)
-            => info == null
-                ? null
-                : new AppTimeModel
+            => (info == null) ? null : new AppTimeModel
                 {
                     AppName = info.ProcessName?.ToLower(),
                     Duration = duration,

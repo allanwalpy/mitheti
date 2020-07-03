@@ -36,7 +36,7 @@ namespace Mitheti.Core.Watcher
             {
                 var result = WinApiAdapter.GetFocusedWindowInfo().ToDatabaseModel(_delay);
 
-                _logger.LogTrace("adding app time {0}", result);
+                _logger.LogTrace("adding app time {0}", result?.ToString() ?? "null object");
 
                 if (result != null
                     && _appList.Contains(result.AppName))
