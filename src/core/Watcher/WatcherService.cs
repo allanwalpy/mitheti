@@ -25,7 +25,7 @@ namespace Mitheti.Core.Watcher
             _database = database;
 
             _delay = config.GetValue<int>(DelayConfigKey);
-            _appList = config.GetList<string>(Helper.AppListConfigKey).ToLowerAll();
+            _appList = config.GetList<string>(Helper.AppListConfigKey);
         }
 
         public async Task Run(CancellationToken stoppingToken)

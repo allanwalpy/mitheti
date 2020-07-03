@@ -73,24 +73,6 @@ namespace Mitheti.Core.Extensions
             }
         }
 
-        /// <summary>
-        /// Runs <see cref="String.ToLower()" /> for every string in collections;
-        /// </summary>
-        public static List<string> ToLowerAll(this List<string> list)
-        {
-            if (list == null || !list.Any())
-            {
-                return list;
-            }
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                list[i] = list[i]?.ToLower();
-            }
-
-            return list;
-        }
-
         public static string Format(this string template, params object[] args)
             => String.Format(template, args: args);
     }
