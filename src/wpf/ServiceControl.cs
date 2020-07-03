@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 
 using WebProgram = Mitheti.Web.Program;
@@ -6,19 +7,17 @@ using CoreProgram = Mitheti.Core.Program;
 
 namespace Mitheti.Wpf
 {
-    // TODO:FIXME:;
     public class ServiceControll : IDisposable
     {
-        private IHost _webService;
         private IHost _coreService;
+        private IHost _webService;
 
         public ServiceControll()
         {
-            //? NB! web app runs on Build() already;
             _coreService = null;
-            _webService = WebProgram.CreateHostBuilder(new string[] {}).Build();
 
-            _webService.RunAsync();
+            _webService =  WebProgram.CreateHostBuilder(new string[] {}).Build();
+            Task.Run(_webService.Run);
         }
 
         public void Start()
@@ -29,7 +28,7 @@ namespace Mitheti.Wpf
             }
 
             _coreService = CoreProgram.CreateHostBuilder(new string[] {}).Build();
-            _coreService.RunAsync();
+            Task.Run(_coreService.Run);
         }
 
         public async void Stop()
@@ -40,11 +39,12 @@ namespace Mitheti.Wpf
 
         public async void Dispose()
         {
-            await _webService.StopAsync();
-            _webService = null;
+            await Task.WhenAll(
+                _coreService.StopAsync(),
+                _webService.StopAsync());
 
-            await _coreService.StopAsync();
             _coreService = null;
+            _webService = null;
         }
     }
 }

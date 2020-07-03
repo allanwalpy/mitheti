@@ -15,7 +15,7 @@ namespace Mitheti.Wpf
             InitializeComponent();
 
             _serviceControll = new ServiceControll();
-            //TODO:FIXME: this.Closed += (a, b) => this._serviceControll.Dispose();
+            //this.Closed += (a, b) => this._serviceControll.Dispose();
         }
 
         public void StartClick(object sender, RoutedEventArgs args)

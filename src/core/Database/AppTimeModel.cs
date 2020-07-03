@@ -1,13 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace Mitheti.Core.Database
 {
     [Table(TableName)]
     public class AppTimeModel
     {
-        public const string TableName = "appTime_source_v2";
+        public const string TableName = "appTime_source_v1";
         public const int AppNameMaxLength = 255;
         public const string TimeColumnName = nameof(Time);
 
@@ -39,8 +40,15 @@ namespace Mitheti.Core.Database
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DayOfWeek { get; set; }
 
-        public override string ToString()
-            => $"{AppName}://{Duration}?at={Time.ToString()};";
+        public AppTimeModel()
+        {   }
+
+        public AppTimeModel(string processName, int duration, DateTime timestamp)
+        {
+            this.AppName = processName;
+            this.Duration = duration;
+            this.Time = timestamp;
+        }
 
         //FIXME:relevant only for values obtained from database;
         public bool IsSameTimeSpan(AppTimeModel other)
@@ -51,5 +59,7 @@ namespace Mitheti.Core.Database
                 && (this.Month   == other.Month)
                 && (this.Year    == other.Year);
         }
+
+        public override string ToString() => $"{AppName}://{Duration}?at={Time.ToString()};";
     }
 }

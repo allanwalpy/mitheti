@@ -16,8 +16,6 @@ namespace Mitheti.Core
         public const string DatabaseConfigFile = "setting.database.secret.json";
         public const string AppListConfigFile = "setting.applist.json";
 
-        public const string AppListConfigKey = "applist";
-
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

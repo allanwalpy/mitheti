@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace Mitheti.Core.Database
 {
@@ -13,7 +12,6 @@ namespace Mitheti.Core.Database
         public const string RecordDelayConfigKey = "database:delay";
         public const int MillisecondsInMinute = 1000 * 60;
 
-        private readonly ILogger<SavingService> _logger;
         private IConnectionService _databaseService;
         private CancellationTokenSource _stopSavingToken;
 
@@ -21,17 +19,13 @@ namespace Mitheti.Core.Database
         private List<AppTimeModel> _records = new List<AppTimeModel>();
         private Task _savingTask;
 
-        public SavingService(ILogger<SavingService> logger, IConfiguration config, IConnectionService databaseService)
+        public SavingService(IConfiguration config, IConnectionService databaseService)
         {
-            _logger = logger;
             _databaseService = databaseService;
 
-            var delay = config.GetValue<int>(RecordDelayConfigKey) * MillisecondsInMinute;
+            var delayMinutes = config.GetValue<int>(RecordDelayConfigKey);
             _stopSavingToken = new CancellationTokenSource();
-
-            _savingTask = Task.Run(() => this.SavingTask(_stopSavingToken.Token, delay));
-
-            _logger.LogDebug($"setted task for {nameof(SavingService)} with delay of {delay} milliseconds");
+            _savingTask = Task.Run(() => this.SavingTask(_stopSavingToken.Token, delayMinutes * MillisecondsInMinute));
         }
 
         public void Add(AppTimeModel data)
@@ -62,14 +56,10 @@ namespace Mitheti.Core.Database
         {
             lock (_lock)
             {
-                _logger.LogTrace($"flashing accumulated etries of {_records.Count} items to database;");
-
-                if (!_records.Any())
+                if (_records.Any())
                 {
-                    return;
+                    this.SaveToDatabaseContext();
                 }
-
-                this.SaveToDatabaseContext();
             }
         }
 
@@ -86,15 +76,14 @@ namespace Mitheti.Core.Database
 
         public async void Dispose()
         {
-            _logger.LogDebug($"disposing of {nameof(SavingService)}");
-
-            //? stop flashing to database task;
+            Console.WriteLine(" --- dispsed calling ---");
+            //? stop saving to database task;
             _stopSavingToken.Cancel();
             await _savingTask;
             _savingTask.Dispose();
             _stopSavingToken.Dispose();
 
-            //? flash to database leftovers;
+            //? save to database leftovers;
             this.SaveToDatabase();
         }
     }

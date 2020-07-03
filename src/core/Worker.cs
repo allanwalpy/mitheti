@@ -9,6 +9,7 @@ namespace Mitheti.Core
     public class Worker : BackgroundService
     {
         private IWatcherService _watcher;
+
         public Worker(IWatcherService watcher)
         {
             _watcher = watcher;

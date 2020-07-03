@@ -2,27 +2,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "web://build&run/",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build.web",
-            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Web.exe",
-            "args": [],
-            "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "web://run/",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Web.exe",
-            "args": [],
-            "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
             "name": "wpf://build&run/",
             "type": "coreclr",
             "request": "launch",
@@ -38,6 +17,27 @@
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Wpf.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "web://build&run/",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build.web",
+            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Web.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "web://run/",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Web.exe",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
             "console": "internalConsole",

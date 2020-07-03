@@ -40,7 +40,7 @@ namespace Mitheti.Wpf
         private void ShowWindow()
         {
             MainWindow.Activate();
-            MainWindow.Show();
+            //MainWindow.Show();
         }
 
         private void ExitApp()
