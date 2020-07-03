@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-using Mitheti.Core.Extensions;
+using CoreProgram = Mitheti.Core.Program;
 
 namespace Mitheti.Web
 {
@@ -22,8 +17,7 @@ namespace Mitheti.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((config) =>
                 {
-                    config
-                        .AddCoreConfigFiles()
+                    config.AddJsonFile(CoreProgram.DatabaseConfigFile, optional: false, reloadOnChange: false)
                         .AddEnvironmentVariables()
                         .AddCommandLine(args);
                 })

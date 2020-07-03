@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,11 +26,8 @@ namespace Mitheti.Web
 
             //? core module services;
             services.AddSingleton<IConnectionService, ConnectionService>();
-            services.AddSingleton<ISavingService, SavingService>();
-            services.AddSingleton<IWatcherService, WatcherService>();
 
             //? web module services;
-            services.AddSingleton<ILauncherService, LauncherService>();
             services.AddSingleton<IStatisticService, StatisticService>();
         }
 

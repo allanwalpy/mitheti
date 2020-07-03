@@ -7,7 +7,7 @@ namespace Mitheti.Core.Database
     [Table(TableName)]
     public class AppTimeModel
     {
-        public const string TableName = "appTime_source_v1";
+        public const string TableName = "appTime_source_v2";
         public const int AppNameMaxLength = 255;
         public const string TimeColumnName = nameof(Time);
 
@@ -41,5 +41,15 @@ namespace Mitheti.Core.Database
 
         public override string ToString()
             => $"{AppName}://{Duration}?at={Time.ToString()};";
+
+        //FIXME:relevant only for values obtained from database;
+        public bool IsSameTimeSpan(AppTimeModel other)
+        {
+            return (this.AppName == other.AppName)
+                && (this.Hour    == other.Hour)
+                && (this.Day     == other.Day)
+                && (this.Month   == other.Month)
+                && (this.Year    == other.Year);
+        }
     }
 }

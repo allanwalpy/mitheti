@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using System.Windows;
 
@@ -23,6 +22,7 @@ namespace Mitheti.Wpf
 
             _notifyIcon = new Forms.NotifyIcon();
             _notifyIcon.DoubleClick += (sender, args) => ShowWindow();
+            //FIXME: conflicts with context menu on rigth click;
             _notifyIcon.Click += (sender, args) => ShowWindow();
             _notifyIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _notifyIcon.Visible = true;
@@ -46,19 +46,21 @@ namespace Mitheti.Wpf
         private void ExitApp()
         {
             _isExiting = true;
+
             MainWindow.Close();
+
             _notifyIcon.Dispose();
             _notifyIcon = null;
         }
 
-        private void CloseWindow(object sender, CancelEventArgs e)
+        private void CloseWindow(object sender, CancelEventArgs cancelArgs)
         {
             if (_isExiting)
             {
                 return;
             }
 
-            e.Cancel = true;
+            cancelArgs.Cancel = true;
             MainWindow.Hide();
         }
 

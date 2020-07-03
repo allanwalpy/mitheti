@@ -3,6 +3,6 @@
         "delay": 1000
     },
     "database": {
-        "delay": 10
+        "delay": 1
     }
 }

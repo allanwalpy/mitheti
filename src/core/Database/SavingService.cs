@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using Mitheti.Core.Extensions;
-
 namespace Mitheti.Core.Database
 {
     public class SavingService : ISavingService, IDisposable
@@ -17,11 +15,11 @@ namespace Mitheti.Core.Database
 
         private readonly ILogger<SavingService> _logger;
         private IConnectionService _databaseService;
-        private CancellationTokenSource _stopFlashingToken;
+        private CancellationTokenSource _stopSavingToken;
 
         private readonly object _lock = new object();
-        private List<AppTimeModel> _accumulated = new List<AppTimeModel>();
-        private Task _flashingTask;
+        private List<AppTimeModel> _records = new List<AppTimeModel>();
+        private Task _savingTask;
 
         public SavingService(ILogger<SavingService> logger, IConfiguration config, IConnectionService databaseService)
         {
@@ -29,54 +27,61 @@ namespace Mitheti.Core.Database
             _databaseService = databaseService;
 
             var delay = config.GetValue<int>(RecordDelayConfigKey) * MillisecondsInMinute;
-            _stopFlashingToken = new CancellationTokenSource();
+            _stopSavingToken = new CancellationTokenSource();
 
-            _flashingTask = Task.Run(() => this.FlashingTask(_stopFlashingToken.Token, delay));
+            _savingTask = Task.Run(() => this.SavingTask(_stopSavingToken.Token, delay));
 
             _logger.LogDebug($"setted task for {nameof(SavingService)} with delay of {delay} milliseconds");
         }
 
-        public void AddRecordedTime(AppTimeModel data)
+        public void Add(AppTimeModel data)
         {
             lock (_lock)
             {
-                this._accumulated.AddAppTime(data);
+                var sameRecords = _records.Where(data.IsSameTimeSpan);
+
+                if (sameRecords.Any())
+                {
+                    sameRecords.First().Duration += data.Duration;
+                    return;
+                }
+                _records.Add(data);
             }
         }
 
-        private async void FlashingTask(CancellationToken stoppingToken, int delay)
+        private async void SavingTask(CancellationToken stoppingToken, int delay)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                this.FlashingToDatabase(null);
+                this.SaveToDatabase();
                 await Task.Delay(delay, stoppingToken);
             }
         }
 
-        private void FlashingToDatabase(object state)
+        private void SaveToDatabase()
         {
             lock (_lock)
             {
-                _logger.LogTrace($"flashing accumulated etries of {_accumulated.Count} items to database;");
+                _logger.LogTrace($"flashing accumulated etries of {_records.Count} items to database;");
 
-                if (!_accumulated.Any())
+                if (!_records.Any())
                 {
                     return;
                 }
 
-                this.SaveRecordsToContext();
-
-                _accumulated.Clear();
+                this.SaveToDatabaseContext();
             }
         }
 
-        private void SaveRecordsToContext()
+        private void SaveToDatabaseContext()
         {
             using (var context = _databaseService.Context)
             {
-                context.AddRange(_accumulated);
+                context.AddRange(_records);
                 context.SaveChanges();
             }
+
+            _records.Clear();
         }
 
         public async void Dispose()
@@ -84,13 +89,13 @@ namespace Mitheti.Core.Database
             _logger.LogDebug($"disposing of {nameof(SavingService)}");
 
             //? stop flashing to database task;
-            _stopFlashingToken.Cancel();
-            await _flashingTask;
-            _flashingTask.Dispose();
-            _stopFlashingToken.Dispose();
+            _stopSavingToken.Cancel();
+            await _savingTask;
+            _savingTask.Dispose();
+            _stopSavingToken.Dispose();
 
             //? flash to database leftovers;
-            this.FlashingToDatabase(null);
+            this.SaveToDatabase();
         }
     }
 }

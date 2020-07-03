@@ -25,7 +25,7 @@ namespace Mitheti.Core.Watcher
             _database = database;
 
             _delay = config.GetValue<int>(DelayConfigKey);
-            _appList = config.GetList<string>(Helper.AppListConfigKey);
+            _appList = config.GetList<string>(Program.AppListConfigKey);
         }
 
         public async Task Run(CancellationToken stoppingToken)
@@ -41,7 +41,7 @@ namespace Mitheti.Core.Watcher
                 if (result != null
                     && _appList.Contains(result.AppName))
                 {
-                    _database.AddRecordedTime(result);
+                    _database.Add(result);
                 }
 
                 await Task.Delay(_delay, stoppingToken);

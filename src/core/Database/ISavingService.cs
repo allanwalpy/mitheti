@@ -5,6 +5,6 @@ namespace Mitheti.Core.Database
         /// <summary>
         /// register delay milliseconds of <paramref name="info" /> process;
         /// </summary>
-        public void AddRecordedTime(AppTimeModel info);
+        void Add(AppTimeModel info);
     }
 }
