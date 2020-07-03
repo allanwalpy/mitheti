@@ -79,13 +79,13 @@ namespace Mitheti.Core.Database
             }
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
             _logger.LogDebug($"disposing of {nameof(SavingService)}");
 
             //? stop flashing to database task;
             _stopFlashingToken.Cancel();
-            _flashingTask.Wait();
+            await _flashingTask;
             _flashingTask.Dispose();
             _stopFlashingToken.Dispose();
 
