@@ -52,7 +52,7 @@
 
     <!-- add resources; -->
     <ItemGroup>
-        <Resource Include="Resource/appIcon.png" />
+        <Resource Include="Resources/appIcon.png" />
     </ItemGroup>
 
 </Project>

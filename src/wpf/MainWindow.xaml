@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mitheti.Wpf"
         mc:Ignorable="d"
-        Title="mitheti://" Height="200" Width="300" WindowStyle="SingleBorderWindow" Icon="/Resource/appIcon.png">
+        Title="mitheti://" Height="200" Width="300" WindowStyle="SingleBorderWindow" Icon="/Resources/appIcon.png">
     <Grid>
         <Label Content="отслеживание окон" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
         <Label Content="активно" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top"/>
