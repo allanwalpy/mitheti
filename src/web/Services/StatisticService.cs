@@ -26,7 +26,7 @@ namespace Mitheti.Web.Services
         private List<AppTimeModel> Normalize(IEnumerable<AppTimeModel> database)
         {
             List<AppTimeModel> result = new List<AppTimeModel>();
-            foreach(var item in database)
+            foreach (var item in database)
             {
                 AddAppTime(result, item);
             }
@@ -44,7 +44,9 @@ namespace Mitheti.Web.Services
             if (founded == null)
             {
                 list.Add(newItem);
-            } else {
+            }
+            else
+            {
                 founded.Duration += newItem.Duration;
             }
         }
