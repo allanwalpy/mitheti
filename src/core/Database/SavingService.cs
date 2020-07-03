@@ -47,8 +47,9 @@ namespace Mitheti.Core.Database
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                await Task.Delay(delay, stoppingToken).ContinueWith(task => { });
+
                 this.SaveToDatabase();
-                await Task.Delay(delay, stoppingToken);
             }
         }
 
@@ -74,17 +75,10 @@ namespace Mitheti.Core.Database
             _records.Clear();
         }
 
-        public async void Dispose()
+        public void Dispose()
         {
-            Console.WriteLine(" --- dispsed calling ---");
             //? stop saving to database task;
             _stopSavingToken.Cancel();
-            await _savingTask;
-            _savingTask.Dispose();
-            _stopSavingToken.Dispose();
-
-            //? save to database leftovers;
-            this.SaveToDatabase();
         }
     }
 }

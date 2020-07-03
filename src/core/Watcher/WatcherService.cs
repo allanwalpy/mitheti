@@ -34,7 +34,7 @@ namespace Mitheti.Core.Watcher
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(_delay, stoppingToken);
+                await Task.Delay(_delay, stoppingToken).ContinueWith(task => { });
 
                 var processName = WinApiAdapter.GetFocusedWindowInfo()?.ProcessName;
                 if (processName == null || !_appList.Contains(processName))

@@ -8,14 +8,14 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class MainWindow : Window, IDisposable
     {
-        private ServiceControll _serviceControll;
+        private ServiceLauncher _serviceControll;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            _serviceControll = new ServiceControll();
-            //this.Closed += (a, b) => this._serviceControll.Dispose();
+            _serviceControll = new ServiceLauncher();
+            this.Closed += (a, b) => this._serviceControll.Dispose();
         }
 
         public void StartClick(object sender, RoutedEventArgs args)

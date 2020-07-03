@@ -21,17 +21,19 @@ namespace Mitheti.Wpf
             MainWindow.Closing += CloseWindow;
 
             _notifyIcon = new Forms.NotifyIcon();
+            this.SetNotifyIcon();
+
+            MainWindow.Show();
+        }
+
+        private void SetNotifyIcon()
+        {
             _notifyIcon.DoubleClick += (sender, args) => ShowWindow();
             //FIXME: conflicts with context menu on rigth click;
             _notifyIcon.Click += (sender, args) => ShowWindow();
             _notifyIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _notifyIcon.Visible = true;
 
-            this.CreateNotifyContextMenu();
-        }
-
-        private void CreateNotifyContextMenu()
-        {
             _notifyIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
             _notifyIcon.ContextMenuStrip.Items.Add("Show").Click += (sender, args) => ShowWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (sender, args) => ExitApp();
@@ -40,7 +42,7 @@ namespace Mitheti.Wpf
         private void ShowWindow()
         {
             MainWindow.Activate();
-            //MainWindow.Show();
+            MainWindow.Show();
         }
 
         private void ExitApp()
@@ -55,13 +57,11 @@ namespace Mitheti.Wpf
 
         private void CloseWindow(object sender, CancelEventArgs cancelArgs)
         {
-            if (_isExiting)
+            if (!_isExiting)
             {
-                return;
+                cancelArgs.Cancel = true;
+                MainWindow.Hide();
             }
-
-            cancelArgs.Cancel = true;
-            MainWindow.Hide();
         }
 
     }
