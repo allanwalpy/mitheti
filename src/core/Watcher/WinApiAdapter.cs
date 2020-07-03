@@ -15,7 +15,7 @@ namespace Mitheti.Core.Watcher
         public static Process GetFocusedWindowInfo()
         {
             IntPtr windowHandle = GetForegroundWindow();
-            return (windowHandle == null) ? null : GetProcessByHandle(windowHandle);
+            return  GetProcessByHandle(windowHandle);
         }
 
         private static Process GetProcessByHandle(IntPtr windowHandle)
