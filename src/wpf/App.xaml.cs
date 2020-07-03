@@ -23,7 +23,8 @@ namespace Mitheti.Wpf
 
             _notifyIcon = new Forms.NotifyIcon();
             _notifyIcon.DoubleClick += (sender, args) => ShowWindow();
-            _notifyIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.png");
+            _notifyIcon.Click += (sender, args) => ShowWindow();
+            _notifyIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _notifyIcon.Visible = true;
 
             this.CreateNotifyContextMenu();
