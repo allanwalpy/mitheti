@@ -23,21 +23,21 @@
             "stopAtEntry": false
         },
         {
-            "name": "gui://build&run/",
+            "name": "wpf://build&run/",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build.gui",
-            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Gui.exe",
+            "preLaunchTask": "build.wpf",
+            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Wpf.exe",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
             "console": "internalConsole",
             "stopAtEntry": false
         },
         {
-            "name": "gui://run/",
+            "name": "wpf://run/",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Gui.exe",
+            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Wpf.exe",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
             "console": "internalConsole",

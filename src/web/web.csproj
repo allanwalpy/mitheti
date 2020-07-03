@@ -29,7 +29,6 @@
     <PropertyGroup>
         <OutputPath>../../out/bin/$(Configuration)/</OutputPath>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <DocumentationFile>../../out/bin/$(Configuration)/$(TargetFramework)/docs/web.xml</DocumentationFile>
         <DebugSymbols>false</DebugSymbols>
         <IncludeSource>true</IncludeSource>
     </PropertyGroup>
