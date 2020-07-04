@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows;
 
 namespace Mitheti.Wpf
@@ -8,31 +9,32 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class MainWindow : Window, IDisposable
     {
-        private ServiceLauncher _serviceControll;
+        private HostLauncher _hostLauncher;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            _serviceControll = new ServiceLauncher();
-            this.Closed += (a, b) => this._serviceControll.Dispose();
+            _hostLauncher = new HostLauncher();
+            this.Closed += (sener, args) => this._hostLauncher.Dispose();
         }
 
-        public void StartClick(object sender, RoutedEventArgs args)
-        {
-            _serviceControll.Start();
-        }
+        public void StartClick(object sender, RoutedEventArgs args) => _hostLauncher.Start();
 
-        public void StopClick(object sender, RoutedEventArgs args)
-        {
-            _serviceControll.Stop();
-        }
+        public void StopClick(object sender, RoutedEventArgs args) => _hostLauncher.Stop();
 
+        //TODO:FIXME: use setting values, not just magic strings;
+        //TODO: open in internal browser on new window;
         public void StatisticClick(object sender, RoutedEventArgs e)
         {
-            //TODO:FIXME:;
+            var processInfo = new ProcessStartInfo
+            {
+                FileName = "http://localhost:5004",
+                UseShellExecute = true
+            };
+            Process.Start(processInfo);
         }
 
-        public void Dispose() => _serviceControll.Dispose();
+        public void Dispose() => _hostLauncher.Dispose();
     }
 }

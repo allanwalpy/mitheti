@@ -75,10 +75,15 @@ namespace Mitheti.Core.Database
             _records.Clear();
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
             //? stop saving to database task;
             _stopSavingToken.Cancel();
+            await Task.WhenAll(_savingTask);
+            _stopSavingToken.Dispose();
+
+            //? save leftovers;
+            this.SaveToDatabase();
         }
     }
 }
