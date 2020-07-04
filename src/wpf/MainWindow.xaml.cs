@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Mitheti.Wpf
 {
@@ -20,8 +21,10 @@ namespace Mitheti.Wpf
             _statusLabel = null;
 
             _hostLauncher = new HostLauncher();
-            _hostLauncher.OnHostStatusChange += this.UpdateStatusLabel;
+            _hostLauncher.OnHostStatusChange += this.StatusChangeEvent;
             this.Closed += (sener, args) => _hostLauncher.Dispose();
+
+            this.UpdateStatus(isLaunched: false);
         }
 
         public void StartClick(object sender, RoutedEventArgs args)
@@ -55,16 +58,27 @@ namespace Mitheti.Wpf
             }
         }
 
-        private void UpdateStatusLabel(object sender, EventArgs args)
+        private void StatusChangeEvent(object sender, EventArgs args)
+        {
+            bool? isLaunched = (args as HostLauncher.HostStatusChangeEvent)?.IsLaunched;
+            if (isLaunched == null)
+            {
+                return;
+            }
+
+            this.UpdateStatus(isLaunched ?? false);
+        }
+
+        private void UpdateStatus(bool isLaunched)
         {
             if (_statusLabel == null)
             {
                 return;
             }
 
-            var isLaunched = (args as HostLauncher.HostStatusChangeEvent)?.IsLaunched ?? false;
-            var message = isLaunched ? "запущен" : "остановлен";
-            _statusLabel.Content = message;
+            //TODO:add json settnig for this;
+            _statusLabel.Content = isLaunched ? "запущен" : "остановлен";
+            _statusLabel.Foreground = isLaunched ? Brushes.Green : Brushes.Red;
         }
     }
 }
