@@ -14,7 +14,7 @@
     <PropertyGroup>
         <AssemblyTitle>Mitheti.Web</AssemblyTitle>
         <PackageId>Mitheti.Web</PackageId>
-        <Version>0.2.2-alpha</Version>
+        <Version>0.3.0-alpha</Version>
         <Authors>allan_walpy aka Andrey Lysenkov</Authors>
         <NeutralLanguage>en-US</NeutralLanguage>
         <Description>displaing statistic from database</Description>
