@@ -2,14 +2,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "wpf://build&run/",
+            "name": "wpf/build/run/",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": [
-                "build.core",
-                "build.web",
-                "build.wpf"
-            ],
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Wpf.exe",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
@@ -17,7 +13,7 @@
             "stopAtEntry": false
         },
         {
-            "name": "wpf://run/",
+            "name": "wpf/run/",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Wpf.exe",
@@ -27,10 +23,10 @@
             "stopAtEntry": false
         },
         {
-            "name": "web://build&run/",
+            "name": "web/build/run/",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build.web",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Web.exe",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
@@ -38,7 +34,7 @@
             "stopAtEntry": false
         },
         {
-            "name": "web://run/",
+            "name": "web/run/",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Web.exe",
@@ -48,10 +44,10 @@
             "stopAtEntry": false
         },
         {
-            "name": "core://build&run/",
+            "name": "core/build/run/",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build.core",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Core.dll",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
@@ -59,7 +55,7 @@
             "stopAtEntry": false
         },
         {
-            "name": "core://run/",
+            "name": "core/run/",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Core.dll",

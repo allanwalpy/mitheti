@@ -77,7 +77,7 @@ namespace Mitheti.Wpf
             }
 
             //TODO:add json settnig for this;
-            _statusLabel.Content = isLaunched ? "запущен" : "остановлен";
+            _statusLabel.Content =    isLaunched ? "запущен"     : "остановлен";
             _statusLabel.Foreground = isLaunched ? Brushes.Green : Brushes.Red;
         }
     }
