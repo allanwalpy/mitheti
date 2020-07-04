@@ -5,8 +5,56 @@
             "label": "build",
             "command": "dotnet",
             "type": "process",
-            "args": [ "build" ],
+            "args": [
+                "build"
+            ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build.wpf",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "./src/wpf/wpf.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build.web",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "./src/web/web.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build.core",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "./src/core/core.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "restore",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "restore"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "clear",
+            "command": "clear",
+            "type": "shell",
+            "args": [],
+            "problemMatcher": []
         }
     ]
 }
