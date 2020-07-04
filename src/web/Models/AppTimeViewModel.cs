@@ -10,15 +10,5 @@ namespace Mitheti.Web.Models
         public int SecondsSpend { get; set; }
 
         public DateTime Timestamp { get; set; }
-
-        public string ToStringTimestamp(
-            string hoursFormat,
-            string minutesFormat,
-            string secondsFormat,
-            string millisecondsFormat)
-        {
-            // TODO:;
-            return null;
-        }
     }
 }

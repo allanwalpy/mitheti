@@ -28,7 +28,7 @@ namespace Mitheti.Web
             services.AddSingleton<IConnectionService, ConnectionService>();
 
             //? web module services;
-            services.AddSingleton<IStatisticService, StatisticService>();
+            services.AddSingleton<ISearchService, SearchService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
