@@ -1,9 +1,8 @@
 {
     "applist": [
-        "code",
+        "Code",
         "chrome",
-        "discord",
-        "geforcenow",
+        "GeForceNOW",
         "devenv"
     ]
 }
