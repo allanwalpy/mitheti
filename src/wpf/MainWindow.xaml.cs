@@ -20,19 +20,18 @@ namespace Mitheti.Wpf
             _statusLabel = null;
 
             _hostLauncher = new HostLauncher();
+            _hostLauncher.OnHostStatusChange += this.UpdateStatusLabel;
             this.Closed += (sener, args) => _hostLauncher.Dispose();
         }
 
         public void StartClick(object sender, RoutedEventArgs args)
         {
             _hostLauncher.Start();
-            this.UpdateStatusLabel();
         }
 
         public void StopClick(object sender, RoutedEventArgs args)
         {
             _hostLauncher.Stop();
-            this.UpdateStatusLabel();
         }
 
         //TODO:FIXME: use setting values, not just magic strings;
@@ -54,18 +53,17 @@ namespace Mitheti.Wpf
             {
                 throw new ArgumentNullException(nameof(_statusLabel), "label not founded");
             }
-
-            this.UpdateStatusLabel();
         }
 
-        private void UpdateStatusLabel()
+        private void UpdateStatusLabel(object sender, EventArgs args)
         {
             if (_statusLabel == null)
             {
                 return;
             }
 
-            var message = _hostLauncher.IsLaunched ? "запущен" : "остановлен";
+            var isLaunched = (args as HostLauncher.HostStatusChangeEvent)?.IsLaunched ?? false;
+            var message = isLaunched ? "запущен" : "остановлен";
             _statusLabel.Content = message;
         }
     }
