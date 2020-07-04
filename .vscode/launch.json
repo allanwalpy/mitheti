@@ -5,7 +5,11 @@
             "name": "wpf://build&run/",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build.wpf",
+            "preLaunchTask": [
+                "build.core",
+                "build.web",
+                "build.wpf"
+            ],
             "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Wpf.exe",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",

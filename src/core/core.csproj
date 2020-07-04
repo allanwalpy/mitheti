@@ -35,7 +35,7 @@
 
     <!-- additional files; -->
     <ItemGroup>
-        <Content Include="../../config/**" CopyToOutputDirectory="Always" />
+        <Content Include="$(SolutionDir)config\**" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
     <!-- debug configuration; -->

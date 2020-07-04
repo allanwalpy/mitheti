@@ -8,9 +8,11 @@ namespace Mitheti.Wpf
 {
     public class HostLauncher : IHostLauncher
     {
-        public const int DelayOnWebHostStart = 250;
+        public const int DelayOnWebHostStart = 500;
         private IHost _coreHost;
         private IHost _webHost;
+
+        public bool IsLaunched => this._coreHost != null;
 
         public HostLauncher()
         {

@@ -44,10 +44,9 @@
     </PropertyGroup>
 
     <!-- FIXME: for some reason not copied on default - so tmp solution below; -->
-    <Target Name="FIXMEwwwroot" AfterTargets="Build">
-        <Exec Command="if not exist ..\..\out\bin\$(Configuration)\$(TargetFramework)\wwwroot mkdir ..\..\out\bin\$(Configuration)\$(TargetFramework)\wwwroot " />
-        <Exec Command="xcopy ..\..\src\web\wwwroot ..\..\out\bin\$(Configuration)\$(TargetFramework)\wwwroot /Y /E" />
-    </Target>
+    <ItemGroup>
+        <Content Include="./wwwroot/**" CopyToOutputDirectory="Always" />
+    </ItemGroup>
 
     <!-- inner solution dependancy; -->
     <ItemGroup>
