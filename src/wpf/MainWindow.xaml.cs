@@ -7,7 +7,7 @@ namespace Mitheti.Wpf
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IDisposable
+    public partial class MainWindow : Window
     {
         private HostLauncher _hostLauncher;
 
@@ -16,7 +16,7 @@ namespace Mitheti.Wpf
             InitializeComponent();
 
             _hostLauncher = new HostLauncher();
-            this.Closed += (sener, args) => this._hostLauncher.Dispose();
+            this.Closed += (sener, args) => _hostLauncher.Dispose();
         }
 
         public void StartClick(object sender, RoutedEventArgs args) => _hostLauncher.Start();
@@ -34,7 +34,5 @@ namespace Mitheti.Wpf
             };
             Process.Start(processInfo);
         }
-
-        public void Dispose() => _hostLauncher.Dispose();
     }
 }
