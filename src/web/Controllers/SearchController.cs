@@ -30,5 +30,13 @@ namespace Mitheti.Web.Controllers
 
             return View("Result", _service.Get(request));
         }
+
+        public IActionResult Default()
+        {
+            return View("Result", _service.Get(new SearchFilter()
+            {
+                Hour = new FilterEqual<int>() { IsSet = false, Value = 0 }
+            }));
+        }
     }
 }
