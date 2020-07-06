@@ -29,7 +29,7 @@ namespace Mitheti.Wpf
             Task.Run(this.StartWebHostWithDelay);
         }
 
-        private async void StartWebHostWithDelay()
+        private async Task StartWebHostWithDelay()
         {
             await Task.Delay(DelayOnWebHostStart);
             await _webHost.StartAsync();
@@ -48,7 +48,7 @@ namespace Mitheti.Wpf
             this.TriggerHostStatusChange(true);
         }
 
-        public async void Stop()
+        public async Task Stop()
         {
             if (_coreHost == null)
             {
@@ -68,9 +68,9 @@ namespace Mitheti.Wpf
         }
 
         //TODO:FIXME: sort out deadlocks and crashes on application exit;
-        public void Dispose()
+        public async void Dispose()
         {
-            this.Stop();
+            await this.Stop();
 
             //? FIXME: web service won't stop, resulting in deadlock on `Task.WhenAll`;
             _webHost.Dispose();
