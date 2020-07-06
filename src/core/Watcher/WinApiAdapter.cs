@@ -10,7 +10,7 @@ namespace Mitheti.Core.Watcher
         private static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32")]
-        private static extern Int32 GetWindowThreadProcessId(IntPtr windowHandle, out uint processId);
+        private static extern int GetWindowThreadProcessId(IntPtr windowHandle, out uint processId);
 
         public static Process GetFocusedWindowInfo()
         {

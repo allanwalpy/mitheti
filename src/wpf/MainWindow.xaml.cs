@@ -22,20 +22,20 @@ namespace Mitheti.Wpf
 
             _hostLauncher = new HostLauncher();
             _hostLauncher.OnHostStatusChange += this.StatusChangeEvent;
-            this.Closed += (sener, args) => _hostLauncher.Dispose();
 
             this.UpdateStatus(isLaunched: false);
         }
 
-        public void StartClick(object sender, RoutedEventArgs args)
+        protected override void OnClosed(EventArgs args)
         {
-            _hostLauncher.Start();
+            _hostLauncher.Dispose();
+
+            base.OnClosed(args);
         }
 
-        public void StopClick(object sender, RoutedEventArgs args)
-        {
-            _hostLauncher.Stop();
-        }
+        public void StartClick(object sender, RoutedEventArgs args) => _hostLauncher.Start();
+
+        public void StopClick(object sender, RoutedEventArgs args) => _hostLauncher.Stop();
 
         //TODO:FIXME: use setting values, not just magic strings;
         //TODO: open in internal browser on new window;

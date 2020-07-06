@@ -43,7 +43,7 @@ namespace Mitheti.Core.Database
             }
         }
 
-        private async void SavingTask(CancellationToken stoppingToken, int delay)
+        private async Task SavingTask(CancellationToken stoppingToken, int delay)
         {
             while (!stoppingToken.IsCancellationRequested)
             {

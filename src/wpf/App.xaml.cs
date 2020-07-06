@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Windows;
 
@@ -10,7 +11,6 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class App : Application
     {
-        private bool _isExiting = false;
         private Forms.NotifyIcon _notifyIcon;
 
         protected override void OnStartup(StartupEventArgs e)
@@ -18,7 +18,7 @@ namespace Mitheti.Wpf
             base.OnStartup(e);
 
             MainWindow = new MainWindow();
-            MainWindow.Closing += CloseWindow;
+            MainWindow.Closing += this.CloseWindow;
 
             _notifyIcon = new Forms.NotifyIcon();
             this.SetNotifyIcon();
@@ -28,27 +28,26 @@ namespace Mitheti.Wpf
 
         private void SetNotifyIcon()
         {
-            _notifyIcon.DoubleClick += (sender, args) => ShowWindow();
+            _notifyIcon.DoubleClick += this.ShowWindow;
             //FIXME: conflicts with context menu on rigth click;
-            _notifyIcon.Click += (sender, args) => ShowWindow();
+            _notifyIcon.Click += this.ShowWindow;
             _notifyIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _notifyIcon.Visible = true;
 
             _notifyIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
-            _notifyIcon.ContextMenuStrip.Items.Add("Show").Click += (sender, args) => ShowWindow();
-            _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (sender, args) => ExitApp();
+            _notifyIcon.ContextMenuStrip.Items.Add("Show").Click += this.ShowWindow;
+            _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += this.ExitApp;
         }
 
-        private void ShowWindow()
+        private void ShowWindow(object sender, EventArgs args)
         {
             MainWindow.Activate();
             MainWindow.Show();
         }
 
-        private void ExitApp()
+        private void ExitApp(object sender, EventArgs args)
         {
-            _isExiting = true;
-
+            MainWindow.Closing -= this.CloseWindow;
             MainWindow.Close();
 
             _notifyIcon.Dispose();
@@ -57,11 +56,8 @@ namespace Mitheti.Wpf
 
         private void CloseWindow(object sender, CancelEventArgs cancelArgs)
         {
-            if (!_isExiting)
-            {
-                cancelArgs.Cancel = true;
-                MainWindow.Hide();
-            }
+            cancelArgs.Cancel = true;
+            MainWindow.Hide();
         }
     }
 }

@@ -25,13 +25,14 @@ namespace Mitheti.Wpf
         {
             _coreHost = null;
 
-            _webHost = WebProgram.CreateHostBuilder(new string[] { }).Build();
-            Task.Run(async () =>
-            {
-                //? delay web host start, so it won't affect wpf app start;
-                await Task.Delay(DelayOnWebHostStart);
-                await _webHost.StartAsync();
-            } );
+            _webHost = WebProgram.CreateHostBuilder(new string[0]).Build();
+            Task.Run(this.StartWebHostWithDelay);
+        }
+
+        private async void StartWebHostWithDelay()
+        {
+            await Task.Delay(DelayOnWebHostStart);
+            await _webHost.StartAsync();
         }
 
         public void Start()
@@ -41,7 +42,7 @@ namespace Mitheti.Wpf
                 return;
             }
 
-            _coreHost = CoreProgram.CreateHostBuilder(new string[] { }).Build();
+            _coreHost = CoreProgram.CreateHostBuilder(new string[0]).Build();
             _coreHost.StartAsync();
 
             this.TriggerHostStatusChange(true);
@@ -63,12 +64,7 @@ namespace Mitheti.Wpf
 
         private void TriggerHostStatusChange(bool isLaunched)
         {
-            if (this.OnHostStatusChange == null)
-            {
-                return;
-            }
-
-            this.OnHostStatusChange.Invoke(null, new HostStatusChangeEvent() { IsLaunched = isLaunched });
+            this.OnHostStatusChange?.Invoke(null, new HostStatusChangeEvent() { IsLaunched = isLaunched });
         }
 
         //TODO:FIXME: sort out deadlocks and crashes on application exit;
