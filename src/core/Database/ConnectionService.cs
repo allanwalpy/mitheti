@@ -28,7 +28,7 @@ namespace Mitheti.Core.Database
             #if DEBUG
                 _connectionString = config.GetConnectionString(ConnectionStringKey + "debug");
             #else
-                _connectionString = config.GetConnectionString(ConnectionStringName);
+                _connectionString = config.GetConnectionString(ConnectionStringKey);
             #endif
         }
     }
