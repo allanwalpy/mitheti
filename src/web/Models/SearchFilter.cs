@@ -20,6 +20,12 @@ namespace Mitheti.Web.Models
         public DateTime TimeBegin { get; set; }
         public DateTime TimeEnd { get; set; }
 
+        public SearchFilter()
+        {
+            TimeBegin = TimeBeginNull;
+            TimeEnd = TimeEndNull;
+        }
+
         public bool Apply(AppTimeModel item)
         {
             return (AppName?.Apply(item.AppName) ?? true)

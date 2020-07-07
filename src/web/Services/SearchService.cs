@@ -40,7 +40,7 @@ namespace Mitheti.Web.Services
 
         private static void AddAppTime(List<AppTimeModel> list, AppTimeModel newItem)
         {
-            var founded = list.Find(item => newItem.IsSameTimeSpan(item));
+            var founded = list.Find(item => newItem.IsSameTimeSpanDay(item));
 
             if (founded != null)
             {

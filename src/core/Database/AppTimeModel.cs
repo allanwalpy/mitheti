@@ -59,6 +59,14 @@ namespace Mitheti.Core.Database
                 && (this.Year    == other.Year);
         }
 
+        public bool IsSameTimeSpanDay(AppTimeModel other)
+        {
+            return (this.AppName == other.AppName)
+                && (this.Day == other.Day)
+                && (this.Month == other.Month)
+                && (this.Year == other.Year);
+        }
+
         public override string ToString() => $"{AppName}://{Duration}?at={Time.ToString()};";
     }
 }

@@ -1,21 +1,39 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
+using Mitheti.Web.Services;
 using Mitheti.Web.Models;
 
 namespace Mitheti.Web.Controllers
 {
-    public class HomeController : Controller
+    public class SearchController : Controller
     {
+        private ISearchService _service;
 
-        public HomeController()
-        {   }
-
-        public IActionResult Index() =>  View();
-
-        public IActionResult Error()
+        public SearchController(ISearchService service)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            _service = service;
+        }
+
+        public IActionResult Index() => RedirectToAction("Default");
+
+        [ActionName("Request")]
+        public IActionResult RequestAction() => View();
+
+        [ActionName("Request")]
+        [HttpPost]
+        public IActionResult ResultAction([Bind] SearchFilter request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(request);
+            }
+
+            return View("Result", _service.Get(request));
+        }
+
+        public IActionResult Default()
+        {
+            return View("Result", _service.Get(new SearchFilter() { }));
         }
     }
 }
