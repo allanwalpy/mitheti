@@ -33,11 +33,6 @@
         <IncludeSource>true</IncludeSource>
     </PropertyGroup>
 
-    <!-- additional files; -->
-    <ItemGroup>
-        <Content Include="./*.json" CopyToOutputDirectory="Always" />
-    </ItemGroup>
-
     <!-- debug configuration; -->
     <PropertyGroup Condition="$(Configuration)=='Debug'">
         <DefineConstants>DEBUG;</DefineConstants>

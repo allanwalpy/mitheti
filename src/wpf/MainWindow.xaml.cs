@@ -41,7 +41,7 @@ namespace Mitheti.Wpf
         {
             var processInfo = new ProcessStartInfo
             {
-                FileName = "http://localhost:5004",
+                FileName = "http://localhost:5000",
                 UseShellExecute = true
             };
             Process.Start(processInfo);
@@ -69,11 +69,6 @@ namespace Mitheti.Wpf
 
         private void UpdateStatus(bool isLaunched)
         {
-            if (_statusLabel == null)
-            {
-                return;
-            }
-
             //TODO:add json settnig for this;
             _statusLabel.Content =    isLaunched ? "запущен"     : "остановлен";
             _statusLabel.Foreground = isLaunched ? Brushes.Green : Brushes.Red;
