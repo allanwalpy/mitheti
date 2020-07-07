@@ -9,17 +9,12 @@ namespace Mitheti.Wpf
 {
     public class HostLauncher : IDisposable
     {
-        public class HostStatusChangeEvent : EventArgs
-        {
-            public bool IsLaunched { get; set; }
-        }
-
         public const int DelayOnWebHostStart = 500;
 
         private IHost _coreHost;
         private IHost _webHost;
 
-        public event EventHandler OnHostStatusChange;
+        public event EventHandler OnStatusChange;
 
         public HostLauncher()
         {
@@ -45,7 +40,7 @@ namespace Mitheti.Wpf
             _coreHost = CoreProgram.CreateHostBuilder(new string[0]).Build();
             await _coreHost.StartAsync();
 
-            this.TriggerHostStatusChange(true);
+            this.TriggerStatusChange(isLaunched: true);
         }
 
         public async Task StopAsync()
@@ -59,12 +54,12 @@ namespace Mitheti.Wpf
             _coreHost.Dispose();
             _coreHost = null;
 
-            this.TriggerHostStatusChange(false);
+            this.TriggerStatusChange(isLaunched: false);
         }
 
-        private void TriggerHostStatusChange(bool isLaunched)
+        private void TriggerStatusChange(bool isLaunched)
         {
-            this.OnHostStatusChange?.Invoke(null, new HostStatusChangeEvent() { IsLaunched = isLaunched });
+            this.OnStatusChange?.Invoke(null, new StatusChangeEventArgs() { IsLaunched = isLaunched });
         }
 
         //TODO:FIXME: sort out deadlocks and crashes on application exit;

@@ -8,7 +8,7 @@
         Title="mitheti://" Height="200" Width="300" WindowStyle="SingleBorderWindow" Icon="/Resources/appIcon.png">
     <Grid>
         <Label Content="отслеживание окон" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="неопределено" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" Loaded="StatusLabelLoaded" />
+        <Label Content="неопределено" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" Loaded="OnStatusLabelLoaded" />
         <Button Click="StartClick" Content="запустить" HorizontalAlignment="Center" Margin="0,75,0,0" VerticalAlignment="Top"/>
         <Button Click="StopClick" Content="остановить" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top"/>
         <Button Click="StatisticClick" Content="статистика" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top"/>

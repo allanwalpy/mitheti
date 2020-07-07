@@ -21,9 +21,7 @@ namespace Mitheti.Wpf
             _statusLabel = null;
 
             _hostLauncher = new HostLauncher();
-            _hostLauncher.OnHostStatusChange += this.StatusChangeEvent;
-
-            this.UpdateStatus(isLaunched: false);
+            _hostLauncher.OnStatusChange += this.StatusChangeEvent;
         }
 
         protected override void OnClosed(EventArgs args)
@@ -49,22 +47,22 @@ namespace Mitheti.Wpf
             Process.Start(processInfo);
         }
 
-        private void StatusLabelLoaded(object sender, RoutedEventArgs args)
+        private void OnStatusLabelLoaded(object sender, RoutedEventArgs args)
         {
+            //? save status label;
             _statusLabel = sender as Label;
             if (_statusLabel == null)
             {
                 throw new ArgumentNullException(nameof(_statusLabel), "label not founded");
             }
+
+            //? update status on label;
+            this.UpdateStatus(isLaunched: false);
         }
 
         private void StatusChangeEvent(object sender, EventArgs args)
         {
-            bool? isLaunched = (args as HostLauncher.HostStatusChangeEvent)?.IsLaunched;
-            if (isLaunched == null)
-            {
-                return;
-            }
+            bool? isLaunched = (args as StatusChangeEventArgs)?.IsLaunched;
 
             this.UpdateStatus(isLaunched ?? false);
         }
