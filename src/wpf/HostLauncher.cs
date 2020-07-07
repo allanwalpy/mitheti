@@ -35,7 +35,7 @@ namespace Mitheti.Wpf
             await _webHost.StartAsync();
         }
 
-        public void Start()
+        public async Task StartAsync()
         {
             if (_coreHost != null)
             {
@@ -43,19 +43,19 @@ namespace Mitheti.Wpf
             }
 
             _coreHost = CoreProgram.CreateHostBuilder(new string[0]).Build();
-            _coreHost.StartAsync();
+            await _coreHost.StartAsync();
 
             this.TriggerHostStatusChange(true);
         }
 
-        public void Stop()
+        public async Task StopAsync()
         {
             if (_coreHost == null)
             {
                 return;
             }
 
-            _coreHost.StopAsync().Wait();
+            await _coreHost.StopAsync();
             _coreHost.Dispose();
             _coreHost = null;
 
@@ -70,7 +70,7 @@ namespace Mitheti.Wpf
         //TODO:FIXME: sort out deadlocks and crashes on application exit;
         public void Dispose()
         {
-            this.Stop();
+            this.StopAsync().Wait();
 
             //? FIXME: web service won't stop, resulting in deadlock on `Task.WhenAll`;
             _webHost.Dispose();

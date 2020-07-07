@@ -33,9 +33,9 @@ namespace Mitheti.Wpf
             base.OnClosed(args);
         }
 
-        public void StartClick(object sender, RoutedEventArgs args) => _hostLauncher.Start();
+        public void StartClick(object sender, RoutedEventArgs args) => _hostLauncher.StartAsync();
 
-        public void StopClick(object sender, RoutedEventArgs args) => _hostLauncher.Stop();
+        public void StopClick(object sender, RoutedEventArgs args) => _hostLauncher.StopAsync();
 
         //TODO:FIXME: use setting values, not just magic strings;
         //TODO: open in internal browser on new window;
