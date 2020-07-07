@@ -16,7 +16,7 @@
     <PropertyGroup>
         <AssemblyTitle>Mitheti.Wpf</AssemblyTitle>
         <PackageId>Mitheti.Wpf</PackageId>
-        <Version>0.3.1-alpha</Version>
+        <Version>0.3.2-alpha</Version>
         <Authors>allan_walpy aka Andrey Lysenkov</Authors>
         <NeutralLanguage>en-US</NeutralLanguage>
         <Description>gui controlling app</Description>
