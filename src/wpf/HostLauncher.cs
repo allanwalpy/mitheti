@@ -7,7 +7,7 @@ using CoreProgram = Mitheti.Core.Program;
 
 namespace Mitheti.Wpf
 {
-    public class HostLauncher
+    public class HostLauncher : IDisposable
     {
         public class HostStatusChangeEvent : EventArgs
         {
@@ -48,14 +48,14 @@ namespace Mitheti.Wpf
             this.TriggerHostStatusChange(true);
         }
 
-        public async Task Stop()
+        public void Stop()
         {
             if (_coreHost == null)
             {
                 return;
             }
 
-            await _coreHost.StopAsync();
+            _coreHost.StopAsync().Wait();
             _coreHost.Dispose();
             _coreHost = null;
 
@@ -68,9 +68,9 @@ namespace Mitheti.Wpf
         }
 
         //TODO:FIXME: sort out deadlocks and crashes on application exit;
-        public async void Dispose()
+        public void Dispose()
         {
-            await this.Stop();
+            this.Stop();
 
             //? FIXME: web service won't stop, resulting in deadlock on `Task.WhenAll`;
             _webHost.Dispose();

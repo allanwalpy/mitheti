@@ -13,7 +13,7 @@ namespace Mitheti.Core
         public const string ModuleName = "core";
 
         public const string ConfigFile = "setting.core.json";
-        public const string DatabaseConfigFile = "setting.database.secret.json";
+        public const string DatabaseConfigFile = "setting.database.json";
         public const string AppListConfigFile = "setting.applist.json";
 
         public static void Main(string[] args)

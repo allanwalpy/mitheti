@@ -35,7 +35,7 @@
 
     <!-- additional files; -->
     <ItemGroup>
-        <Content Include="$(SolutionDir)config/**" CopyToOutputDirectory="Always" />
+        <Content Include="./*.json" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
     <!-- debug configuration; -->

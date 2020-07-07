@@ -45,7 +45,6 @@
 
     <!-- FIXME: for some reason wwwroot not copied on default - so tmp solution below; -->
     <ItemGroup>
-        <Content Include="$(SolutionDir)config/**" CopyToOutputDirectory="Always" />
         <Content Include="./wwwroot/**" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
