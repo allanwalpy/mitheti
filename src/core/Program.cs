@@ -12,9 +12,7 @@ namespace Mitheti.Core
     {
         public const string ModuleName = "core";
 
-        public const string ConfigFile = "setting.core.json";
-        public const string DatabaseConfigFile = "setting.database.json";
-        public const string AppListConfigFile = "setting.applist.json";
+        public const string ConfigFile = "config.json";
 
         public static void Main(string[] args)
         {
@@ -28,8 +26,6 @@ namespace Mitheti.Core
                 {
                     config.SetBasePath(Directory.GetCurrentDirectory())
                         .AddJsonFile(ConfigFile, optional: false, reloadOnChange: false)
-                        .AddJsonFile(DatabaseConfigFile, optional: false, reloadOnChange: false)
-                        .AddJsonFile(AppListConfigFile, optional: false, reloadOnChange: false)
                         .AddEnvironmentVariables()
                         .AddCommandLine(args);
                 })

@@ -9,7 +9,6 @@ namespace Mitheti.Core.Database
     {
         public const string TableName = "appTime_source_v1";
         public const int AppNameMaxLength = 255;
-        public const string TimeColumnName = nameof(Time);
 
         [Key]
         public int Id { get; set; }
@@ -24,20 +23,16 @@ namespace Mitheti.Core.Database
         [Required]
         public DateTime Time { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Hour { get; set; }
+        public int Hour => this.Time.Hour;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Day { get; set; }
+        public int Day => this.Time.Day;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Month { get; set; }
+        public int Month => this.Time.Month;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Year { get; set; }
+        public int Year => this.Time.Year;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int DayOfWeek { get; set; }
+        //FIXME: use defined enum?;
+        public int DayOfWeek => (int)this.Time.DayOfWeek;
 
         public AppTimeModel()
         {   }
@@ -59,6 +54,7 @@ namespace Mitheti.Core.Database
                 && (this.Year    == other.Year);
         }
 
+        //FIXME: tmp solution for by Day statistic;
         public bool IsSameTimeSpanDay(AppTimeModel other)
         {
             return (this.AppName == other.AppName)
