@@ -11,10 +11,5 @@ namespace Mitheti.Wpf
         {
             InitializeComponent();
         }
-
-        private void OnWindowLoaded(object sender, RoutedEventArgs args)
-        {
-            //olplthis.WebView.Navigate(new Uri);
-        }
     }
 }
