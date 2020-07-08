@@ -40,6 +40,7 @@ namespace Mitheti.Wpf
         {
             _hostLauncher.StopAsync().ConfigureAwait(false);
         }
+
         //TODO:FIXME: use setting values, not just magic strings;
         //TODO: open in internal browser on new window;
         public void StatisticClick(object sender, RoutedEventArgs e)

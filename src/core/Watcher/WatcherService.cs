@@ -26,14 +26,7 @@ namespace Mitheti.Core.Watcher
 
                 _filter.Add(processName, _delay);
 
-                await Task.Delay(_delay, stoppingToken)
-                    .ContinueWith((task) => {
-                        //? if task wasn't canelled and exception arised => trow it;
-                        if (!task.IsCanceled && task.Exception != null)
-                        {
-                            throw task.Exception;
-                        }
-                    });
+                await Task.Delay(_delay, stoppingToken).ThrowNoExceptionOnCancelled();
             }
         }
     }

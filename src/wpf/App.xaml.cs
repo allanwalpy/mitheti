@@ -20,7 +20,6 @@ namespace Mitheti.Wpf
             MainWindow = new MainWindow();
             MainWindow.Closing += this.CloseWindow;
 
-            _notifyIcon = new Forms.NotifyIcon();
             this.SetNotifyIcon();
 
             MainWindow.Show();
@@ -28,9 +27,12 @@ namespace Mitheti.Wpf
 
         private void SetNotifyIcon()
         {
+            _notifyIcon = new Forms.NotifyIcon();
+
             _notifyIcon.DoubleClick += this.ShowWindow;
             //FIXME: conflicts with context menu on rigth click;
             _notifyIcon.Click += this.ShowWindow;
+
             _notifyIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _notifyIcon.Visible = true;
 
@@ -47,6 +49,9 @@ namespace Mitheti.Wpf
 
         private void ExitApp(object sender, EventArgs args)
         {
+            _notifyIcon.Click -= this.ShowWindow;
+            _notifyIcon.DoubleClick -= this.ShowWindow;
+
             MainWindow.Closing -= this.CloseWindow;
             MainWindow.Close();
 
