@@ -1,6 +1,7 @@
 {
+    "applist": [],
     "service": {
-        "delay": 1000
+        "delay": 250
     },
     "database": {
         "delay": 1

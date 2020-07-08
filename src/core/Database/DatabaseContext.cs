@@ -16,7 +16,7 @@ namespace Mitheti.Core.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer($"Filename={DatabaseFilename}");
+            optionsBuilder.UseSqlite($"Data Source={DatabaseFilename};");
 
             base.OnConfiguring(optionsBuilder);
         }
