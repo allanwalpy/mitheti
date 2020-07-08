@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 
 using Forms = System.Windows.Forms;
@@ -11,10 +12,15 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class App : Application
     {
+        public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
+
+        private Mutex _instanceMutex = null;
         private Forms.NotifyIcon _notifyIcon;
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            this.ShutdownIfMoreThanOneInstance();
+
             base.OnStartup(e);
 
             MainWindow = new MainWindow();
@@ -23,6 +29,20 @@ namespace Mitheti.Wpf
             this.SetNotifyIcon();
 
             MainWindow.Show();
+        }
+
+        private void ShutdownIfMoreThanOneInstance()
+        {
+            bool isCreatedNew;
+            _instanceMutex = new Mutex(true, $"Global\\{AppId}", out isCreatedNew);
+
+            if (isCreatedNew)
+            {
+                return;
+            }
+
+            _instanceMutex = null;
+            Application.Current.Shutdown();
         }
 
         private void SetNotifyIcon()
@@ -63,6 +83,16 @@ namespace Mitheti.Wpf
         {
             cancelArgs.Cancel = true;
             MainWindow.Hide();
+        }
+
+        protected override void OnExit(ExitEventArgs args)
+        {
+            if (_instanceMutex != null)
+            {
+                _instanceMutex.ReleaseMutex();
+            }
+
+            base.OnExit(args);
         }
     }
 }
