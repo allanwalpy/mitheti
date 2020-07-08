@@ -31,10 +31,15 @@ namespace Mitheti.Wpf
             base.OnClosed(args);
         }
 
-        public void StartClick(object sender, RoutedEventArgs args) => _hostLauncher.StartAsync();
+        public void StartClick(object sender, RoutedEventArgs args)
+        {
+            _hostLauncher.StartAsync().ConfigureAwait(false);
+        }
 
-        public void StopClick(object sender, RoutedEventArgs args) => _hostLauncher.StopAsync();
-
+        public void StopClick(object sender, RoutedEventArgs args)
+        {
+            _hostLauncher.StopAsync().ConfigureAwait(false);
+        }
         //TODO:FIXME: use setting values, not just magic strings;
         //TODO: open in internal browser on new window;
         public void StatisticClick(object sender, RoutedEventArgs e)
