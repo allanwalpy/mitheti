@@ -8,4 +8,5 @@ program under [mit license](./license);
 
 using:
 
-- web interface icon, wpf interface icon from [bqlqn on flaticon.com](https://www.flaticon.com/authors/bqlqn);
+- web interface icon, wpf interface tray and window icon from [fjstudio](https://www.flaticon.com/authors/fjstudio)
+  on [flaricon.com](https://www.flaticon.com/);
