@@ -45,12 +45,8 @@ namespace Mitheti.Wpf
         //TODO: open in internal browser on new window;
         public void StatisticClick(object sender, RoutedEventArgs e)
         {
-            var processInfo = new ProcessStartInfo
-            {
-                FileName = "http://localhost:5000",
-                UseShellExecute = true
-            };
-            Process.Start(processInfo);
+            WebWindow window = new WebWindow();
+            window.Show();
         }
 
         private void OnStatusLabelLoaded(object sender, RoutedEventArgs args)
