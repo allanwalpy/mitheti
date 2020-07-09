@@ -10,8 +10,6 @@ namespace Mitheti.Worker
 {
     public static class Program
     {
-        public const string ModuleName = "core";
-
         public const string ConfigFile = "config.json";
 
         public static void Main(string[] args)

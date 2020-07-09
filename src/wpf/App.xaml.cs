@@ -1,10 +1,7 @@
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using Microsoft.Extensions.Hosting;
-
-using Forms = System.Windows.Forms;
 
 using WebProgram = Mitheti.Web.Program;
 
@@ -21,12 +18,11 @@ namespace Mitheti.Wpf
         private IHost _host;
         private IHost _webHost;
         
-        private Mutex _instanceMutex;
-        private Forms.NotifyIcon _notifyIcon;
+        private Mutex? _instanceMutex;
 
         public App()
         {
-            _host = new HostBuilder().Build();
+            _host = Extensions.CreateAppHost();
         }
 
         private async void StartupApp(object sender, StartupEventArgs args)
@@ -34,13 +30,6 @@ namespace Mitheti.Wpf
             this.ShutdownIfLaunched();
 
             await _host.RunAsync();
-
-            MainWindow = new MainWindow();
-            MainWindow.Closing += this.CloseWindow;
-
-            this.SetNotifyIcon();
-
-            MainWindow.Show();
             
             _webHost = WebProgram.CreateHostBuilder(new string[0]).Build();
             //TODO:FIXME: await and ConfigureAwait(false)?; 
@@ -61,61 +50,11 @@ namespace Mitheti.Wpf
         {
             _instanceMutex = new Mutex(true, $"Global\\{AppId}", out var isCreatedNew);
 
-            if (isCreatedNew)
+            if (!isCreatedNew)
             {
-                return;
-            }
-
-            _instanceMutex = null;
-            Application.Current.Shutdown();
-        }
-
-        private void SetNotifyIcon()
-        {
-            _notifyIcon = new Forms.NotifyIcon();
-
-            _notifyIcon.MouseClick += this.OnTrayIconClick;
-            _notifyIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
-            _notifyIcon.Visible = true;
-
-            _notifyIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
-            _notifyIcon.ContextMenuStrip.Items.Add("Show").Click += this.ShowWindow;
-            _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += this.OnExitApp;
-        }
-
-        private void OnTrayIconClick(object sender, Forms.MouseEventArgs args)
-        {
-            bool isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
-            if (isLeftClick)
-            {
-                this.ShowWindow(sender, args);
+                _instanceMutex = null;
+                Application.Current.Shutdown();
             }
         }
-
-        private void ShowWindow(object? sender, EventArgs args)
-        {
-            MainWindow.Activate();
-            MainWindow.Show();
-        }
-
-        private void OnExitApp(object sender, EventArgs args)
-        {
-            _notifyIcon.Click -= this.ShowWindow;
-            _notifyIcon.DoubleClick -= this.ShowWindow;
-
-            MainWindow.Closing -= this.CloseWindow;
-            MainWindow.Close();
-
-            _notifyIcon.Dispose();
-            _notifyIcon = null;
-        }
-
-        private void CloseWindow(object sender, CancelEventArgs cancelArgs)
-        {
-            cancelArgs.Cancel = true;
-            MainWindow.Hide();
-        }
-
-        
     }
 }

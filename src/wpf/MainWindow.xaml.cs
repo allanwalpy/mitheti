@@ -1,7 +1,8 @@
 using System;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+
+using Forms = System.Windows.Forms;
 
 namespace Mitheti.Wpf
 {
@@ -10,69 +11,80 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        private HostLauncher _hostLauncher;
-        private Label _statusLabel;
-
+        private Forms.NotifyIcon _trayIcon;
+        
         public MainWindow()
         {
             InitializeComponent();
 
-            _statusLabel = null;
+            SetTrayIcon();
 
-            _hostLauncher = new HostLauncher();
-            _hostLauncher.OnStatusChange += this.StatusChangeEvent;
+            Closing += HideWindow;
+            
+            Show();
         }
 
-        protected override void OnClosed(EventArgs args)
+        private void SetTrayIcon()
         {
-            _hostLauncher.Dispose();
+            //TODO: make separate class configuration for trayIcon?; 
+            _trayIcon = new Forms.NotifyIcon();
+            
+            _trayIcon.MouseClick += OnTrayIconClick;
+            _trayIcon.DoubleClick += RevealWindow;
+            _trayIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
+            _trayIcon.Visible = true;
 
-            base.OnClosed(args);
+            _trayIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
+            _trayIcon.ContextMenuStrip.Items.Add("Show").Click += RevealWindow;
+            _trayIcon.ContextMenuStrip.Items.Add("Exit").Click += ExitApp;
         }
-
-        public void StartClick(object sender, RoutedEventArgs args)
+        
+        private void OnTrayIconClick(object sender, Forms.MouseEventArgs args)
         {
-            _hostLauncher.StartAsync().ConfigureAwait(false);
-        }
-
-        public void StopClick(object sender, RoutedEventArgs args)
-        {
-            _hostLauncher.StopAsync().ConfigureAwait(false);
-        }
-
-        //TODO:FIXME: use setting values, not just magic strings;
-        //TODO: open in internal browser on new window;
-        public void StatisticClick(object sender, RoutedEventArgs e)
-        {
-            WebWindow window = new WebWindow();
-            window.Show();
-        }
-
-        private void OnStatusLabelLoaded(object sender, RoutedEventArgs args)
-        {
-            //? save status label;
-            _statusLabel = sender as Label;
-            if (_statusLabel == null)
+            bool isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
+            if (isLeftClick)
             {
-                throw new ArgumentNullException(nameof(_statusLabel), "label not founded");
+                RevealWindow(sender, args);
             }
-
-            //? update status on label;
-            this.UpdateStatus(isLaunched: false);
         }
 
-        private void StatusChangeEvent(object sender, EventArgs args)
+        private void RevealWindow(object sender, EventArgs args)
         {
-            bool? isLaunched = (args as StatusChangeEventArgs)?.IsLaunched;
-
-            this.UpdateStatus(isLaunched ?? false);
+            Activate();
+            Show();
         }
 
-        private void UpdateStatus(bool isLaunched)
+        private void ExitApp(object sender, EventArgs args)
         {
-            //TODO:add json settnig for this;
-            _statusLabel.Content =    isLaunched ? "запущен"     : "остановлен";
-            _statusLabel.Foreground = isLaunched ? Brushes.Green : Brushes.Red;
+            _trayIcon.MouseClick -= OnTrayIconClick;
+            _trayIcon.DoubleClick -= RevealWindow;
+            
+            _trayIcon.Dispose();
+            _trayIcon = null;
+
+            Closing -= HideWindow;
+            Close();
+        }
+
+        private void StartClick(object sender, RoutedEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void StopClick(object sender, RoutedEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void StatisticClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void HideWindow(object sender, CancelEventArgs args)
+        {
+            args.Cancel = true;
+            Hide();
         }
     }
 }

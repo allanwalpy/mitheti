@@ -66,5 +66,8 @@
         <ProjectReference Include="..\worker\worker.csproj" />
         <ProjectReference Include="..\web\web.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Services" />
+    </ItemGroup>
 
 </Project>
