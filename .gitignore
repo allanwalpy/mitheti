@@ -8,7 +8,8 @@
 [Oo]bj
 [Oo]ut
 [Bb]in
-*_wpftmp.csproj
+*tmp.csproj
 
-# visual studio files
+# IDE files
 .vs
+.idea

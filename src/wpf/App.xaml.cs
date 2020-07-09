@@ -14,7 +14,7 @@ namespace Mitheti.Wpf
     {
         public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
 
-        private Mutex _instanceMutex = null;
+        private Mutex _instanceMutex;
         private Forms.NotifyIcon _notifyIcon;
 
         protected override void OnStartup(StartupEventArgs e)
@@ -49,10 +49,7 @@ namespace Mitheti.Wpf
         {
             _notifyIcon = new Forms.NotifyIcon();
 
-            _notifyIcon.DoubleClick += this.ShowWindow;
-            //FIXME: conflicts with context menu on rigth click;
-            _notifyIcon.Click += this.ShowWindow;
-
+            _notifyIcon.MouseClick += this.OnTrayIconClick;
             _notifyIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _notifyIcon.Visible = true;
 
@@ -61,7 +58,16 @@ namespace Mitheti.Wpf
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += this.ExitApp;
         }
 
-        private void ShowWindow(object sender, EventArgs args)
+        private void OnTrayIconClick(object sender, Forms.MouseEventArgs args)
+        {
+            bool isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
+            if (isLeftClick)
+            {
+                this.ShowWindow(sender, args);
+            }
+        }
+
+        private void ShowWindow(object? sender, EventArgs args)
         {
             MainWindow.Activate();
             MainWindow.Show();
@@ -87,10 +93,7 @@ namespace Mitheti.Wpf
 
         protected override void OnExit(ExitEventArgs args)
         {
-            if (_instanceMutex != null)
-            {
-                _instanceMutex.ReleaseMutex();
-            }
+            _instanceMutex?.ReleaseMutex();
 
             base.OnExit(args);
         }
