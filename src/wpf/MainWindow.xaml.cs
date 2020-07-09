@@ -34,7 +34,6 @@ namespace Mitheti.Wpf
             _trayIcon = new Forms.NotifyIcon();
             
             _trayIcon.MouseClick += OnTrayIconClick;
-            _trayIcon.DoubleClick += RevealWindow;
             _trayIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _trayIcon.Visible = true;
 
@@ -61,7 +60,6 @@ namespace Mitheti.Wpf
         private void ExitApp(object sender, EventArgs args)
         {
             _trayIcon.MouseClick -= OnTrayIconClick;
-            _trayIcon.DoubleClick -= RevealWindow;
             
             _trayIcon.Dispose();
             _trayIcon = null;

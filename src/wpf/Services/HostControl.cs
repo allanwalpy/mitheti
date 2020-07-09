@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mitheti.Core.Services;
@@ -40,7 +39,7 @@ namespace Mitheti.Wpf.Services
                 .ConfigureServices((hostingContext, services) =>
                 {
                     services.AddCoreServices();
-                    services.AddSingleton<IWatcherService, WatcherService>();
+                    services.AddSingleton<IWatcherControlService, WatcherControlService>();
                     services.AddSingleton<MainWindow>();
                 })
                 .Build();   

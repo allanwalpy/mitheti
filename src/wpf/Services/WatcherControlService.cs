@@ -28,7 +28,6 @@ namespace Mitheti.Wpf.Services
                 return;
             }
 
-            //TODO:;
             _tokenSource = new CancellationTokenSource();
             _watcherTask = _watcher.Run(_tokenSource.Token);
 
@@ -42,9 +41,8 @@ namespace Mitheti.Wpf.Services
                 return;
             }
 
-            //TODO:;
             _tokenSource.Cancel();
-            await _watcherTask;
+            await Task.WhenAny(_watcherTask);
 
             _tokenSource = null;
             _watcherTask = null;
