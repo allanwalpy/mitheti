@@ -26,9 +26,10 @@ namespace Mitheti.Core.Watcher
 
         private bool IsAddToDatabase(string app)
         {
-            return (app != null)                //? skip null strings;
-                || (_appList.Count == 0)        //? add all processes if no apps specified in list;
-                || (_appList.Contains(app));    //? add app if it's in app list;
+            //? add not null apps;
+            //? if no apps specified in list, then add all processes;
+            //? else add app only if it in list;
+            return (app != null) && (_appList.Count == 0 || _appList.Contains(app));
         }
 
         public void Add(string app, int delay)

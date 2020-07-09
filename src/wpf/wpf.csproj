@@ -63,7 +63,7 @@
 
     <!-- inner solution dependancy; -->
     <ItemGroup>
-        <ProjectReference Include="..\core\core.csproj" />
+        <ProjectReference Include="..\worker\worker.csproj" />
         <ProjectReference Include="..\web\web.csproj" />
     </ItemGroup>
 

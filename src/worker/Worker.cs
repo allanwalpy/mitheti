@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 using Mitheti.Core.Watcher;
 
-namespace Mitheti.Core
+namespace Mitheti.Worker
 {
     public class Worker : BackgroundService
     {

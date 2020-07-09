@@ -2,8 +2,11 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using Microsoft.Extensions.Hosting;
 
 using Forms = System.Windows.Forms;
+
+using WebProgram = Mitheti.Web.Program;
 
 namespace Mitheti.Wpf
 {
@@ -13,15 +16,24 @@ namespace Mitheti.Wpf
     public partial class App : Application
     {
         public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
+        private const int WaitUntilShutdownSeconds = 5;
 
+        private IHost _host;
+        private IHost _webHost;
+        
         private Mutex _instanceMutex;
         private Forms.NotifyIcon _notifyIcon;
 
-        protected override void OnStartup(StartupEventArgs e)
+        public App()
         {
-            this.ShutdownIfMoreThanOneInstance();
+            _host = new HostBuilder().Build();
+        }
 
-            base.OnStartup(e);
+        private async void StartupApp(object sender, StartupEventArgs args)
+        {
+            this.ShutdownIfLaunched();
+
+            await _host.RunAsync();
 
             MainWindow = new MainWindow();
             MainWindow.Closing += this.CloseWindow;
@@ -29,12 +41,25 @@ namespace Mitheti.Wpf
             this.SetNotifyIcon();
 
             MainWindow.Show();
+            
+            _webHost = WebProgram.CreateHostBuilder(new string[0]).Build();
+            //TODO:FIXME: await and ConfigureAwait(false)?; 
+            await _webHost.RunAsync().ConfigureAwait(false);
+        }
+        
+        private async void ExitApp(object sender, ExitEventArgs args)
+        {
+            using (_host)
+            {
+                await _host.StopAsync(TimeSpan.FromSeconds(WaitUntilShutdownSeconds));
+            }
+
+            _instanceMutex?.ReleaseMutex();
         }
 
-        private void ShutdownIfMoreThanOneInstance()
+        private void ShutdownIfLaunched()
         {
-            bool isCreatedNew;
-            _instanceMutex = new Mutex(true, $"Global\\{AppId}", out isCreatedNew);
+            _instanceMutex = new Mutex(true, $"Global\\{AppId}", out var isCreatedNew);
 
             if (isCreatedNew)
             {
@@ -55,7 +80,7 @@ namespace Mitheti.Wpf
 
             _notifyIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
             _notifyIcon.ContextMenuStrip.Items.Add("Show").Click += this.ShowWindow;
-            _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += this.ExitApp;
+            _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += this.OnExitApp;
         }
 
         private void OnTrayIconClick(object sender, Forms.MouseEventArgs args)
@@ -73,7 +98,7 @@ namespace Mitheti.Wpf
             MainWindow.Show();
         }
 
-        private void ExitApp(object sender, EventArgs args)
+        private void OnExitApp(object sender, EventArgs args)
         {
             _notifyIcon.Click -= this.ShowWindow;
             _notifyIcon.DoubleClick -= this.ShowWindow;
@@ -91,11 +116,6 @@ namespace Mitheti.Wpf
             MainWindow.Hide();
         }
 
-        protected override void OnExit(ExitEventArgs args)
-        {
-            _instanceMutex?.ReleaseMutex();
-
-            base.OnExit(args);
-        }
+        
     }
 }

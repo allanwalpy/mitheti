@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Mitheti.Core.Database;
 using Mitheti.Core.Watcher;
 
-namespace Mitheti.Core
+namespace Mitheti.Worker
 {
     public static class Program
     {

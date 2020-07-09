@@ -13,3 +13,4 @@
 # IDE files
 .vs
 .idea
+*.sln.*
