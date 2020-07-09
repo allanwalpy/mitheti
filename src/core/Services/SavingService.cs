@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
-using Mitheti.Core.Database;
-
 namespace Mitheti.Core.Services
 {
     public class SavingService : ISavingService, IDisposable

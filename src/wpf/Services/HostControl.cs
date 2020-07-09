@@ -1,21 +1,22 @@
 using System;
 using System.Threading.Tasks;
+using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Mitheti.Core.Services;
 
 namespace Mitheti.Wpf.Services
 {
-    public class HostControlService : IHostControlService
+    public class HostControl
     {
         private const int WaitForStopSeconds = 5;
         
-        private IHost _host;
-
+        private IHost? _host;
+        
         public async Task StartAsync()
         {
-            CreateAppHost();
-            await _host.StopAsync();
+            _host = GetDefaultHost();
+            await _host.StartAsync();
         }
 
         public async Task StopAsync()
@@ -26,9 +27,12 @@ namespace Mitheti.Wpf.Services
             }
         }
 
-        private void CreateAppHost()
+        public T? GetService<T>() where T : class
+            => _host?.Services.GetService<T>();
+
+        private IHost GetDefaultHost()
         {
-            _host = Host.CreateDefaultBuilder(new string [0])
+            return Host.CreateDefaultBuilder(new string [0])
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.AddCoreConfiguration();
@@ -36,6 +40,8 @@ namespace Mitheti.Wpf.Services
                 .ConfigureServices((hostingContext, services) =>
                 {
                     services.AddCoreServices();
+                    services.AddSingleton<IWatcherService, WatcherService>();
+                    services.AddSingleton<MainWindow>();
                 })
                 .Build();   
         }

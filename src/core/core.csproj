@@ -45,6 +45,11 @@
         <NoWarn>1591;1573;</NoWarn>
     </PropertyGroup>
 
+    <!-- additional files; -->
+    <ItemGroup>
+        <Content Include="./config.json" CopyToOutputDirectory="Always" />
+    </ItemGroup>
+
     <!-- system dependancy; -->
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.*" />

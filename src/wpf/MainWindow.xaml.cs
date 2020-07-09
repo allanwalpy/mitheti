@@ -1,8 +1,10 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
-
+using Microsoft.Extensions.Configuration;
 using Forms = System.Windows.Forms;
+
+using Mitheti.Wpf.Services; 
 
 namespace Mitheti.Wpf
 {
@@ -11,17 +13,19 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly IConfiguration _config;
+        private readonly IWatcherControlService _watcherControl;
         private Forms.NotifyIcon _trayIcon;
         
-        public MainWindow()
+        public MainWindow(IConfiguration config, IWatcherControlService watcherControl)
         {
+            _config = config;
+            _watcherControl = watcherControl;
+            
             InitializeComponent();
 
             SetTrayIcon();
-
             Closing += HideWindow;
-            
-            Show();
         }
 
         private void SetTrayIcon()
@@ -66,17 +70,17 @@ namespace Mitheti.Wpf
             Close();
         }
 
-        private void StartClick(object sender, RoutedEventArgs args)
+        private void OnStartClick(object sender, RoutedEventArgs args)
         {
-            throw new NotImplementedException();
+            _watcherControl.Start();
         }
 
-        private void StopClick(object sender, RoutedEventArgs args)
+        private void OnStopClick(object sender, RoutedEventArgs args)
         {
-            throw new NotImplementedException();
+            _watcherControl.StopAsync().Wait();
         }
 
-        private void StatisticClick(object sender, RoutedEventArgs e)
+        private void OnStatisticClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }

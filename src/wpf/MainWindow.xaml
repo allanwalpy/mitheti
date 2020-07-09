@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="mitheti://main" Height="200" Width="300" WindowStyle="SingleBorderWindow" Icon="/Resources/appIcon.png">
     <Grid>
-        <Label Content="отслеживание окон" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="неопределено" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" />
-        <Button Click="StartClick" Content="запустить" HorizontalAlignment="Center" Margin="0,75,0,0" VerticalAlignment="Top"/>
-        <Button Click="StopClick" Content="остановить" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top"/>
-        <Button Click="StatisticClick" Content="статистика" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top"/>
+        <Label Content="отслеживание окон" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Content="undefinded" Margin="0,30,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" /><!--{Binding _watcherControl.IsLaunched}-->
+        <Button Click="OnStartClick" Content="запустить" Margin="0,75,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button Click="OnStopClick" Content="остановить" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button Click="OnStatisticClick" Content="статистика" Margin="0,125,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
     </Grid>
 </Window>
