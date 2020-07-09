@@ -1,17 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Mitheti.Core.Database
+namespace Mitheti.Core
 {
-    public class DatabaseContext : DbContext
+    public sealed class DatabaseContext : DbContext
     {
         public const string DatabaseFilename = "database.db";
 
         public DbSet<AppTimeModel> AppTimes { get; set; }
 
-        public DatabaseContext(DbContextOptions options)
-            : base(options)
+        public DatabaseContext()
+            : base(new DbContextOptionsBuilder().Options)
         {
-            this.Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,11 +25,6 @@ namespace Mitheti.Core.Database
         {
             base.OnModelCreating(builder);
 
-            this.ConfigureAppTimeSpans(builder);
-        }
-
-        private void ConfigureAppTimeSpans(ModelBuilder builder)
-        {
             builder.Entity<AppTimeModel>()
                 .HasIndex(x => x.Id)
                 .IsUnique();

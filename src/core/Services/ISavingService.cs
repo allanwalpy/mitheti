@@ -1,4 +1,4 @@
-namespace Mitheti.Core.Database
+namespace Mitheti.Core.Services
 {
     public interface ISavingService
     {

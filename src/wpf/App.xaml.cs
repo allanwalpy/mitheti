@@ -1,9 +1,6 @@
-using System;
 using System.Threading;
 using System.Windows;
-using Microsoft.Extensions.Hosting;
-
-using WebProgram = Mitheti.Web.Program;
+using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf
 {
@@ -13,36 +10,24 @@ namespace Mitheti.Wpf
     public partial class App : Application
     {
         public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
-        private const int WaitUntilShutdownSeconds = 5;
-
-        private IHost _host;
-        private IHost _webHost;
         
+        private IHostControlService _hostControl;
         private Mutex? _instanceMutex;
 
         public App()
         {
-            _host = Extensions.CreateAppHost();
+            _hostControl = new HostControlService();
         }
 
         private async void StartupApp(object sender, StartupEventArgs args)
         {
-            this.ShutdownIfLaunched();
-
-            await _host.RunAsync();
-            
-            _webHost = WebProgram.CreateHostBuilder(new string[0]).Build();
-            //TODO:FIXME: await and ConfigureAwait(false)?; 
-            await _webHost.RunAsync().ConfigureAwait(false);
+            ShutdownIfLaunched();
+            await _hostControl.StopAsync();
         }
         
         private async void ExitApp(object sender, ExitEventArgs args)
         {
-            using (_host)
-            {
-                await _host.StopAsync(TimeSpan.FromSeconds(WaitUntilShutdownSeconds));
-            }
-
+            await _hostControl.StopAsync();
             _instanceMutex?.ReleaseMutex();
         }
 

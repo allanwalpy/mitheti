@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
-namespace Mitheti.Core.Watcher
+namespace Mitheti.Core.Services
 {
     public class WatcherService : IWatcherService
     {

@@ -5,41 +5,45 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
-namespace Mitheti.Core.Database
+using Mitheti.Core.Database;
+
+namespace Mitheti.Core.Services
 {
     public class SavingService : ISavingService, IDisposable
     {
         public const string RecordDelayConfigKey = "database:delay";
         public const int MillisecondsInMinute = 1000 * 60;
 
-        private IConnectionService _databaseService;
-        private CancellationTokenSource _stopSavingToken;
-
         private readonly object _lock = new object();
-        private List<AppTimeModel> _records = new List<AppTimeModel>();
+        
+        private CancellationTokenSource _stopSavingToken;
+        private List<AppTimeModel> _records;
         private Task _savingTask;
 
-        public SavingService(IConfiguration config, IConnectionService databaseService)
+        public SavingService(IConfiguration config)
         {
-            _databaseService = databaseService;
-
+            _records = new List<AppTimeModel>();
+            
             var delayMinutes = config.GetValue<int>(RecordDelayConfigKey);
             _stopSavingToken = new CancellationTokenSource();
-            _savingTask = Task.Run(() => this.SavingTask(_stopSavingToken.Token, delayMinutes * MillisecondsInMinute));
+            _savingTask = Task.Run(() => SavingTask(_stopSavingToken.Token, delayMinutes * MillisecondsInMinute));
         }
 
         public void Add(AppTimeModel data)
         {
             lock (_lock)
             {
-                var sameRecords = _records.Where(data.IsSameTimeSpan);
+                var sameRecord = _records.Where(data.IsSameTimeSpan).FirstOrDefault();
 
-                if (sameRecords.Any())
+                if (sameRecord == null)
                 {
-                    sameRecords.First().Duration += data.Duration;
-                    return;
+                    _records.Add(data);
                 }
-                _records.Add(data);
+                else
+                {
+                    sameRecord.Duration += data.Duration;
+                }
+                
             }
         }
 
@@ -47,9 +51,9 @@ namespace Mitheti.Core.Database
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(delay, stoppingToken).ContinueWith(task => { });
+                await Task.Delay(delay, stoppingToken).ThrowNoExceptionOnCancelled();
 
-                this.SaveToDatabase();
+                SaveToDatabase();
             }
         }
 
@@ -57,22 +61,19 @@ namespace Mitheti.Core.Database
         {
             lock (_lock)
             {
-                if (_records.Any())
+                if (_records.Count == 0)
                 {
-                    this.SaveToDatabaseContext();
+                    return;
                 }
-            }
-        }
+                
+                using (var context = new DatabaseContext())
+                {
+                    context.AddRange(_records);
+                    context.SaveChanges();
+                }
 
-        private void SaveToDatabaseContext()
-        {
-            using (var context = _databaseService.Context)
-            {
-                context.AddRange(_records);
-                context.SaveChanges();
+                _records.Clear();
             }
-
-            _records.Clear();
         }
 
         public void Dispose()
@@ -83,7 +84,7 @@ namespace Mitheti.Core.Database
             _stopSavingToken.Dispose();
 
             //? save leftovers;
-            this.SaveToDatabase();
+            SaveToDatabase();
         }
     }
 }

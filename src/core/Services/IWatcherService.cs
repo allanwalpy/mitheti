@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Mitheti.Core.Watcher
+namespace Mitheti.Core.Services
 {
     public interface IWatcherService
     {

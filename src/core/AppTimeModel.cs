@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Mitheti.Core.Database
+namespace Mitheti.Core
 {
     [Table(TableName)]
     public class AppTimeModel
@@ -23,28 +23,28 @@ namespace Mitheti.Core.Database
         [Required]
         public DateTime Time { get; set; }
 
-        public int Hour => this.Time.Hour;
+        public int Hour => Time.Hour;
 
-        public int Day => this.Time.Day;
+        public int Day => Time.Day;
 
-        public int Month => this.Time.Month;
+        public int Month => Time.Month;
 
-        public int Year => this.Time.Year;
+        public int Year => Time.Year;
 
-        //FIXME: use defined enum?;
-        public int DayOfWeek => (int)this.Time.DayOfWeek;
+        //TODO:FIXME: use defined enum?;
+        public int DayOfWeek => (int)Time.DayOfWeek;
 
         public AppTimeModel()
         {   }
 
         public AppTimeModel(string processName, int duration, DateTime timestamp)
         {
-            this.AppName = processName;
-            this.Duration = duration;
-            this.Time = timestamp;
+            AppName = processName;
+            Duration = duration;
+            Time = timestamp;
         }
 
-        //FIXME:relevant only for values obtained from database;
+        //TODO:FIXME:relevant only for values obtained from database;
         public bool IsSameTimeSpan(AppTimeModel other)
         {
             return (this.AppName == other.AppName)
@@ -54,13 +54,13 @@ namespace Mitheti.Core.Database
                 && (this.Year    == other.Year);
         }
 
-        //FIXME: tmp solution for by Day statistic;
+        //TODO:FIXME: tmp solution for by Day statistic;
         public bool IsSameTimeSpanDay(AppTimeModel other)
         {
             return (this.AppName == other.AppName)
-                && (this.Day == other.Day)
-                && (this.Month == other.Month)
-                && (this.Year == other.Year);
+                && (this.Day     == other.Day)
+                && (this.Month   == other.Month)
+                && (this.Year    == other.Year);
         }
 
         public override string ToString() => $"{AppName}://{Duration}?at={Time.ToString()};";

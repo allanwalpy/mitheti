@@ -25,6 +25,7 @@
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/allan-walpy/mitheti</RepositoryUrl>
+        <Copyright>MIT license 2020 allan_walpy aka Andrey Lysenkov</Copyright>
     </PropertyGroup>
 
     <!-- compilation config; -->
@@ -38,6 +39,11 @@
     <!-- debug configuration; -->
     <PropertyGroup Condition="$(Configuration)=='Debug'">
         <DefineConstants>DEBUG;</DefineConstants>
+    </PropertyGroup>
+    
+    <!-- turn off documentation warnings; -->
+    <PropertyGroup>
+        <NoWarn>1591;1573;</NoWarn>
     </PropertyGroup>
 
     <!-- system dependancy; -->

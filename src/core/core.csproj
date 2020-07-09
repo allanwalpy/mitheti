@@ -24,6 +24,7 @@
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/allan-walpy/mitheti</RepositoryUrl>
+        <Copyright>MIT license 2020 allan_walpy aka Andrey Lysenkov</Copyright>
     </PropertyGroup>
 
     <!-- compilation config; -->
@@ -39,10 +40,16 @@
         <DefineConstants>DEBUG;</DefineConstants>
     </PropertyGroup>
 
+    <!-- turn off documentation warnings; -->
+    <PropertyGroup>
+        <NoWarn>1591;1573;</NoWarn>
+    </PropertyGroup>
+
     <!-- system dependancy; -->
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.*" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.*" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.*" />
     </ItemGroup>
     
 </Project>

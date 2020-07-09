@@ -1,4 +1,4 @@
-namespace Mitheti.Core.Watcher
+namespace Mitheti.Core.Services
 {
     public interface IFilterApp
     {

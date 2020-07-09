@@ -11,7 +11,6 @@
         <AssemblyName>Mitheti.Wpf</AssemblyName>
         <RootNamespace>Mitheti.Wpf</RootNamespace>
         <Nullable>enable</Nullable>
-        <Copyright>MIT license 2020 allan_walpy aka Andrey Lysenkov</Copyright>
     </PropertyGroup>
 
     <!-- package info; -->
@@ -29,6 +28,7 @@
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/allan-walpy/mitheti</RepositoryUrl>
+        <Copyright>MIT license 2020 allan_walpy aka Andrey Lysenkov</Copyright>
     </PropertyGroup>
 
     <!-- compilation config; -->
@@ -61,13 +61,14 @@
         <NoWarn>1591;1573;</NoWarn>
     </PropertyGroup>
 
+    <!-- system dependancy; -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.*" />
+    </ItemGroup>
+    
     <!-- inner solution dependancy; -->
     <ItemGroup>
-        <ProjectReference Include="..\worker\worker.csproj" />
-        <ProjectReference Include="..\web\web.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Services" />
+        <ProjectReference Include="..\core\core.csproj" />
     </ItemGroup>
 
 </Project>
