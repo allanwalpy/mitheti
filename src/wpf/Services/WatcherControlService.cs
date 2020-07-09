@@ -10,15 +10,17 @@ namespace Mitheti.Wpf.Services
         private readonly IWatcherService _watcher;
         private CancellationTokenSource? _tokenSource;
         private Task? _watcherTask;
-        
+
         public bool IsLaunched { get; private set; }
+        
+        public event StatusChangedHandler StatusChanged;
 
         public WatcherControlService(IWatcherService watcher)
         {
             _watcher = watcher;
             _tokenSource = null;
-            
-            IsLaunched = false;
+
+            UpdateStatus(false);
         }
 
         public void Start()
@@ -31,7 +33,7 @@ namespace Mitheti.Wpf.Services
             _tokenSource = new CancellationTokenSource();
             _watcherTask = _watcher.Run(_tokenSource.Token);
 
-            IsLaunched = true;
+            UpdateStatus(true);
         }
         
         public async Task StopAsync()
@@ -46,7 +48,13 @@ namespace Mitheti.Wpf.Services
 
             _tokenSource = null;
             _watcherTask = null;
-            IsLaunched = false;
+            UpdateStatus(false);
+        }
+
+        private void UpdateStatus(bool isLaunched)
+        {
+            this.IsLaunched = isLaunched;
+            StatusChanged?.Invoke(this, new WatcherStatusEventArgs(IsLaunched));
         }
     }
 }

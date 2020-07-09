@@ -4,7 +4,8 @@ using System.Windows;
 using Microsoft.Extensions.Configuration;
 using Forms = System.Windows.Forms;
 
-using Mitheti.Wpf.Services; 
+using Mitheti.Wpf.Services;
+using Mitheti.Wpf.ViewModel;
 
 namespace Mitheti.Wpf
 {
@@ -16,11 +17,14 @@ namespace Mitheti.Wpf
         private readonly IConfiguration _config;
         private readonly IWatcherControlService _watcherControl;
         private Forms.NotifyIcon _trayIcon;
+        private readonly WatcherStatusViewModel _watcherStatusViewModel;
         
         public MainWindow(IConfiguration config, IWatcherControlService watcherControl)
         {
             _config = config;
             _watcherControl = watcherControl;
+            _watcherStatusViewModel = new WatcherStatusViewModel(_watcherControl);
+            DataContext = _watcherStatusViewModel;
             
             InitializeComponent();
 
