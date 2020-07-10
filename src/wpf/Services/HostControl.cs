@@ -42,7 +42,7 @@ namespace Mitheti.Wpf.Services
                     services.AddSingleton<IWatcherControlService, WatcherControlService>();
                     services.AddSingleton<MainWindow>();
                 })
-                .Build();   
+                .Build();
         }
     }
 }

@@ -14,14 +14,14 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly IConfiguration _config;
+        private readonly ILocalizeService _localization;
         private readonly IWatcherControlService _watcherControl;
-        private Forms.NotifyIcon _trayIcon;
         private readonly WatcherStatusViewModel _watcherStatusViewModel;
+        private Forms.NotifyIcon _trayIcon;
         
-        public MainWindow(IConfiguration config, IWatcherControlService watcherControl)
+        public MainWindow(ILocalizeService localization, IWatcherControlService watcherControl)
         {
-            _config = config;
+            _localization = localization;
             _watcherControl = watcherControl;
             _watcherStatusViewModel = new WatcherStatusViewModel(_watcherControl);
             DataContext = _watcherStatusViewModel;

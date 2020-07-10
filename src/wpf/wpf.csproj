@@ -42,6 +42,7 @@
     <!-- additional files; -->
     <ItemGroup>
         <Content Include="./Resources/**" CopyToOutputDirectory="Always" />
+        <Content Include="./localization.json" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
     <!--TODO:FIXME: firgure out how to treat resources;-->
@@ -64,8 +65,14 @@
     <!-- system dependancy; -->
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.*" />
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="3.*" />
     </ItemGroup>
-    
+
+    <!-- 3rd party dependancy; -->
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="12.*" />
+    </ItemGroup>
+        
     <!-- inner solution dependancy; -->
     <ItemGroup>
         <ProjectReference Include="..\core\core.csproj" />
