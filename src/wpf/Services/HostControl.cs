@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mitheti.Core.Services;
+using Mitheti.Wpf.Localization;
 
 namespace Mitheti.Wpf.Services
 {
@@ -39,6 +40,7 @@ namespace Mitheti.Wpf.Services
                 .ConfigureServices((hostingContext, services) =>
                 {
                     services.AddCoreServices();
+                    services.AddJsonLocalization();
                     services.AddSingleton<IWatcherControlService, WatcherControlService>();
                     services.AddSingleton<MainWindow>();
                 })

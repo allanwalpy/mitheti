@@ -39,13 +39,10 @@ namespace Mitheti.Wpf.Localization
 
         public LocalizedString this[string key, params object[] args] => this[key];
         
-        public IEnumerable<LocalizedString> GetAllStrings(bool flag)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCulture)
+            => _dictionary.Value.Select(item => new LocalizedString(item.Key, item.Value));
         
         public IStringLocalizer WithCulture(CultureInfo culture)
             => throw new NotSupportedException("Obsolete API");
-
     }
 }
