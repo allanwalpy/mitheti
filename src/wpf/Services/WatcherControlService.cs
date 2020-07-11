@@ -12,7 +12,7 @@ namespace Mitheti.Wpf.Services
         private Task? _watcherTask;
 
         public bool IsLaunched { get; private set; }
-        
+
         public event StatusChangedHandler StatusChanged;
 
         public WatcherControlService(IWatcherService watcher)
@@ -35,7 +35,7 @@ namespace Mitheti.Wpf.Services
 
             UpdateStatus(true);
         }
-        
+
         public async Task StopAsync()
         {
             if (!IsLaunched)
@@ -46,11 +46,15 @@ namespace Mitheti.Wpf.Services
             _tokenSource.Cancel();
             await Task.WhenAny(_watcherTask);
 
+            //нужно освобождать токен _tokenSource.Dispose()
             _tokenSource = null;
             _watcherTask = null;
             UpdateStatus(false);
+            //Start и Stop сранно работают, так как IsLaunched будет выстовлен только после выполнения,
+            //а проверяется он вначале, если вызвать несколько раз StopAsync то _tokenSource выдаст исключения
         }
 
+        //это лучше перенести в сеттер IsLaunched
         private void UpdateStatus(bool isLaunched)
         {
             this.IsLaunched = isLaunched;

@@ -26,6 +26,7 @@ namespace Mitheti.Wpf.ViewModel
 
         private void OnPropertyChanged(string propertyName)
         {
+            //PropertyChanged может быть null
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }

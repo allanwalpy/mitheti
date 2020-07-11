@@ -15,15 +15,18 @@ namespace Mitheti.Core.Services
         {
             _filter = filter;
 
+            //в конфиге этого хначения может не быть, тогда вернется default(int), те 0
             _delay = config.GetValue<int>(DelayConfigKey);
         }
 
+        //rename to RunAsync
+        //похорошему лучше таску наружу не выставлять а крутить внутри сервиса, локализовать её работу так сказать
         public async Task Run(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
                 var processName = WinApiAdapter.GetFocusedWindowInfo()?.ProcessName;
-
+                //странно что допускается добавление null
                 _filter.Add(processName, _delay);
 
                 await Task.Delay(_delay, stoppingToken).ThrowNoExceptionOnCancelled();

@@ -23,6 +23,7 @@ namespace Mitheti.Core
         [Required]
         public DateTime Time { get; set; }
 
+        //начало бесполезынх полей
         public int Hour => Time.Hour;
 
         public int Day => Time.Day;
@@ -30,15 +31,18 @@ namespace Mitheti.Core
         public int Month => Time.Month;
 
         public int Year => Time.Year;
+        //конец бесполезынх полей
 
         //TODO:FIXME: use defined enum?;
         public int DayOfWeek => (int)Time.DayOfWeek;
 
+        //пустой можно удалить
         public AppTimeModel()
         {   }
 
         public AppTimeModel(string processName, int duration, DateTime timestamp)
         {
+            //странно что есть AppNameMaxLength, но ты тут ничего не обрезаешь и доверяешься дата аннотациям
             AppName = processName;
             Duration = duration;
             Time = timestamp;
@@ -63,6 +67,7 @@ namespace Mitheti.Core
                 && (this.Year    == other.Year);
         }
 
+        //что это за магия, где используется?
         public override string ToString() => $"{AppName}://{Duration}?at={Time.ToString()};";
     }
 }

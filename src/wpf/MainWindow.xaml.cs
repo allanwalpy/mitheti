@@ -18,25 +18,26 @@ namespace Mitheti.Wpf
         private readonly IWatcherControlService _watcherControl;
         private readonly WatcherStatusViewModel _watcherStatusViewModel;
         private Forms.NotifyIcon _trayIcon;
-        
+
         public MainWindow(ILocalizeService localization, IWatcherControlService watcherControl)
         {
             _localization = localization;
             _watcherControl = watcherControl;
             _watcherStatusViewModel = new WatcherStatusViewModel(_watcherControl);
             DataContext = _watcherStatusViewModel;
-            
+
             InitializeComponent();
 
             SetTrayIcon();
+            //лучше оверрайдить методы, чем такие подписки делать
             Closing += HideWindow;
         }
 
         private void SetTrayIcon()
         {
-            //TODO: make separate class configuration for trayIcon?; 
+            //TODO: make separate class configuration for trayIcon?;
             _trayIcon = new Forms.NotifyIcon();
-            
+
             _trayIcon.MouseClick += OnTrayIconClick;
             _trayIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _trayIcon.Visible = true;
@@ -45,9 +46,10 @@ namespace Mitheti.Wpf
             _trayIcon.ContextMenuStrip.Items.Add("Show").Click += RevealWindow;
             _trayIcon.ContextMenuStrip.Items.Add("Exit").Click += ExitApp;
         }
-        
+
         private void OnTrayIconClick(object sender, Forms.MouseEventArgs args)
         {
+            //var
             bool isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
             if (isLeftClick)
             {
@@ -61,11 +63,14 @@ namespace Mitheti.Wpf
             Show();
         }
 
+        //название неоч, какое Exit если Close, какое App если Window
         private void ExitApp(object sender, EventArgs args)
         {
             _trayIcon.MouseClick -= OnTrayIconClick;
-            
+            //нужно отписаться еще от методов в ContextMenuStrip
+            //и у ContextMenuStrip тоже есть Dispose
             _trayIcon.Dispose();
+            //зачем это зануление?
             _trayIcon = null;
 
             Closing -= HideWindow;
