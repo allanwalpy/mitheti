@@ -22,6 +22,7 @@ namespace Mitheti.Core.Services
 
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
+            services.AddSingleton<IClearDatabaseService, ClearDatabaseService>();
             services.AddSingleton<ISavingService, SavingService>();
             services.AddSingleton<IFilterApp, FilterApp>();
             services.AddSingleton<IWatcherService, WatcherService>();

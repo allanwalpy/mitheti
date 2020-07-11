@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Mitheti.Wpf.Localization
 {
-    //? see https://github.com/dradovic/Embedded.Json.Localization/blob/master/src/Embedded.Json.Localization/ServicesCollectionExtensions.cs ;
+    //? see https://github.com/dradovic/Embedded.Json.Localization/ ;
     public class JsonStringLocalizer : IStringLocalizer
     {
         public const string LocalizationConfigFile = "localization.json";
@@ -32,8 +32,8 @@ namespace Mitheti.Wpf.Localization
                 var hasKey = _dictionary.Value.Keys.Contains(key);
                 return new LocalizedString(
                     key,
-                    (hasKey ? _dictionary.Value[key] : String.Empty),
-                    !hasKey);
+                    (hasKey ? _dictionary.Value[key] : key),
+                    false);
             }
         }
 

@@ -10,10 +10,7 @@ namespace Mitheti.Wpf.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public bool IsLaunched
-        {
-            get => _watcherControlService.IsLaunched;
-        }
+        public bool IsLaunched => _watcherControlService.IsLaunched;
 
         public WatcherStatusViewModel(IWatcherControlService watcherControlService)
         {
@@ -25,8 +22,6 @@ namespace Mitheti.Wpf.ViewModel
         }
 
         private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
+            => PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
     }
 }
