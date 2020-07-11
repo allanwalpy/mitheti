@@ -1,18 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <!-- assembly config; -->
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <LangVersion>latest</LangVersion>
         <RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
-        <AssemblyName>Mitheti.Core</AssemblyName>
-        <RootNamespace>Mitheti.Core</RootNamespace>
+        <AssemblyName>Mitheti.Worker</AssemblyName>
+        <RootNamespace>Mitheti.Worker</RootNamespace>
     </PropertyGroup>
 
     <!-- package info; -->
     <PropertyGroup>
-        <AssemblyTitle>Mitheti.Core</AssemblyTitle>
-        <PackageId>Mitheti.Core</PackageId>
+        <AssemblyTitle>Mitheti.Worker</AssemblyTitle>
+        <PackageId>Mitheti.Worker</PackageId>
         <Version>0.5.0-alpha</Version>
         <AssemblyVersion>0.5.0</AssemblyVersion>
         <FileVersion>0.5.0</FileVersion>
@@ -39,22 +40,21 @@
     <PropertyGroup Condition="$(Configuration)=='Debug'">
         <DefineConstants>DEBUG;</DefineConstants>
     </PropertyGroup>
-
+    
     <!-- turn off documentation warnings; -->
     <PropertyGroup>
         <NoWarn>1591;1573;</NoWarn>
     </PropertyGroup>
 
-    <!-- additional files; -->
-    <ItemGroup>
-        <Content Include="./config.json" CopyToOutputDirectory="Always" />
-    </ItemGroup>
-
     <!-- system dependancy; -->
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.*" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.*" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.*" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.*" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.*" />
     </ItemGroup>
-    
+
+    <!-- inner solution dependancy; -->
+    <ItemGroup>
+        <ProjectReference Include="..\core\core.csproj" />
+    </ItemGroup>
+
 </Project>

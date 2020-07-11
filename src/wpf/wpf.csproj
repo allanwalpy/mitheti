@@ -11,16 +11,15 @@
         <AssemblyName>Mitheti.Wpf</AssemblyName>
         <RootNamespace>Mitheti.Wpf</RootNamespace>
         <Nullable>enable</Nullable>
-        <Copyright>MIT license 2020 allan_walpy aka Andrey Lysenkov</Copyright>
     </PropertyGroup>
 
     <!-- package info; -->
     <PropertyGroup>
         <AssemblyTitle>Mitheti.Wpf</AssemblyTitle>
         <PackageId>Mitheti.Wpf</PackageId>
-        <Version>0.4.0-alpha</Version>
-        <AssemblyVersion>0.4.0</AssemblyVersion>
-        <FileVersion>0.4.0</FileVersion>
+        <Version>0.5.0-alpha</Version>
+        <AssemblyVersion>0.5.0</AssemblyVersion>
+        <FileVersion>0.5.0</FileVersion>
         <Authors>allan_walpy aka Andrey Lysenkov</Authors>
         <NeutralLanguage>en-US</NeutralLanguage>
         <Description>gui controlling app</Description>
@@ -29,6 +28,7 @@
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/allan-walpy/mitheti</RepositoryUrl>
+        <Copyright>MIT license 2020 allan_walpy aka Andrey Lysenkov</Copyright>
     </PropertyGroup>
 
     <!-- compilation config; -->
@@ -42,6 +42,7 @@
     <!-- additional files; -->
     <ItemGroup>
         <Content Include="./Resources/**" CopyToOutputDirectory="Always" />
+        <Content Include="./localization.json" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
     <!--TODO:FIXME: firgure out how to treat resources;-->
@@ -61,10 +62,20 @@
         <NoWarn>1591;1573;</NoWarn>
     </PropertyGroup>
 
+    <!-- system dependancy; -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.*" />
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="3.*" />
+    </ItemGroup>
+
+    <!-- 3rd party dependancy; -->
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="12.*" />
+    </ItemGroup>
+        
     <!-- inner solution dependancy; -->
     <ItemGroup>
         <ProjectReference Include="..\core\core.csproj" />
-        <ProjectReference Include="..\web\web.csproj" />
     </ItemGroup>
 
 </Project>
