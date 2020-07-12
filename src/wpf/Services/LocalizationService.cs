@@ -9,6 +9,9 @@ namespace Mitheti.Wpf.Services
     {
         private const string SectionKey = "localization";
 
+        public string this[string key, string defaultValue]
+            => Data.Keys.Contains(key) ? Data[key] : defaultValue;
+
         public Dictionary<string, string> Data { get; }
 
         public LocalizationService(IConfiguration config)
