@@ -12,7 +12,7 @@ namespace Mitheti.Wpf
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly IWatcherControlService _watcherControl;
         private readonly Dictionary<string, string> _localization;

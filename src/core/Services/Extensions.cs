@@ -8,6 +8,8 @@ namespace Mitheti.Core.Services
 {
     public static class Extensions
     {
+        public const string ConfigFile = "config.json";
+        
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             services.TryAddSingleton<IAddToDatabaseService, AddToDatabaseService>();
@@ -22,8 +24,8 @@ namespace Mitheti.Core.Services
         public static IConfigurationBuilder AddCoreConfiguration(this IConfigurationBuilder config,
             bool isOptional = true)
         {
-            const string configFile = "config.json";
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), configFile);
+            
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), ConfigFile);
             return config.AddJsonFile(filePath, isOptional, false);
         }
 

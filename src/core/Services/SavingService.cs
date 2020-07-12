@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -30,7 +29,7 @@ namespace Mitheti.Core.Services
         {
             lock (_lock)
             {
-                var sameRecord = _records.Where(data.IsSameTimeSpan).FirstOrDefault();
+                var sameRecord = _records.Find(data.Equals);
 
                 if (sameRecord == null)
                 {
@@ -40,7 +39,6 @@ namespace Mitheti.Core.Services
                 {
                     sameRecord.Duration += data.Duration;
                 }
-
             }
         }
 
