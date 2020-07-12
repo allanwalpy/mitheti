@@ -1,14 +1,17 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mitheti.Core.Services;
-using Mitheti.Wpf.Localization;
+using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf
 {
     public class HostControl
     {
+        public const string LocalizationFile = "localization.json";
+        public const string WpfConfigFile = "config.wpf.json";
         private const int WaitForStopSeconds = 5;
 
         private IHost _host;
@@ -35,11 +38,13 @@ namespace Mitheti.Wpf
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.AddCoreConfiguration();
+                    config.AddJsonFile(LocalizationFile, false, false);
+                    config.AddJsonFile(WpfConfigFile, true, false);
                 })
                 .ConfigureServices((hostingContext, services) =>
                 {
                     services.AddCoreServices();
-                    services.AddJsonLocalization();
+                    services.AddSingleton<ILocalizationService, LocalizationService>();
                     services.AddSingleton<MainWindow>();
                 })
                 .Build();

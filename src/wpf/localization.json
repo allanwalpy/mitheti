@@ -1,6 +1,16 @@
 {
-    "MainWindow.xaml.Title": "mitheti://главная",
-    "MainWindow.xaml.ButtonStart": "запустить",
-    "status_label_on": "слежение запущено",
-    "status_label_off": "слежение остановлено"
+    "localization": {
+        "Tray": {
+            "Option:Show": "Показать окно",
+            "Option:Close": "Выйти"
+        },
+        "MainWindow": {
+            "Title": "Mind The Time",
+            "StatusLabel:True": "Слежение активно",
+            "StatusLabel:False": "Слежение отключено",
+            "Button:Start" : "Запустить",
+            "Button:Stop": "Остановить",
+            "Button:Statistic": "Посмотреть статистику"
+        }
+    }
 }

@@ -40,9 +40,9 @@
         <DefineConstants>DEBUG;</DefineConstants>
     </PropertyGroup>
 
-    <!-- turn off documentation warnings; -->
+    <!-- turn off documentation and some nullable warnings and; -->
     <PropertyGroup>
-        <NoWarn>1591;1573;</NoWarn>
+        <NoWarn>1591;1573;8618;8622;8625;</NoWarn>
     </PropertyGroup>
 
     <!-- additional files; -->

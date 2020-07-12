@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using Forms = System.Windows.Forms;
 using Mitheti.Core.Services;
+using Mitheti.Wpf.Services;
 using Mitheti.Wpf.ViewModel;
 
 namespace Mitheti.Wpf
@@ -13,33 +15,35 @@ namespace Mitheti.Wpf
     public partial class MainWindow : Window
     {
         private readonly IWatcherControlService _watcherControl;
-        private readonly WatcherStatusViewModel _watcherStatusViewModel;
-        private Forms.NotifyIcon _trayIcon;
-
-        public MainWindow(IWatcherControlService watcherControl)
+        private readonly Dictionary<string, string> _localization;
+        private readonly Forms.NotifyIcon _trayIcon;
+        
+        public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl)
         {
+            _localization = localization.Data;
             _watcherControl = watcherControl;
-            _watcherStatusViewModel = new WatcherStatusViewModel(_watcherControl);
-            DataContext = _watcherStatusViewModel;
-
+            
+            DataContext = new MainWindowViewModel(localization, watcherControl);
+            
             InitializeComponent();
 
-            SetTrayIcon();
+            _trayIcon = new Forms.NotifyIcon();
+            ConfigureTray();
+            
+            Title = _localization["MainWindow.Title"];
             Closing += HideWindow;
         }
 
-        private void SetTrayIcon()
+        private void ConfigureTray()
         {
             //TODO: make separate class configuration for trayIcon?;
-            _trayIcon = new Forms.NotifyIcon();
-
             _trayIcon.MouseClick += OnTrayIconClick;
             _trayIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _trayIcon.Visible = true;
 
             _trayIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
-            _trayIcon.ContextMenuStrip.Items.Add("Show").Click += OnTrayClickShow;
-            _trayIcon.ContextMenuStrip.Items.Add("Exit").Click += OnTrayClickExit;
+            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Option:Show"]).Click += OnTrayClickShow;
+            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Option:Close"]).Click += OnTrayClickExit;
         }
 
         private void OnTrayIconClick(object? sender, Forms.MouseEventArgs args)
