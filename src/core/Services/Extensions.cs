@@ -7,6 +7,7 @@ namespace Mitheti.Core.Services
 {
     public static class Extensions
     {
+        //странно что это находится здесь
         public const string ConfigFile = "config.json";
 
         public static Task ThrowNoExceptionOnCancelled(this Task configuredTask)
@@ -20,6 +21,7 @@ namespace Mitheti.Core.Services
             });
         }
 
+        //этот метод делает что то кастомное, правильнее его описывать там где он используется
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             services.AddSingleton<IClearDatabaseService, ClearDatabaseService>();
@@ -30,6 +32,7 @@ namespace Mitheti.Core.Services
             return services;
         }
 
+        //этот тоже
         public static IConfigurationBuilder AddCoreConfiguration(this IConfigurationBuilder config)
             => config.SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(ConfigFile, false, false);
