@@ -37,7 +37,7 @@ namespace Mitheti.Wpf
 
         private async void StartupApp(object sender, StartupEventArgs args)
         {
-            MainWindow = Host.GetService<MainWindow>();
+            MainWindow = Host.Services.GetService<MainWindow>();
             MainWindow.Show();
 
             await Host.StartAsync();
