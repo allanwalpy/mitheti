@@ -11,7 +11,6 @@ namespace Mitheti.Wpf
     public class HostControl
     {
         public const string LocalizationFile = "localization.json";
-        public const string WpfConfigFile = "config.wpf.json";
         private const int WaitForStopSeconds = 5;
 
         private IHost _host;
@@ -39,7 +38,6 @@ namespace Mitheti.Wpf
                 {
                     config.AddCoreConfiguration();
                     config.AddJsonFile(LocalizationFile, false, false);
-                    config.AddJsonFile(WpfConfigFile, true, false);
                 })
                 .ConfigureServices((hostingContext, services) =>
                 {

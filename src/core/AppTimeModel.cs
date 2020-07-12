@@ -1,11 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace Mitheti.Core
 {
     [Table(TableName)]
-    public class AppTimeModel
+    public class AppTimeModel : IEquatable<AppTimeModel>
     {
         public const string TableName = "appTime_source_v1";
         public const int AppNameMaxLength = 255;
@@ -26,11 +27,11 @@ namespace Mitheti.Core
 
         [Required] public DateTime Time { get; set; }
 
-        public bool IsSameTimeSpan(AppTimeModel other)
-            => (AppName == other.AppName) && (GetCutedToHoursTime() == other.GetCutedToHoursTime());
+        public bool Equals(AppTimeModel other)
+            => (this.AppName == other?.AppName) && (this.CutTimeToHours() == other?.CutTimeToHours());
+        
+        private DateTime CutTimeToHours() => new DateTime(Time.Year, Time.Month, Time.Day, Time.Hour, 0, 0);
 
-        private DateTime GetCutedToHoursTime() => new DateTime(Time.Year, Time.Month, Time.Day, Time.Hour, 0, 0);
-
-        public override string ToString() => $"{AppName}://{Duration}?at={Time.ToString()};";
+        public override string ToString() => $"{AppName}://{Duration}?at={Time.ToString(CultureInfo.CurrentCulture)};";
     }
 }
