@@ -40,7 +40,7 @@
         <DefineConstants>DEBUG;</DefineConstants>
     </PropertyGroup>
 
-    <!-- turn off documentation and some nullable warnings and; -->
+    <!-- turn off documentation and some nullable warnings; -->
     <PropertyGroup>
         <NoWarn>1591;1573;8618;8622;8625;</NoWarn>
     </PropertyGroup>
@@ -52,9 +52,9 @@
 
     <!-- system dependancy; -->
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.*" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.*" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.*" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
     </ItemGroup>
     
 </Project>
