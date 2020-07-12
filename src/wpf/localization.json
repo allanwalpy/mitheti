@@ -1,29 +1,39 @@
 {
     "localization": {
         "Tray": {
-            "Option:Show": "Показать окно",
-            "Option:Close": "Выйти"
+            "Options" :  {
+                "Show": "Показать окно",
+                "Close": "Выйти"  
+            }
         },
         "MainWindow": {
             "Title": "Mind The Time",
-            "StatusLabel:True": "Слежение активно",
-            "StatusLabel:False": "Слежение отключено",
-            "Button:Start" : "Запустить",
-            "Button:Stop": "Остановить",
-            "Button:Statistic": "Посмотреть статистику"
+            "StatusLabel": {
+                "True": "Слежение активно",
+                "False": "Слежение отключено"
+            },
+            "Button": {
+                "Start" : "Запустить",
+                "Stop": "Остановить",
+                "Statistic": "Посмотреть статистику"    
+            }            
         },
         "StatisticWindow": {
             "Title": "Статистика",
-            "DayOfWeek:Percentage:Item": "[{0}]",
-            "DayOfWeek:Total:Item": "{0} дн. {1} ч. {2} мин. {3} сек.",
-            "DayOfWeek:Item": "{0}: {1} {2}",
-            "DayOfWeek:0": "Воскресенье",
-            "DayOfWeek:1": "Понедельник",
-            "DayOfWeek:2": "Вторник",
-            "DayOfWeek:3": "Среда",
-            "DayOfWeek:4": "Четверг",
-            "DayOfWeek:5": "Пятница",
-            "DayOfWeek:6": "Суббота"
+            "DayOfWeek": {
+                "Percentage:Item": "[{0}]",
+                "Total:Item": "{0} дн. {1} ч. {2} мин. {3} сек.",
+                "Item": "{0}: {1} {2}",
+                "Name": [
+                    "Воскресенье",
+                    "Понедельник",
+                    "Вторник",
+                    "Среда",
+                    "Четверг",
+                    "Пятница",
+                    "Суббота"
+                ]
+            }            
         },
         "Formats": {
             "Percentage": "P"

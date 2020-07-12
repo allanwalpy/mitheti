@@ -12,12 +12,14 @@ namespace Mitheti.Core.Services
         
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
+            services.TryAddSingleton<IDatabaseService, DatabaseService>();
             services.TryAddSingleton<IAddToDatabaseService, AddToDatabaseService>();
             services.TryAddSingleton<ISavingService, SavingService>();
             services.TryAddSingleton<IClearDatabaseService, ClearDatabaseService>();
             services.TryAddSingleton<IWatcherService, WatcherService>();
             services.TryAddSingleton<IWatcherControlService, WatcherControlService>();
             services.TryAddSingleton<IStatisticDayOfWeekService, StatisticDayOfWeekService>();
+            services.TryAddSingleton<IStatisticTopAppService, StatisticTopAppService>();
 
             return services;
         }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.ComponentModel;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;

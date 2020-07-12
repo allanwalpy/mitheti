@@ -12,16 +12,19 @@ namespace Mitheti.Core.Services
         public const int RecordDelayDefault = 1;
         public const int MillisecondsInMinute = 60 * 1000;
 
+        private readonly IDatabaseService _database;
+        
         private readonly object _lock = new object();
-
+        
         private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
         private readonly List<AppTimeModel> _records = new List<AppTimeModel>();
         private readonly Task _savingTask;
 
-        public SavingService(IConfiguration config)
+        public SavingService(IConfiguration config, IDatabaseService database)
         {
+            _database = database;
+            
             var delayMinutes = config.GetValue(RecordDelayConfigKey, RecordDelayDefault);
-
             _savingTask = SavingTask(_tokenSource.Token, delayMinutes * MillisecondsInMinute);
         }
 
@@ -61,7 +64,7 @@ namespace Mitheti.Core.Services
                     return;
                 }
 
-                using var context = new DatabaseContext();
+                using var context = _database.GetContext();
                 context.AddRange(_records);
                 context.SaveChanges();
 

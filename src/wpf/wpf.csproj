@@ -45,13 +45,6 @@
         <Content Include="./localization.json" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
-    <!--TODO:FIXME: firgure out how to treat resources;-->
-
-    <!-- add resources; -->
-    <ItemGroup>
-        <Resource Include="Resources/appIcon.png" />
-    </ItemGroup>
-
     <!-- debug configuration; -->
     <PropertyGroup Condition="$(Configuration)=='Debug'">
         <DefineConstants>DEBUG;</DefineConstants>

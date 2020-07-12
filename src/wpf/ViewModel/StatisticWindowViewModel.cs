@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mitheti.Core;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
 
@@ -23,29 +24,29 @@ namespace Mitheti.Wpf.ViewModel
 
         private void SetDayOfWeekString()
         {
-            var totalString = _database.GetTotal()
+            var totalString = _database.GetTotal(TimeInterval.All)
                 .ConvertAll(TimeSpanAsLocalizedString);
                 
-            var percentageString = _database.GetPercentage()
+            var percentageString = _database.GetPercentage(TimeInterval.All)
                 .ConvertAll(PercentageAsLocalizedString);
 
-            for (int i = 0; i < 7; i++)
+            for (var i = 0; i < 7; i++)
             {
-                DayOfWeekString[i] = string.Format(Localization["StatisticWindow:DayOfWeek:Item"],
-                    Localization[$"StatisticWindow:DayOfWeek:{i}"],
+                DayOfWeekString[i] = string.Format(Localization[$"{nameof(StatisticWindow)}:DayOfWeek:Item"],
+                    Localization[$"{nameof(StatisticWindow)}:DayOfWeek:Name:{i}"],
                     totalString[i], percentageString[i]);
             }
         }
 
         private string PercentageAsLocalizedString(double value)
-            => string.Format(Localization["StatisticWindow:DayOfWeek:Percentage:Item"],
+            => string.Format(Localization[$"{nameof(StatisticWindow)}:DayOfWeek:Percentage:Item"],
                value.ToString(format: Localization["Formats:Percentage"]));
 
         private string TimeSpanAsLocalizedString(int milliseconds)
         {
             var timeSpan = new TimeSpan(milliseconds);
             // TODO: fix format, deleting zeroes, except 0 seconds;
-            return string.Format(Localization["StatisticWindow:DayOfWeek:Total:Item"],
+            return string.Format(Localization[$"{nameof(StatisticWindow)}:DayOfWeek:Total:Item"],
                 timeSpan.TotalDays, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
         }
     }

@@ -11,8 +11,7 @@ namespace Mitheti.Wpf
             DataContext = new StatisticWindowViewModel(localization, dayOfWeekService);
             InitializeComponent();
 
-            // TODO: replace StatisticWindow and MainWindow with nameof;
-            Title = localization["StatisticWindow:Title"];
+            Title = localization[$"{nameof(StatisticWindow)}:Title"];
         }
     }
 }

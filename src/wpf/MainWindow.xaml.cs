@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using Forms = System.Windows.Forms;
@@ -33,20 +32,20 @@ namespace Mitheti.Wpf
             _trayIcon = new Forms.NotifyIcon();
             ConfigureTray();
 
-            Title = _localization["MainWindow:Title"];
+            Title = _localization[$"{nameof(MainWindow)}:Title"];
             Closing += HideWindow;
         }
 
         private void ConfigureTray()
         {
-            //TODO: make separate class configuration for trayIcon?;
+            //TODO: make separate class configuration for tray?;
             _trayIcon.MouseClick += OnTrayIconClick;
             _trayIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
             _trayIcon.Visible = true;
 
             _trayIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
-            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Option:Show"]).Click += OnTrayClickShow;
-            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Option:Close"]).Click += OnTrayClickExit;
+            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Options:Show"]).Click += OnTrayClickShow;
+            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Options:Close"]).Click += OnTrayClickExit;
         }
 
         private void OnTrayIconClick(object? sender, Forms.MouseEventArgs args)
@@ -80,9 +79,17 @@ namespace Mitheti.Wpf
 
         private void OnStatisticClick(object sender, RoutedEventArgs e)
         {
-            //TODO:FIXME: fix crash after opening window after closing;
-            _statisticWindow ??= new StatisticWindow(_localization, _dayOfWeek);
+            if (_statisticWindow == null)
+            {
+                _statisticWindow = new StatisticWindow(_localization, _dayOfWeek);
+                _statisticWindow.Closed += NullStaticWindowOnClosed;
+            }
             _statisticWindow.Show();
+        }
+
+        private void NullStaticWindowOnClosed(object sender, EventArgs args)
+        {
+            _statisticWindow = null;
         }
 
         private void HideWindow(object sender, CancelEventArgs args)
