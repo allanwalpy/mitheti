@@ -14,14 +14,17 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class MainWindow
     {
+        private readonly IStatisticDayOfWeekService _dayOfWeek;
         private readonly IWatcherControlService _watcherControl;
-        private readonly Dictionary<string, string> _localization;
+        private readonly ILocalizationService _localization;
         private readonly Forms.NotifyIcon _trayIcon;
+        private StatisticWindow _statisticWindow;
 
-        public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl)
+        public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl, IStatisticDayOfWeekService dayOfWeek)
         {
-            _localization = localization.Data;
+            _localization = localization;
             _watcherControl = watcherControl;
+            _dayOfWeek = dayOfWeek;
 
             DataContext = new MainWindowViewModel(localization, watcherControl);
 
@@ -77,8 +80,9 @@ namespace Mitheti.Wpf
 
         private void OnStatisticClick(object sender, RoutedEventArgs e)
         {
-            StatisticWindow window = new StatisticWindow();
-            window.Show();
+            //TODO:FIXME: fix crash after opening window after closing;
+            _statisticWindow ??= new StatisticWindow(_localization, _dayOfWeek);
+            _statisticWindow.Show();
         }
 
         private void HideWindow(object sender, CancelEventArgs args)

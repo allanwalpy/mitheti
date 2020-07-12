@@ -5,19 +5,17 @@ using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly IWatcherControlService _watcherControl;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Dictionary<string, string> Localization { get; }
         public string IsLaunchedString => Localization[$"MainWindow:StatusLabel:{_watcherControl.IsLaunched}"];
 
         public MainWindowViewModel(ILocalizationService localization, IWatcherControlService watcherControl)
+            : base(localization)
         {
-            Localization = localization.Data;
-
             _watcherControl = watcherControl;
             _watcherControl.StatusChanged += (sender, args) => { OnPropertyChanged(nameof(IsLaunchedString)); };
         }

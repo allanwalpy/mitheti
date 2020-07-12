@@ -67,11 +67,6 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.5" />
     </ItemGroup>
 
-    <!-- 3rd party dependancy; -->
-    <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="12.*" />
-    </ItemGroup>
-
     <!-- inner solution dependancy; -->
     <ItemGroup>
         <ProjectReference Include="..\Core\Core.csproj" />

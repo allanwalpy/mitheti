@@ -17,6 +17,7 @@ namespace Mitheti.Core.Services
             services.TryAddSingleton<IClearDatabaseService, ClearDatabaseService>();
             services.TryAddSingleton<IWatcherService, WatcherService>();
             services.TryAddSingleton<IWatcherControlService, WatcherControlService>();
+            services.TryAddSingleton<IStatisticDayOfWeekService, StatisticDayOfWeekService>();
 
             return services;
         }

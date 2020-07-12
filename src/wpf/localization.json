@@ -11,6 +11,22 @@
             "Button:Start" : "Запустить",
             "Button:Stop": "Остановить",
             "Button:Statistic": "Посмотреть статистику"
+        },
+        "StatisticWindow": {
+            "Title": "Статистика",
+            "DayOfWeek:Percentage:Item": "[{0}]",
+            "DayOfWeek:Total:Item": "{0} дн. {1} ч. {2} мин. {3} сек.",
+            "DayOfWeek:Item": "{0}: {1} {2}",
+            "DayOfWeek:0": "Воскресенье",
+            "DayOfWeek:1": "Понедельник",
+            "DayOfWeek:2": "Вторник",
+            "DayOfWeek:3": "Среда",
+            "DayOfWeek:4": "Четверг",
+            "DayOfWeek:5": "Пятница",
+            "DayOfWeek:6": "Суббота"
+        },
+        "Formats": {
+            "Percentage": "P"
         }
     }
 }
