@@ -1,9 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
-using Microsoft.Extensions.Configuration;
 using Forms = System.Windows.Forms;
-
 using Mitheti.Wpf.Services;
 using Mitheti.Wpf.ViewModel;
 
@@ -14,14 +12,12 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ILocalizeService _localization;
         private readonly IWatcherControlService _watcherControl;
         private readonly WatcherStatusViewModel _watcherStatusViewModel;
         private Forms.NotifyIcon _trayIcon;
 
-        public MainWindow(ILocalizeService localization, IWatcherControlService watcherControl)
+        public MainWindow(IWatcherControlService watcherControl)
         {
-            _localization = localization;
             _watcherControl = watcherControl;
             _watcherStatusViewModel = new WatcherStatusViewModel(_watcherControl);
             DataContext = _watcherStatusViewModel;
@@ -89,7 +85,7 @@ namespace Mitheti.Wpf
 
         private void OnStatisticClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            StatisticWindow v;
         }
 
         private void HideWindow(object sender, CancelEventArgs args)

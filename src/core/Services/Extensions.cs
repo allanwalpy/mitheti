@@ -24,6 +24,7 @@ namespace Mitheti.Core.Services
         //этот метод делает что то кастомное, правильнее его описывать там где он используется
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
+            services.AddSingleton<IClearDatabaseService, ClearDatabaseService>();
             services.AddSingleton<ISavingService, SavingService>();
             services.AddSingleton<IFilterApp, FilterApp>();
             services.AddSingleton<IWatcherService, WatcherService>();

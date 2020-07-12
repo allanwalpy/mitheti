@@ -58,15 +58,6 @@ namespace Mitheti.Core
                 && (this.Year    == other.Year);
         }
 
-        //TODO:FIXME: tmp solution for by Day statistic;
-        public bool IsSameTimeSpanDay(AppTimeModel other)
-        {
-            return (this.AppName == other.AppName)
-                && (this.Day     == other.Day)
-                && (this.Month   == other.Month)
-                && (this.Year    == other.Year);
-        }
-
         //что это за магия, где используется?
         public override string ToString() => $"{AppName}://{Duration}?at={Time.ToString()};";
     }

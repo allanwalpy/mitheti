@@ -76,6 +76,6 @@
     <!-- inner solution dependancy; -->
     <ItemGroup>
         <ProjectReference Include="..\core\core.csproj" />
-    </ItemGroup>
+    </ItemGroup
 
 </Project>
