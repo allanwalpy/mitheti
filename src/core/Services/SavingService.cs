@@ -24,8 +24,6 @@ namespace Mitheti.Core.Services
             var delayMinutes = config.GetValue(RecordDelayConfigKey, RecordDelayDefault);
 
             _savingTask = SavingTask(_tokenSource.Token, delayMinutes * MillisecondsInMinute);
-            _savingTask.ConfigureAwait(false);
-            _savingTask.Start();
         }
 
         public void Add(AppTimeModel data)
@@ -68,7 +66,7 @@ namespace Mitheti.Core.Services
                 using var context = new DatabaseContext();
                 context.AddRange(_records);
                 context.SaveChanges();
-                
+
                 _records.Clear();
             }
         }

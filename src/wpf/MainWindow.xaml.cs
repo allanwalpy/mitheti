@@ -17,20 +17,20 @@ namespace Mitheti.Wpf
         private readonly IWatcherControlService _watcherControl;
         private readonly Dictionary<string, string> _localization;
         private readonly Forms.NotifyIcon _trayIcon;
-        
+
         public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl)
         {
             _localization = localization.Data;
             _watcherControl = watcherControl;
-            
+
             DataContext = new MainWindowViewModel(localization, watcherControl);
-            
+
             InitializeComponent();
 
             _trayIcon = new Forms.NotifyIcon();
             ConfigureTray();
-            
-            Title = _localization["MainWindow.Title"];
+
+            Title = _localization["MainWindow:Title"];
             Closing += HideWindow;
         }
 
