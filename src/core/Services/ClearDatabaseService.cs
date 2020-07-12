@@ -7,20 +7,18 @@ namespace Mitheti.Core.Services
     {
         public void Clear(DateTime laterThen, DateTime beforeThen)
         {
-            using (var context = new DatabaseContext())
-            {
-                var forDeletion =  context.AppTimes.Where(item => item.Time > laterThen && item.Time < beforeThen);
-                if (!forDeletion.Any())
-                {
-                    return;
-                }
+            using var context = new DatabaseContext();
 
-                context.AppTimes.RemoveRange(forDeletion);
-                context.SaveChanges();
+            var forDeletion = context.AppTimes.Where(item => item.Time > laterThen && item.Time < beforeThen);
+            if (!forDeletion.Any())
+            {
+                return;
             }
+
+            context.AppTimes.RemoveRange(forDeletion);
+            context.SaveChanges();
         }
 
-        public void Clear(DateTime beforeThen)
-            => Clear(DateTime.MinValue, beforeThen);
+        public void Clear(DateTime beforeThen) => Clear(DateTime.MinValue, beforeThen);
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using Forms = System.Windows.Forms;
-using Mitheti.Wpf.Services;
+using Mitheti.Core.Services;
 using Mitheti.Wpf.ViewModel;
 
 namespace Mitheti.Wpf
@@ -25,7 +25,6 @@ namespace Mitheti.Wpf
             InitializeComponent();
 
             SetTrayIcon();
-            //лучше оверрайдить методы, чем такие подписки делать
             Closing += HideWindow;
         }
 
@@ -39,53 +38,43 @@ namespace Mitheti.Wpf
             _trayIcon.Visible = true;
 
             _trayIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
-            _trayIcon.ContextMenuStrip.Items.Add("Show").Click += RevealWindow;
-            _trayIcon.ContextMenuStrip.Items.Add("Exit").Click += ExitApp;
+            _trayIcon.ContextMenuStrip.Items.Add("Show").Click += OnTrayClickShow;
+            _trayIcon.ContextMenuStrip.Items.Add("Exit").Click += OnTrayClickExit;
         }
 
-        private void OnTrayIconClick(object sender, Forms.MouseEventArgs args)
+        private void OnTrayIconClick(object? sender, Forms.MouseEventArgs args)
         {
-            //var
-            bool isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
+            var isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
             if (isLeftClick)
             {
-                RevealWindow(sender, args);
+                OnTrayClickShow(sender, args);
             }
         }
 
-        private void RevealWindow(object sender, EventArgs args)
+        private void OnTrayClickShow(object? sender, EventArgs args)
         {
             Activate();
             Show();
         }
 
-        //название неоч, какое Exit если Close, какое App если Window
-        private void ExitApp(object sender, EventArgs args)
+        private void OnTrayClickExit(object sender, EventArgs args)
         {
             _trayIcon.MouseClick -= OnTrayIconClick;
-            //нужно отписаться еще от методов в ContextMenuStrip
-            //и у ContextMenuStrip тоже есть Dispose
+            _trayIcon.ContextMenuStrip.Dispose();
             _trayIcon.Dispose();
-            //зачем это зануление?
-            _trayIcon = null;
 
             Closing -= HideWindow;
             Close();
         }
 
-        private void OnStartClick(object sender, RoutedEventArgs args)
-        {
-            _watcherControl.Start();
-        }
+        private void OnStartClick(object sender, RoutedEventArgs args) => _watcherControl.Start();
 
-        private void OnStopClick(object sender, RoutedEventArgs args)
-        {
-            _watcherControl.StopAsync().Wait();
-        }
+        private void OnStopClick(object sender, RoutedEventArgs args) => _watcherControl.StopAsync().Wait();
 
         private void OnStatisticClick(object sender, RoutedEventArgs e)
         {
-            StatisticWindow v;
+            StatisticWindow window = new StatisticWindow();
+            window.Show();
         }
 
         private void HideWindow(object sender, CancelEventArgs args)

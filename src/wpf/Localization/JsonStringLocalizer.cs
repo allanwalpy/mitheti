@@ -13,31 +13,30 @@ namespace Mitheti.Wpf.Localization
     {
         public const string LocalizationConfigFile = "localization.json";
 
-        private readonly Lazy<Dictionary<string, string>> _dictionary;
+        private readonly Lazy<Dictionary<string, string>> _dictionary
+            = new Lazy<Dictionary<string, string>>(ReadLocalizeFile);
 
-        public JsonStringLocalizer()
-        {
-            //желательно инит перенести в обьявление
-            _dictionary = new Lazy<Dictionary<string, string>>(ReadLocalizeFile);
-
-        }
-
-        //очень рискованные метод, посмотри сколько там ексепшенов может выпасть в File.ReadAllText
-        //может просто файла не существовать
         private static Dictionary<string, string> ReadLocalizeFile()
-            => JsonConvert.DeserializeObject<Dictionary<string, string>>(
-                File.ReadAllText(LocalizationConfigFile));
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<Dictionary<string, string>>(
+                    File.ReadAllText(LocalizationConfigFile));
+            }
+            catch (Exception)
+            {
+                //TODO: log exception as warning;
+                return new Dictionary<string, string>();
+            }
+        }
 
         public LocalizedString this[string key]
         {
             get
             {
                 var hasKey = _dictionary.Value.Keys.Contains(key);
-                return new LocalizedString(
-                    key,
-                    //сложно такое читать, вынеси в переменную, строк даже меньше станет
-                    (hasKey ? _dictionary.Value[key] : key),
-                    false);
+                var value = hasKey ? _dictionary.Value[key] : key;
+                return new LocalizedString(key, value, false);
             }
         }
 
@@ -46,7 +45,6 @@ namespace Mitheti.Wpf.Localization
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCulture)
             => _dictionary.Value.Select(item => new LocalizedString(item.Key, item.Value));
 
-        public IStringLocalizer WithCulture(CultureInfo culture)
-            => throw new NotSupportedException("Obsolete API");
+        public IStringLocalizer WithCulture(CultureInfo culture) => throw new NotSupportedException("Obsolete API");
     }
 }

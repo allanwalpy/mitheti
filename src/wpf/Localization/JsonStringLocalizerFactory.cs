@@ -5,8 +5,7 @@ namespace Mitheti.Wpf.Localization
 {
     public class JsonStringLocalizerFactory : IStringLocalizerFactory
     {
-        // = null можно убрать
-        private IStringLocalizer _localizer = null;
+        private IStringLocalizer _localizer;
 
         public IStringLocalizer Create(Type resourceSource)
             => GetLocalizer();
@@ -16,12 +15,7 @@ namespace Mitheti.Wpf.Localization
 
         private IStringLocalizer GetLocalizer()
         {
-            //есть оператор ??=
-            if (_localizer == null)
-            {
-                _localizer = new JsonStringLocalizer();
-            }
-
+            _localizer ??= new JsonStringLocalizer();
             return _localizer;
         }
     }

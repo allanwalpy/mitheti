@@ -1,6 +1,6 @@
 namespace Mitheti.Core.Services
 {
-    public interface IFilterApp
+    public interface IAddToDatabaseService
     {
         void Add(string app, int delay);
     }

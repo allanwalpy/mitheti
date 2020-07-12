@@ -7,29 +7,28 @@ namespace Mitheti.Core.Services
     public class WatcherService : IWatcherService
     {
         public const string DelayConfigKey = "service:delay";
+        public const int DefaultDelay = 250;
 
-        private readonly IFilterApp _filter;
+        private readonly IAddToDatabaseService _database;
         private readonly int _delay;
 
-        public WatcherService(IConfiguration config, IFilterApp filter)
+        public WatcherService(IConfiguration config, IAddToDatabaseService database)
         {
-            _filter = filter;
-
-            //в конфиге этого хначения может не быть, тогда вернется default(int), те 0
-            _delay = config.GetValue<int>(DelayConfigKey);
+            _database = database;
+            _delay = config.GetValue(DelayConfigKey, DefaultDelay);
         }
 
-        //rename to RunAsync
-        //похорошему лучше таску наружу не выставлять а крутить внутри сервиса, локализовать её работу так сказать
-        public async Task Run(CancellationToken stoppingToken)
+        public async Task RunAsync(CancellationToken token)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            while (!token.IsCancellationRequested)
             {
                 var processName = WinApiAdapter.GetFocusedWindowInfo()?.ProcessName;
-                //странно что допускается добавление null
-                _filter.Add(processName, _delay);
+                if (processName != null)
+                {
+                    _database.Add(processName, _delay);
+                }
 
-                await Task.Delay(_delay, stoppingToken).ThrowNoExceptionOnCancelled();
+                await Task.Delay(_delay, token).ThrowNoExceptionOnCancelled();
             }
         }
     }

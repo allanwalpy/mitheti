@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Windows;
-using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf
 {
@@ -12,11 +11,17 @@ namespace Mitheti.Wpf
         public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
 
         private readonly HostControl _hostControl;
-        private Mutex? _instanceMutex;
+        private readonly Mutex _instanceMutex;
 
         public App()
         {
-            ShutdownIfLaunched();
+            _instanceMutex = new Mutex(true, $"Global\\{AppId}", out var isCreatedNew);
+
+            if (!isCreatedNew)
+            {
+                _instanceMutex = null;
+                return;
+            }
 
             _hostControl = new HostControl();
         }
@@ -33,18 +38,6 @@ namespace Mitheti.Wpf
         {
             await _hostControl.StopAsync();
             _instanceMutex?.ReleaseMutex();
-        }
-
-        private void ShutdownIfLaunched()
-        {
-            _instanceMutex = new Mutex(true, $"Global\\{AppId}", out var isCreatedNew);
-
-            if (!isCreatedNew)
-            {
-                _instanceMutex = null;
-                //зачем тут такое? просто делай return в App()
-                Application.Current.Shutdown();
-            }
         }
     }
 }

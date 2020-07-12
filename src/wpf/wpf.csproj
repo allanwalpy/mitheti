@@ -57,9 +57,9 @@
         <DefineConstants>DEBUG;</DefineConstants>
     </PropertyGroup>
 
-    <!-- turn off documentation warnings; -->
+    <!-- turn off documentation and some nullable warnings and; -->
     <PropertyGroup>
-        <NoWarn>1591;1573;</NoWarn>
+        <NoWarn>1591;1573;8618;8622;8625;</NoWarn>
     </PropertyGroup>
 
     <!-- system dependancy; -->
@@ -72,10 +72,10 @@
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="12.*" />
     </ItemGroup>
-        
+
     <!-- inner solution dependancy; -->
     <ItemGroup>
-        <ProjectReference Include="..\core\core.csproj" />
-    </ItemGroup
+        <ProjectReference Include="..\Core\Core.csproj" />
+    </ItemGroup>
 
 </Project>

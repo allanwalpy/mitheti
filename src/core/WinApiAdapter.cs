@@ -14,8 +14,7 @@ namespace Mitheti.Core
 
         public static Process GetFocusedWindowInfo()
         {
-            //можно var
-            IntPtr windowHandle = GetForegroundWindow();
+            var windowHandle = GetForegroundWindow();
             return GetProcessByHandle(windowHandle);
         }
 
@@ -23,10 +22,8 @@ namespace Mitheti.Core
         {
             try
             {
-                //можно GetWindowThreadProcessId(windowHandle, out var processId);
-                uint processId;
-                GetWindowThreadProcessId(windowHandle, out processId);
-                return Process.GetProcessById((int)processId);
+                GetWindowThreadProcessId(windowHandle, out var processId);
+                return Process.GetProcessById((int) processId);
             }
             catch
             {
