@@ -4,7 +4,7 @@ namespace Mitheti.Core
 {
     public class TimeInterval : IComparable<DateTime>, IEquatable<DateTime>
     {
-        public static readonly TimeInterval All = new TimeInterval(); 
+        public static readonly TimeInterval All = new TimeInterval();
             
         public DateTime Begin { get; }
         public DateTime End { get; }

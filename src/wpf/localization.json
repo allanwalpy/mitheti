@@ -21,9 +21,9 @@
         "StatisticWindow": {
             "Title": "Статистика",
             "DayOfWeek": {
-                "Percentage:Item": "[{0}]",
-                "Total:Item": "{0} дн. {1} ч. {2} мин. {3} сек.",
-                "Item": "{0}: {1} {2}",
+                "Percentage:Item": "{0}",
+                "Total:Item": "{0:F0} дн. {1} ч. {2} мин. {3} сек.",
+                "Item": "{0}: {1} [{2}]",
                 "Name": [
                     "Воскресенье",
                     "Понедельник",
@@ -33,7 +33,13 @@
                     "Пятница",
                     "Суббота"
                 ]
-            }            
+            },
+            "TopApp": {
+                "Item": "{0}: {1}",
+                "Item:AppName": "{0}",
+                "Item:AppName:Null": "--- пусто ---",
+                "Item:Time": "{0:F0} дн. {1} ч. {2} мин. {3} сек."
+            }
         },
         "Formats": {
             "Percentage": "P"

@@ -20,7 +20,8 @@ namespace Mitheti.Core.Services
             _logger = logger;
             _database = database;
 
-            _appList = config.GetSection(AppListConfigKey).Get<string[]>().ToList();
+            //? on `"applist": []`, `Get<string[]>()` returns `null`, not `string[0]`;
+            _appList = config.GetSection(AppListConfigKey).Get<string[]>()?.ToList() ?? new List<string>();
         }
 
         public void Add(string app, int delay)
@@ -30,7 +31,7 @@ namespace Mitheti.Core.Services
                 _logger.LogTrace($"not adding to database: {app} with {delay}ms");
                 return;
             }
-            
+
             var info = new AppTimeModel
             {
                 AppName = app,
@@ -41,7 +42,6 @@ namespace Mitheti.Core.Services
             _logger.LogTrace($"adding to database: {info}");
 
             _database.Add(info);
-
         }
     }
 }
