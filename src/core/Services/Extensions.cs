@@ -31,6 +31,7 @@ namespace Mitheti.Core.Services
             return config.AddJsonFile(filePath, isOptional, false);
         }
 
+        //TODO:FIXME: possible cause of endless task await/Wait on cancel;
         internal static Task ThrowNoExceptionOnCancelled(this Task configuredTask)
         {
             return configuredTask.ContinueWith(ThrowNoExceptionOnCancelledContinueWith);

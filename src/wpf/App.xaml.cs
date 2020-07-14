@@ -21,7 +21,7 @@ namespace Mitheti.Wpf
         //? see https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499- ;
         public const int ExitCodeAlreadyLaunched = 101;
 
-        public readonly IHost Host;
+        private readonly IHost _host;
         private readonly Mutex _instanceMutex;
 
         public App()
@@ -34,27 +34,30 @@ namespace Mitheti.Wpf
                 Application.Current.Shutdown(ExitCodeAlreadyLaunched);
             }
 
-            Host = GetDefaultHost();
+            _host = GetDefaultHost();
         }
 
         private async void OnStartup(object sender, StartupEventArgs args)
         {
-            MainWindow = Host.Services.GetService<MainWindow>();
+            MainWindow = _host.Services.GetService<MainWindow>();
             MainWindow.Show();
 
-            await Host.StartAsync();
+            await _host.StartAsync();
         }
 
         private async void OnExit(object sender, ExitEventArgs args)
         {
-            await Host.StopAsync(TimeSpan.FromMilliseconds(StopWait));
+            using (_host)
+            {
+                await _host.StopAsync(TimeSpan.FromMilliseconds(StopWait));
+            }
 
             _instanceMutex?.ReleaseMutex();
         }
 
         private IHost GetDefaultHost()
         {
-            return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(new string [0])
+            return Host.CreateDefaultBuilder(new string [0])
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.AddCoreConfiguration();
