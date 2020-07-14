@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Mitheti.Wpf.Services;
 
-namespace Mitheti.Wpf.ViewModel
+namespace Mitheti.Wpf.ViewModels
 {
     public abstract class BaseViewModel
     {

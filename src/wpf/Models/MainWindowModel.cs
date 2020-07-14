@@ -1,4 +1,4 @@
-namespace Mitheti.Wpf.Model
+namespace Mitheti.Wpf.Models
 {
     public sealed class MainWindowModel : BaseModel
     { }

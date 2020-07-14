@@ -2,7 +2,7 @@
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
 
-namespace Mitheti.Wpf.ViewModel
+namespace Mitheti.Wpf.ViewModels
 {
     public class MainTabViewModel : BaseViewModel, INotifyPropertyChanged
     {

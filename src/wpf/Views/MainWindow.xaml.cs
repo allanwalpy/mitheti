@@ -4,9 +4,9 @@ using System.Drawing;
 using Forms = System.Windows.Forms;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
-using Mitheti.Wpf.ViewModel;
+using Mitheti.Wpf.ViewModels;
 
-namespace Mitheti.Wpf
+namespace Mitheti.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

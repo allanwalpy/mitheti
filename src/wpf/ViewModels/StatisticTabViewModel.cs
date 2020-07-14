@@ -1,35 +1,37 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
 
-namespace Mitheti.Wpf.ViewModel
+namespace Mitheti.Wpf.ViewModels
 {
-    public class MainWindowViewModel : BaseViewModel
+    public class StatisticTabViewModel : BaseViewModel
     {
         private const int TopAppsCount = 10;
 
         private readonly IStatisticDayOfWeekService _databaseDayOfWeek;
         private readonly IStatisticTopAppService _databaseTopApp;
 
-        public List<string> DayOfWeekString { get; }
-        public List<string> TopAppsString { get; }
+        public List<string> DayOfWeekString { get; private set; }
+        public List<string> TopAppsString { get; private set; }
 
-        public MainWindowViewModel(ILocalizationService localization, IStatisticDayOfWeekService databaseDayOfWeek,
+        public StatisticTabViewModel(ILocalizationService localization, IStatisticDayOfWeekService databaseDayOfWeek,
             IStatisticTopAppService databaseTopApp)
             : base(localization)
         {
             _databaseDayOfWeek = databaseDayOfWeek;
             _databaseTopApp = databaseTopApp;
+            
+            PopulateWithData();
+        }
 
-            DayOfWeekString = Enumerable.Repeat(string.Empty, StatisticDayOfWeekService.DaysOfWeekCount).ToList();
-            SetDayOfWeekString();
-
+        public void PopulateWithData()
+        {
+            DayOfWeekString = GetDayOfWeekString();
             TopAppsString = GetTopAppsString();
         }
 
-        private void SetDayOfWeekString()
+        private List<string> GetDayOfWeekString()
         {
             var totalString = _databaseDayOfWeek.GetTotal()
                 .ConvertAll(TimeSpanAsLocalizedString);
@@ -37,12 +39,16 @@ namespace Mitheti.Wpf.ViewModel
             var percentageString = _databaseDayOfWeek.GetPercentage()
                 .ConvertAll(PercentageAsLocalizedString);
 
-            for (var i = 0; i < 7; i++)
+            const int daysOfWeek = StatisticDayOfWeekService.DaysOfWeekCount;
+            var result = new List<string>();
+            for (var i = 0; i < daysOfWeek; i++)
             {
-                DayOfWeekString[i] = string.Format(Localization[$"Window:Statistic:DayOfWeek:Item"],
+                result.Add(string.Format(Localization[$"Window:Statistic:DayOfWeek:Item"],
                     Localization[$"Window:Statistic:DayOfWeek:Name:{i}"],
-                    totalString[i], percentageString[i]);
+                    totalString[i], percentageString[i]));
             }
+
+            return result;
         }
 
         private string PercentageAsLocalizedString(double value)

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
+using Mitheti.Wpf.Views;
 
 namespace Mitheti.Wpf
 {

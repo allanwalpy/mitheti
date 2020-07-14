@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Mitheti.Wpf.Model
+namespace Mitheti.Wpf.Models
 {
     public sealed class StatisticTabModel : BaseModel
     {
