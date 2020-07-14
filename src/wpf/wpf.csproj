@@ -29,6 +29,7 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/allan-walpy/mitheti</RepositoryUrl>
         <Copyright>MIT license 2020 allan_walpy aka Andrey Lysenkov</Copyright>
+        <ApplicationIcon>Resources/executable.ico</ApplicationIcon>
     </PropertyGroup>
 
     <!-- compilation config; -->
@@ -53,6 +54,7 @@
     <!-- turn off documentation and some nullable warnings; -->
     <PropertyGroup>
         <NoWarn>1591;1573;8618;8622;8625;</NoWarn>
+        
     </PropertyGroup>
 
     <!-- system dependancy; -->

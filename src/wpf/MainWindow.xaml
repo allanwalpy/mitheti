@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Height="600" Width="400" WindowStyle="SingleBorderWindow" Icon="/Resources/appIcon.png">
+        Height="600" Width="400" WindowStyle="SingleBorderWindow" Icon="/Resources/app.png">
     <Grid>
         <TabControl>
             <TabItem x:Name="Main" Header="{Binding Localization[Window:Main:Tab:Title]}">

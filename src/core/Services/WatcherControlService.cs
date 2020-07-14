@@ -24,7 +24,7 @@ namespace Mitheti.Core.Services
             UpdateStatus();
         }
 
-        public async Task StartAsync()
+        public void Start()
         {
             if (IsLaunched)
             {
@@ -35,11 +35,11 @@ namespace Mitheti.Core.Services
 
             _tokenSource = new CancellationTokenSource();
             _watcherTask = _watcher.RunAsync(_tokenSource.Token);
-
+            
             UpdateStatus();
         }
 
-        public async Task StopAsync()
+        public void Stop()
         {
             if (!IsLaunched)
             {

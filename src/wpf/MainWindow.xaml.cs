@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows;
 using Forms = System.Windows.Forms;
 using Mitheti.Core.Services;
@@ -13,6 +15,11 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class MainWindow
     {
+        private const string TrayIconBaseFile = "./Resources/tray";
+        public const string TrayIconOnFile = TrayIconBaseFile + ".on.ico";
+        public const string TrayIconOffFile = TrayIconBaseFile + ".off.ico";
+        public const string TrayIconDefaultFile = TrayIconOffFile;
+
         private readonly IWatcherControlService _watcherControl;
         private readonly ILocalizationService _localization;
         private readonly Forms.NotifyIcon _trayIcon;
@@ -29,6 +36,7 @@ namespace Mitheti.Wpf
 
             _trayIcon = new Forms.NotifyIcon();
             ConfigureTray();
+            _watcherControl.StatusChanged += ChangeTray;
 
             Title = _localization[$"Window:Title"];
             Closing += HideWindow;
@@ -38,7 +46,7 @@ namespace Mitheti.Wpf
         {
             //TODO: make separate class configuration for tray?;
             _trayIcon.MouseClick += OnTrayIconClick;
-            _trayIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
+            _trayIcon.Icon = new Icon(TrayIconDefaultFile);
             _trayIcon.Visible = true;
 
             _trayIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
@@ -63,6 +71,9 @@ namespace Mitheti.Wpf
 
         private void OnTrayClickExit(object sender, EventArgs args) => Exit();
 
+        private void ChangeTray(object sender, WatcherStatusEventArgs args)
+            => _trayIcon.Icon = new Icon(args.IsLaunched ? TrayIconOnFile : TrayIconOffFile);
+
         private void HideWindow(object sender, CancelEventArgs args)
         {
             args.Cancel = true;
@@ -70,15 +81,16 @@ namespace Mitheti.Wpf
         }
 
         private void OnStartClick(object sender, RoutedEventArgs args) =>
-            _watcherControl.StartAsync().ConfigureAwait(false);
+            Task.Run(_watcherControl.Start).ConfigureAwait(false);
 
         private void OnStopClick(object sender, RoutedEventArgs args) =>
-            _watcherControl.StopAsync().ConfigureAwait(false);
+            Task.Run(_watcherControl.Stop).ConfigureAwait(false);
 
         private void OnExitClick(object sender, RoutedEventArgs args) => Exit();
 
         private void Exit()
         {
+            _watcherControl.StatusChanged -= ChangeTray;
             _trayIcon.MouseClick -= OnTrayIconClick;
             _trayIcon.ContextMenuStrip.Dispose();
             _trayIcon.Dispose();

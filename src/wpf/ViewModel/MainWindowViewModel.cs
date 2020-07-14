@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
 
@@ -70,8 +71,8 @@ namespace Mitheti.Wpf.ViewModel
         private List<string> GetTopAppsString()
         {
             var data = _databaseTopApp.Get(TopAppsCount);
-
-            return data.ConvertAll<string>(
+            
+            return data.ConvertAll(
                 (info) => string.Format(Localization[$"Window:Statistic:TopApp:Item"],
                     string.Format(Localization[$"Window:Statistic:TopApp:Item:AppName"], 
                         info.AppName ?? Localization[$"Window:Statistic:TopApp:Item:AppName:Null"]),

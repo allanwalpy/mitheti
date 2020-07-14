@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace Mitheti.Core.Services
 {
     public delegate void StatusChangedHandler(object sender, WatcherStatusEventArgs args);
@@ -10,8 +8,8 @@ namespace Mitheti.Core.Services
 
         bool IsLaunched { get; }
 
-        Task StartAsync();
+        void Start();
 
-        Task StopAsync();
+        void Stop();
     }
 }

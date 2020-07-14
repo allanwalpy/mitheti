@@ -13,7 +13,7 @@ namespace Mitheti.Core.Services
         public bool Equals(TopAppInfo other)
             => other != null && AppName == other.AppName && TotalDuration == other.TotalDuration;
 
-        //? simplifing: `TotalDuration.CompareTo((other?.TotalDuration ?? NullDuration));`;
+        //? simplifying: `TotalDuration.CompareTo((other?.TotalDuration ?? NullDuration));`;
         public int CompareTo(TopAppInfo other)
             => (other?.TotalDuration ?? NullDuration) - TotalDuration;
     }
