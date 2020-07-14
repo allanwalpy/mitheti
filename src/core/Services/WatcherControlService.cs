@@ -1,9 +1,10 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Mitheti.Core.Services
 {
-    public class WatcherControlService : IWatcherControlService
+    public class WatcherControlService : IWatcherControlService, IDisposable
     {
         public const int StopWait = 500;
 
@@ -49,7 +50,7 @@ namespace Mitheti.Core.Services
             IsLaunched = false;
 
             _tokenSource.Cancel();
-            Task.WhenAll(_watcherTask).Wait(StopWait);
+            _watcherTask.WaitCancelled(StopWait);
 
             _tokenSource.Dispose();
             _tokenSource = null;
@@ -58,5 +59,7 @@ namespace Mitheti.Core.Services
         }
 
         private void UpdateStatus() => StatusChanged?.Invoke(this, new WatcherStatusEventArgs(IsLaunched));
+
+        public void Dispose() => Stop();
     }
 }

@@ -19,7 +19,7 @@ namespace Mitheti.Core.Services
             _logger = logger;
             _database = database;
 
-            _appList = config.GetSection(AppListConfigKey).ParseAsList(new List<string>());
+            _appList = config.GetList(AppListConfigKey, new List<string>());
         }
 
         public void Add(string app, int delay)

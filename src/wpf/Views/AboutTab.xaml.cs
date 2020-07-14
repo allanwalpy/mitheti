@@ -13,7 +13,7 @@ namespace Mitheti.Wpf.Views
             DataContext = new AboutTabViewModel(localization);
             InitializeComponent();
 
-            SetCollaborators(localization.Config.GetSection("Window:About:Collaborators").ParseAsList(new List<string>()));
+            SetCollaborators(localization.Config.GetList("Window:About:Collaborators", new List<string>()));
         }
 
         // TODO: add from github api?;

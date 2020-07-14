@@ -52,7 +52,7 @@ namespace Mitheti.Core.Services
             {
                 SaveToDatabase();
                 
-                await Task.Delay(delay, stoppingToken).ThrowNoExceptionOnCancelled();
+                await Task.Delay(delay, stoppingToken); //.ContinueWith(Extensions.NoErrorOnCancellation);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Mitheti.Core.Services
         public void Dispose()
         {
             _tokenSource.Cancel();
-            Task.WhenAll(_savingTask).Wait(StopWait);
+            _savingTask.WaitCancelled(StopWait);
             _tokenSource.Dispose();
             
             //? save leftovers;

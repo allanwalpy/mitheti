@@ -8,8 +8,7 @@
              d:DesignHeight="500" d:DesignWidth="350">
     <StackPanel>
         <Label Content="{Binding IsLaunchedString}" />
-        <Button Click="OnStartClick" Content="{Binding Localization[Window:Main:Button:Start]}" />
-        <Button Click="OnStopClick" Content="{Binding Localization[Window:Main:Button:Stop]}" />
+        <Button x:Name="LauncherButton" Click="OnLauncherClick" />
         <Button Click="OnExitClick" Content="{Binding Localization[Window:Main:Button:Exit]}" />
     </StackPanel>
 </UserControl>

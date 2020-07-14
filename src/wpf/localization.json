@@ -15,6 +15,13 @@
                     "False": "Слежение отключено"
                 },
                 "Button": {
+                    "Launcher": {
+                        "Comment": "IsLaunchedBeforePressed:IsStatusChanging",
+                        "True:True": "останавливается...",
+                        "True:False": "Остановить",
+                        "False:True": "запускается...",
+                        "False:False": "Запустить"
+                    },
                     "Start": "Запустить",
                     "Stop": "Остановить",
                     "Exit": "Выйти из приложения"

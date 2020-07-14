@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,28 +34,14 @@ namespace Mitheti.Core.Services
             return config.AddJsonFile(filePath, isOptional, false);
         }
 
-        //TODO:FIXME: possible cause of endless task await/Wait on cancel;
-        internal static Task ThrowNoExceptionOnCancelled(this Task configuredTask)
-        {
-            return configuredTask.ContinueWith(ThrowNoExceptionOnCancelledContinueWith);
-        }
+        internal static void WaitCancelled(this Task task, int timeoutMilliseconds)
+            => Task.WaitAny(new[] {task}, timeoutMilliseconds);
 
-        private static void ThrowNoExceptionOnCancelledContinueWith(Task task)
-        {
-            if (!task.IsCanceled && task.Exception != null)
-            {
-                throw task.Exception;
-            }
+        //? on `"someKey": []`, `GetSection(key).Get<string[]>()` returns `null`, not `string[0]`; `GetValue<T[]>` not working for array/list;
+        public static List<T> GetList<T>(this IConfigurationSection config, string key, List<T> defaultValue = null)
+            => config.GetSection(key).Get<T[]>()?.ToList() ?? defaultValue; //TODO:delete? meaning?;
 
-            if (task.IsCanceled)
-            {
-                //TODO:FIXME: is legit?;
-                task.Dispose();
-            }
-        }
-
-        //? on `"someKey": []`, `Get<string[]>()` returns `null`, not `string[0]`;
-        public static List<T> ParseAsList<T>(this IConfigurationSection config, List<T> defaultValue = null)
-            => config.Get<T[]>()?.ToList() ?? defaultValue; //TODO:delete? meaning?;
+        public static List<T> GetList<T>(this IConfiguration config, string key, List<T> defaultValue = null)
+            => config.GetSection(key).Get<T[]>()?.ToList() ?? defaultValue;
     }
 }

@@ -28,7 +28,7 @@ namespace Mitheti.Core.Services
                     _database.Add(processName, _delay);
                 }
 
-                await Task.Delay(_delay, token).ThrowNoExceptionOnCancelled();
+                await Task.Delay(_delay, token);
             }
         }
     }
