@@ -5,29 +5,32 @@ namespace Mitheti.Core.Services
 {
     public class WatcherControlService : IWatcherControlService
     {
+        public const int StopWait = 500;
+
         private readonly IWatcherService _watcher;
         private CancellationTokenSource _tokenSource;
         private Task _watcherTask;
 
-        public bool IsLaunched { get; private set; }
-
         public event StatusChangedHandler StatusChanged;
+
+        public bool IsLaunched { get; private set; }
 
         public WatcherControlService(IWatcherService watcher)
         {
             _watcher = watcher;
             _tokenSource = null;
-
             IsLaunched = false;
+
             UpdateStatus();
         }
 
-        public void Start()
+        public async Task StartAsync()
         {
             if (IsLaunched)
             {
                 return;
             }
+
             IsLaunched = true;
 
             _tokenSource = new CancellationTokenSource();
@@ -42,10 +45,11 @@ namespace Mitheti.Core.Services
             {
                 return;
             }
+
             IsLaunched = false;
-            
+
             _tokenSource.Cancel();
-            await Task.WhenAny(_watcherTask);
+            Task.WhenAll(_watcherTask).Wait(StopWait);
 
             _tokenSource.Dispose();
             _tokenSource = null;

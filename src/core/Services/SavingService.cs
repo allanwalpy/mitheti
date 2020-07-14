@@ -11,6 +11,7 @@ namespace Mitheti.Core.Services
         public const string RecordDelayConfigKey = "database:delay";
         public const int RecordDelayDefault = 1;
         public const int MillisecondsInMinute = 60 * 1000;
+        public const int StopWait = 500;
 
         private readonly IDatabaseService _database;
         
@@ -49,9 +50,9 @@ namespace Mitheti.Core.Services
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(delay, stoppingToken).ThrowNoExceptionOnCancelled();
-
                 SaveToDatabase();
+                
+                await Task.Delay(delay, stoppingToken).ThrowNoExceptionOnCancelled();
             }
         }
 
@@ -74,11 +75,10 @@ namespace Mitheti.Core.Services
 
         public void Dispose()
         {
-            //? stop saving to database task;
             _tokenSource.Cancel();
-            Task.WhenAll(_savingTask).Wait();
+            Task.WhenAll(_savingTask).Wait(StopWait);
             _tokenSource.Dispose();
-
+            
             //? save leftovers;
             SaveToDatabase();
         }

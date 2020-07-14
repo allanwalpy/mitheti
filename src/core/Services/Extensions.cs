@@ -9,7 +9,7 @@ namespace Mitheti.Core.Services
     public static class Extensions
     {
         public const string ConfigFile = "config.json";
-        
+
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             services.TryAddSingleton<IDatabaseService, DatabaseService>();
@@ -27,20 +27,27 @@ namespace Mitheti.Core.Services
         public static IConfigurationBuilder AddCoreConfiguration(this IConfigurationBuilder config,
             bool isOptional = true)
         {
-            
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), ConfigFile);
             return config.AddJsonFile(filePath, isOptional, false);
         }
 
         internal static Task ThrowNoExceptionOnCancelled(this Task configuredTask)
         {
-            return configuredTask.ContinueWith((task) =>
+            return configuredTask.ContinueWith(ThrowNoExceptionOnCancelledContinueWith);
+        }
+
+        private static void ThrowNoExceptionOnCancelledContinueWith(Task task)
+        {
+            if (!task.IsCanceled && task.Exception != null)
             {
-                if (!task.IsCanceled && task.Exception != null)
-                {
-                    throw task.Exception;
-                }
-            });
+                throw task.Exception;
+            }
+
+            if (task.IsCanceled)
+            {
+                //TODO:FIXME: is legit?;
+                task.Dispose();
+            }
         }
     }
 }

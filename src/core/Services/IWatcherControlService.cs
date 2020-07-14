@@ -10,7 +10,7 @@ namespace Mitheti.Core.Services
 
         bool IsLaunched { get; }
 
-        void Start();
+        Task StartAsync();
 
         Task StopAsync();
     }

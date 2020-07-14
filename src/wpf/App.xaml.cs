@@ -45,8 +45,11 @@ namespace Mitheti.Wpf
 
         private async void ExitApp(object sender, ExitEventArgs args)
         {
-            await Host.StopAsync(TimeSpan.FromSeconds(WaitForStopSeconds));
-
+            using (Host)
+            {
+                await Host.StopAsync(TimeSpan.FromSeconds(WaitForStopSeconds));
+            }
+            
             _instanceMutex?.ReleaseMutex();
         }
 

@@ -71,9 +71,11 @@ namespace Mitheti.Wpf
             Close();
         }
 
-        private void OnStartClick(object sender, RoutedEventArgs args) => _watcherControl.Start();
+        private void OnStartClick(object sender, RoutedEventArgs args) =>
+            _watcherControl.StartAsync().ConfigureAwait(false);
 
-        private void OnStopClick(object sender, RoutedEventArgs args) => _watcherControl.StopAsync().Wait();
+        private void OnStopClick(object sender, RoutedEventArgs args) =>
+            _watcherControl.StopAsync().ConfigureAwait(false);
 
         private void HideWindow(object sender, CancelEventArgs args)
         {
