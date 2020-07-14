@@ -20,8 +20,7 @@ namespace Mitheti.Core.Services
             _logger = logger;
             _database = database;
 
-            //? on `"applist": []`, `Get<string[]>()` returns `null`, not `string[0]`;
-            _appList = config.GetSection(AppListConfigKey).Get<string[]>()?.ToList() ?? new List<string>();
+            _appList = config.GetSection(AppListConfigKey).ParseAsList(new List<string>());
         }
 
         public void Add(string app, int delay)

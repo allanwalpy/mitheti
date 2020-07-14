@@ -66,5 +66,15 @@
     <ItemGroup>
         <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Page Update="Views\AboutTab.xaml">
+        <Generator></Generator>
+      </Page>
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Views\AboutTab.xaml.cs">
+        <DependentUpon>AboutTab.xaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
 
 </Project>

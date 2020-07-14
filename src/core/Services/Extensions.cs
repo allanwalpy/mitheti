@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,5 +52,9 @@ namespace Mitheti.Core.Services
                 task.Dispose();
             }
         }
+
+        //? on `"someKey": []`, `Get<string[]>()` returns `null`, not `string[0]`;
+        public static List<T> ParseAsList<T>(this IConfigurationSection config, List<T> defaultValue = null)
+            => config.Get<T[]>()?.ToList() ?? defaultValue; //TODO:delete? meaning?;
     }
 }

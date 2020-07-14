@@ -10,33 +10,31 @@ namespace Mitheti.Wpf.Services
         private const string SectionKey = "localization";
 
         public string this[string key, string defaultValue]
-            => Data.Keys.Contains(key) ? Data[key] : defaultValue;
+        {
+            get => Config.GetValue(key, defaultValue); //TODO:FIXME: Data.Keys.Contains(key) ? Data[key] : defaultValue;
+        }
 
         public Dictionary<string, string> Data { get; }
+        public IConfigurationSection Config { get; }
 
         public LocalizationService(IConfiguration config)
         {
             Data = new Dictionary<string, string>();
-            PopulateData(config.GetSection(SectionKey));
+            Config = config.GetSection(SectionKey);
+            PopulateData(Config);
         }
 
         //TODO:FIXME: find better solution;
         private void PopulateData(IConfigurationSection section)
         {
             List<IConfigurationSection> records = section.GetChildren().ToList();
-            while (records.Count != 0)
+            while (records.Count > 0)
             {
                 var record = records.First();
                 var children = record.GetChildren();
-                if (children.Any())
-                {
-                    records.AddRange(children);
-                }
 
-                if (record.Value != null)
-                {
-                    Data.Add(record.Path.Substring(SectionKey.Length + 1), record.Value);
-                }
+                records.AddRange(children);
+                Data.Add(record.Path.Substring(SectionKey.Length + 1), record.Value ?? string.Empty);
 
                 records.RemoveAt(0);
             }

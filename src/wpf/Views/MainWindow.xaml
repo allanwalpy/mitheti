@@ -8,11 +8,9 @@
         Height="600" Width="400" WindowStyle="SingleBorderWindow" Icon="/Resources/app.png">
     <Grid>
         <TabControl>
-            <TabItem x:Name="Main" Header="{Binding Localization[Window:Main:Tab:Title]}" />
-            <TabItem x:Name="Statistic" Header="{Binding Localization[Window:Statistic:Tab:Title]}" />
-            <TabItem x:Name="About" Header="{Binding Localization[Window:About:Tab:Title]}">
-                <Label Content="TODO: NOT IMPLEMENTED" />
-            </TabItem>
+            <TabItem x:Name="TabMain" Header="{Binding Localization[Window:Main:Tab:Title]}" />
+            <TabItem x:Name="TabStatistic" Header="{Binding Localization[Window:Statistic:Tab:Title]}" />
+            <TabItem x:Name="TabAbout" Header="{Binding Localization[Window:About:Tab:Title]}" />
             <!-- TODO: add settings changing; -->
             <!-- TODO: add database management (clear, see size of it); -->
         </TabControl>

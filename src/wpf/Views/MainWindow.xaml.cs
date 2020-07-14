@@ -30,8 +30,9 @@ namespace Mitheti.Wpf.Views
 
             DataContext = new MainWindowViewModel(localization, dayOfWeek, topApp);
             InitializeComponent();
-            Main.Content = new MainTab(localization, watcherControl);
-            Statistic.Content = new StatisticTab(localization, dayOfWeek, topApp);
+            TabMain.Content = new MainTab(localization, watcherControl);
+            TabStatistic.Content = new StatisticTab(localization, dayOfWeek, topApp);
+            TabAbout.Content = new AboutTab(localization);
 
             _tray = new Forms.NotifyIcon();
             ConfigureTray();

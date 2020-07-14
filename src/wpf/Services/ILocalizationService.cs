@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace Mitheti.Wpf.Services
 {
@@ -7,5 +8,7 @@ namespace Mitheti.Wpf.Services
         string this[string key, string defaultValue = ""] { get; }
         
         Dictionary<string, string> Data { get; }
+        
+        IConfigurationSection Config { get; }
     }
 }
