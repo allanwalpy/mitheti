@@ -13,29 +13,24 @@ namespace Mitheti.Wpf
     /// </summary>
     public partial class MainWindow
     {
-        private readonly IStatisticDayOfWeekService _dayOfWeek;
-        private readonly IStatisticTopAppService _topApp;
         private readonly IWatcherControlService _watcherControl;
         private readonly ILocalizationService _localization;
         private readonly Forms.NotifyIcon _trayIcon;
-        private StatisticWindow _statisticWindow;
 
         public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl,
             IStatisticDayOfWeekService dayOfWeek, IStatisticTopAppService topApp)
         {
             _localization = localization;
             _watcherControl = watcherControl;
-            _dayOfWeek = dayOfWeek;
-            _topApp = topApp;
 
-            DataContext = new MainWindowViewModel(localization, watcherControl);
+            DataContext = new MainWindowViewModel(localization, watcherControl, dayOfWeek, topApp);
 
             InitializeComponent();
 
             _trayIcon = new Forms.NotifyIcon();
             ConfigureTray();
 
-            Title = _localization[$"{nameof(MainWindow)}:Title"];
+            Title = _localization[$"Window:Title"];
             Closing += HideWindow;
         }
 
@@ -68,9 +63,6 @@ namespace Mitheti.Wpf
 
         private void OnTrayClickExit(object sender, EventArgs args)
         {
-            _statisticWindow?.Close();
-            _statisticWindow = null;
-            
             _trayIcon.MouseClick -= OnTrayIconClick;
             _trayIcon.ContextMenuStrip.Dispose();
             _trayIcon.Dispose();
@@ -82,22 +74,6 @@ namespace Mitheti.Wpf
         private void OnStartClick(object sender, RoutedEventArgs args) => _watcherControl.Start();
 
         private void OnStopClick(object sender, RoutedEventArgs args) => _watcherControl.StopAsync().Wait();
-
-        private void OnStatisticClick(object sender, RoutedEventArgs e)
-        {
-            if (_statisticWindow == null)
-            {
-                _statisticWindow = new StatisticWindow(_localization, _dayOfWeek, _topApp);
-                _statisticWindow.Closed += NullStaticWindowOnClosed;
-            }
-
-            _statisticWindow.Show();
-        }
-
-        private void NullStaticWindowOnClosed(object sender, EventArgs args)
-        {
-            _statisticWindow = null;
-        }
 
         private void HideWindow(object sender, CancelEventArgs args)
         {

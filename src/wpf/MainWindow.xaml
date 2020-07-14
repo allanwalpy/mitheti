@@ -4,11 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Height="200" Width="300" WindowStyle="SingleBorderWindow" Icon="/Resources/appIcon.png">
+        Height="600" Width="400" WindowStyle="SingleBorderWindow" Icon="/Resources/appIcon.png">
     <Grid>
-        <Label Content="{Binding IsLaunchedString}" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <Button Click="OnStartClick" Content="{Binding Localization[MainWindow:Button:Start]}" Margin="0,55,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Click="OnStopClick" Content="{Binding Localization[MainWindow:Button:Stop]}" Margin="0,80,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Click="OnStatisticClick" Content="{Binding Localization[MainWindow:Button:Statistic]}" Margin="0,105,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TabControl>
+            <TabItem x:Name="Main" Header="{Binding Localization[Window:Main:Tab:Title]}">
+                <TabItem.Content>
+                    <StackPanel>
+                        <Label Content="{Binding IsLaunchedString}" />
+                        <Button Click="OnStartClick" Content="{Binding Localization[Window:Main:Button:Start]}" />
+                        <Button Click="OnStopClick" Content="{Binding Localization[Window:Main:Button:Stop]}" />
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="Statistic" Header="{Binding Localization[Window:Statistic:Tab:Title]}">
+                <StackPanel>
+                    <!-- DayOfWeek labels -->
+                    <Label Content="{Binding DayOfWeekString[1]}" />
+                    <Label Content="{Binding DayOfWeekString[2]}" />
+                    <Label Content="{Binding DayOfWeekString[3]}" />
+                    <Label Content="{Binding DayOfWeekString[4]}" />
+                    <Label Content="{Binding DayOfWeekString[5]}" />
+                    <Label Content="{Binding DayOfWeekString[6]}" />
+                    <Label Content="{Binding DayOfWeekString[0]}" />
+                    <!-- TopApp labels; -->
+                    <Label Content="{Binding TopAppsString[0]}" />
+                    <Label Content="{Binding TopAppsString[1]}" />
+                    <Label Content="{Binding TopAppsString[2]}" />
+                    <Label Content="{Binding TopAppsString[3]}" />
+                    <Label Content="{Binding TopAppsString[4]}" />
+                    <Label Content="{Binding TopAppsString[5]}" />
+                    <Label Content="{Binding TopAppsString[6]}" />
+                    <Label Content="{Binding TopAppsString[7]}" />
+                    <Label Content="{Binding TopAppsString[8]}" />
+                    <Label Content="{Binding TopAppsString[9]}" />
+                </StackPanel>
+            </TabItem>
+            <TabItem x:Name="About" Header="{Binding Localization[Window:About:Tab:Title]}">
+                <Label Content="TODO: NOT IMPLEMENTED" />
+            </TabItem>
+        </TabControl>
+        <!-- TODO: add settings changing; -->
+        <!-- TODO: add database management (clear, see size of it); -->
     </Grid>
 </Window>

@@ -1,44 +1,50 @@
 {
     "localization": {
         "Tray": {
-            "Options" :  {
+            "Options": {
                 "Show": "Показать окно",
-                "Close": "Выйти"  
+                "Close": "Выйти"
             }
         },
-        "MainWindow": {
+        "Window": {
             "Title": "Mind The Time",
-            "StatusLabel": {
-                "True": "Слежение активно",
-                "False": "Слежение отключено"
+            "Main": {
+                "Tab:Title": "Отслеживание",
+                "StatusLabel": {
+                    "True": "Слежение активно",
+                    "False": "Слежение отключено"
+                },
+                "Button": {
+                    "Start": "Запустить",
+                    "Stop": "Остановить",
+                    "Statistic": "Посмотреть статистику"
+                }
             },
-            "Button": {
-                "Start" : "Запустить",
-                "Stop": "Остановить",
-                "Statistic": "Посмотреть статистику"    
-            }            
-        },
-        "StatisticWindow": {
-            "Title": "Статистика",
-            "DayOfWeek": {
-                "Percentage:Item": "{0}",
-                "Total:Item": "{0:F0} дн. {1} ч. {2} мин. {3} сек.",
-                "Item": "{0}: {1} [{2}]",
-                "Name": [
-                    "Воскресенье",
-                    "Понедельник",
-                    "Вторник",
-                    "Среда",
-                    "Четверг",
-                    "Пятница",
-                    "Суббота"
-                ]
+            "Statistic": {
+                "Tab:Title": "Статистика",
+                "DayOfWeek": {
+                    "Percentage:Item": "{0}",
+                    "Total:Item": "{0:F0} дн. {1} ч. {2} мин. {3} сек.",
+                    "Item": "{0}: {1} [{2}]",
+                    "Name": [
+                        "Воскресенье",
+                        "Понедельник",
+                        "Вторник",
+                        "Среда",
+                        "Четверг",
+                        "Пятница",
+                        "Суббота"
+                    ]
+                },
+                "TopApp": {
+                    "Item": "{0}: {1}",
+                    "Item:AppName": "{0}",
+                    "Item:AppName:Null": "--- пусто ---",
+                    "Item:Time": "{0:F0} дн. {1} ч. {2} мин. {3} сек."
+                }
             },
-            "TopApp": {
-                "Item": "{0}: {1}",
-                "Item:AppName": "{0}",
-                "Item:AppName:Null": "--- пусто ---",
-                "Item:Time": "{0:F0} дн. {1} ч. {2} мин. {3} сек."
+            "About": {
+                "Tab:Title": "О приложении"
             }
         },
         "Formats": {
