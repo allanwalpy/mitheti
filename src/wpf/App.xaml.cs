@@ -1,101 +1,71 @@
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Windows;
-
-using Forms = System.Windows.Forms;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Mitheti.Core.Services;
+using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
         public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
+        public const int ExitCodeAlreadyLaunched = 101; //? see https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499- ;
+        public const string LocalizationFile = "localization.json";
+        private const int WaitForStopSeconds = 5;
 
-        private Mutex _instanceMutex;
-        private Forms.NotifyIcon _notifyIcon;
+        public readonly IHost Host;
+        private readonly Mutex _instanceMutex;
 
-        protected override void OnStartup(StartupEventArgs e)
+        public App()
         {
-            this.ShutdownIfMoreThanOneInstance();
+            _instanceMutex = new Mutex(true, $"Global\\{AppId}", out var isCreatedNew);
 
-            base.OnStartup(e);
-
-            MainWindow = new MainWindow();
-            MainWindow.Closing += this.CloseWindow;
-
-            this.SetNotifyIcon();
-
-            MainWindow.Show();
-        }
-
-        private void ShutdownIfMoreThanOneInstance()
-        {
-            bool isCreatedNew;
-            _instanceMutex = new Mutex(true, $"Global\\{AppId}", out isCreatedNew);
-
-            if (isCreatedNew)
+            if (!isCreatedNew)
             {
-                return;
+                _instanceMutex = null;
+                Application.Current.Shutdown(ExitCodeAlreadyLaunched);
             }
 
-            _instanceMutex = null;
-            Application.Current.Shutdown();
+            Host = GetDefaultHost();
         }
 
-        private void SetNotifyIcon()
+        private async void StartupApp(object sender, StartupEventArgs args)
         {
-            _notifyIcon = new Forms.NotifyIcon();
-
-            _notifyIcon.MouseClick += this.OnTrayIconClick;
-            _notifyIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
-            _notifyIcon.Visible = true;
-
-            _notifyIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
-            _notifyIcon.ContextMenuStrip.Items.Add("Show").Click += this.ShowWindow;
-            _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += this.ExitApp;
-        }
-
-        private void OnTrayIconClick(object sender, Forms.MouseEventArgs args)
-        {
-            bool isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
-            if (isLeftClick)
-            {
-                this.ShowWindow(sender, args);
-            }
-        }
-
-        private void ShowWindow(object? sender, EventArgs args)
-        {
-            MainWindow.Activate();
+            MainWindow = Host.Services.GetService<MainWindow>();
             MainWindow.Show();
+
+            await Host.StartAsync();
         }
 
-        private void ExitApp(object sender, EventArgs args)
+        private async void ExitApp(object sender, ExitEventArgs args)
         {
-            _notifyIcon.Click -= this.ShowWindow;
-            _notifyIcon.DoubleClick -= this.ShowWindow;
+            await Host.StopAsync(TimeSpan.FromSeconds(WaitForStopSeconds));
 
-            MainWindow.Closing -= this.CloseWindow;
-            MainWindow.Close();
-
-            _notifyIcon.Dispose();
-            _notifyIcon = null;
-        }
-
-        private void CloseWindow(object sender, CancelEventArgs cancelArgs)
-        {
-            cancelArgs.Cancel = true;
-            MainWindow.Hide();
-        }
-
-        protected override void OnExit(ExitEventArgs args)
-        {
             _instanceMutex?.ReleaseMutex();
+        }
 
-            base.OnExit(args);
+        private IHost GetDefaultHost()
+        {
+            return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(new string [0])
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddCoreConfiguration();
+                    config.AddJsonFile(LocalizationFile, false, false);
+                })
+                .ConfigureServices((hostingContext, services) =>
+                {
+                    services.AddCoreServices();
+                    services.AddSingleton(this);
+                    services.AddSingleton<ILocalizationService, LocalizationService>();
+                    services.AddSingleton<MainWindow>();
+                })
+                .Build();
         }
     }
 }

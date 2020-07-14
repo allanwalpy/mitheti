@@ -1,28 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <!-- assembly config; -->
     <PropertyGroup>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <UseWPF>true</UseWPF>
-        <UseWindowsForms>true</UseWindowsForms>
         <LangVersion>latest</LangVersion>
         <RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
-        <AssemblyName>Mitheti.Wpf</AssemblyName>
-        <RootNamespace>Mitheti.Wpf</RootNamespace>
-        <Nullable>enable</Nullable>
+        <AssemblyName>Mitheti.Worker</AssemblyName>
+        <RootNamespace>Mitheti.Worker</RootNamespace>
     </PropertyGroup>
 
     <!-- package info; -->
     <PropertyGroup>
-        <AssemblyTitle>Mitheti.Wpf</AssemblyTitle>
-        <PackageId>Mitheti.Wpf</PackageId>
+        <AssemblyTitle>Mitheti.Worker</AssemblyTitle>
+        <PackageId>Mitheti.Worker</PackageId>
         <Version>0.5.1-alpha</Version>
         <AssemblyVersion>0.5.1</AssemblyVersion>
         <FileVersion>0.5.1</FileVersion>
         <Authors>allan_walpy aka Andrey Lysenkov</Authors>
         <NeutralLanguage>en-US</NeutralLanguage>
-        <Description>gui controlling app</Description>
+        <Description>counting active windows time</Description>
         <PackageProjectUrl>https://github.com/allan-walpy/mitheti</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/allan-walpy/mitheti/blob/master/license</PackageLicenseUrl>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -39,12 +36,6 @@
         <IncludeSource>true</IncludeSource>
     </PropertyGroup>
 
-    <!-- additional files; -->
-    <ItemGroup>
-        <Content Include="./Resources/**" CopyToOutputDirectory="Always" />
-        <Content Include="./localization.json" CopyToOutputDirectory="Always" />
-    </ItemGroup>
-
     <!-- debug configuration; -->
     <PropertyGroup Condition="$(Configuration)=='Debug'">
         <DefineConstants>DEBUG;</DefineConstants>
@@ -58,6 +49,7 @@
     <!-- system dependancy; -->
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.5" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.1.5" />
     </ItemGroup>
 
     <!-- inner solution dependancy; -->

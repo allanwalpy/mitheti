@@ -1,9 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <!-- assembly config; -->
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>latest</LangVersion>
         <RuntimeIdentifiers>win-x64;</RuntimeIdentifiers>
         <AssemblyName>Mitheti.Core</AssemblyName>
@@ -14,9 +13,9 @@
     <PropertyGroup>
         <AssemblyTitle>Mitheti.Core</AssemblyTitle>
         <PackageId>Mitheti.Core</PackageId>
-        <Version>0.4.0-alpha</Version>
-        <AssemblyVersion>0.4.0</AssemblyVersion>
-        <FileVersion>0.4.0</FileVersion>
+        <Version>0.5.1-alpha</Version>
+        <AssemblyVersion>0.5.1</AssemblyVersion>
+        <FileVersion>0.5.1</FileVersion>
         <Authors>allan_walpy aka Andrey Lysenkov</Authors>
         <NeutralLanguage>en-US</NeutralLanguage>
         <Description>counting active windows time</Description>
@@ -25,6 +24,7 @@
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/allan-walpy/mitheti</RepositoryUrl>
+        <Copyright>MIT license 2020 allan_walpy aka Andrey Lysenkov</Copyright>
     </PropertyGroup>
 
     <!-- compilation config; -->
@@ -40,23 +40,21 @@
         <DefineConstants>DEBUG;</DefineConstants>
     </PropertyGroup>
 
-    <!-- turn off documentation warnings; -->
+    <!-- turn off documentation and some nullable warnings; -->
     <PropertyGroup>
-        <NoWarn>1591;1573;</NoWarn>
+        <NoWarn>1591;1573;8618;8622;8625;</NoWarn>
     </PropertyGroup>
+
+    <!-- additional files; -->
+    <ItemGroup>
+        <Content Include="./config.json" CopyToOutputDirectory="Always" />
+    </ItemGroup>
 
     <!-- system dependancy; -->
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.*" />
-        <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.*" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.*" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.*" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.*" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
     </ItemGroup>
-
-    <!-- 3rd party dependancy; -->
-    <ItemGroup>
-        <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.*" />
-    </ItemGroup>
-
+    
 </Project>

@@ -1,6 +1,6 @@
 :? remove all build & restore files;
 
 rmdir /s /q .\out
-rmdir /s /q .\src\core\obj
-rmdir /s /q .\src\web\obj
-rmdir /s /q .\src\wpf\obj
+rmdir /s /q .\src\Core\obj
+rmdir /s /q .\src\Worker\obj
+rmdir /s /q .\src\Wpf\obj

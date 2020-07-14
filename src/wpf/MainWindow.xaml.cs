@@ -1,78 +1,108 @@
 using System;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+using Forms = System.Windows.Forms;
+using Mitheti.Core.Services;
+using Mitheti.Wpf.Services;
+using Mitheti.Wpf.ViewModel;
 
 namespace Mitheti.Wpf
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private HostLauncher _hostLauncher;
-        private Label _statusLabel;
+        private readonly IStatisticDayOfWeekService _dayOfWeek;
+        private readonly IStatisticTopAppService _topApp;
+        private readonly IWatcherControlService _watcherControl;
+        private readonly ILocalizationService _localization;
+        private readonly Forms.NotifyIcon _trayIcon;
+        private StatisticWindow _statisticWindow;
 
-        public MainWindow()
+        public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl,
+            IStatisticDayOfWeekService dayOfWeek, IStatisticTopAppService topApp)
         {
+            _localization = localization;
+            _watcherControl = watcherControl;
+            _dayOfWeek = dayOfWeek;
+            _topApp = topApp;
+
+            DataContext = new MainWindowViewModel(localization, watcherControl);
+
             InitializeComponent();
 
-            _statusLabel = null;
+            _trayIcon = new Forms.NotifyIcon();
+            ConfigureTray();
 
-            _hostLauncher = new HostLauncher();
-            _hostLauncher.OnStatusChange += this.StatusChangeEvent;
+            Title = _localization[$"{nameof(MainWindow)}:Title"];
+            Closing += HideWindow;
         }
 
-        protected override void OnClosed(EventArgs args)
+        private void ConfigureTray()
         {
-            _hostLauncher.Dispose();
+            //TODO: make separate class configuration for tray?;
+            _trayIcon.MouseClick += OnTrayIconClick;
+            _trayIcon.Icon = new System.Drawing.Icon("./Resources/trayIcon.ico");
+            _trayIcon.Visible = true;
 
-            base.OnClosed(args);
+            _trayIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
+            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Options:Show"]).Click += OnTrayClickShow;
+            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Options:Close"]).Click += OnTrayClickExit;
         }
 
-        public void StartClick(object sender, RoutedEventArgs args)
+        private void OnTrayIconClick(object? sender, Forms.MouseEventArgs args)
         {
-            _hostLauncher.StartAsync().ConfigureAwait(false);
-        }
-
-        public void StopClick(object sender, RoutedEventArgs args)
-        {
-            _hostLauncher.StopAsync().ConfigureAwait(false);
-        }
-
-        //TODO:FIXME: use setting values, not just magic strings;
-        //TODO: open in internal browser on new window;
-        public void StatisticClick(object sender, RoutedEventArgs e)
-        {
-            WebWindow window = new WebWindow();
-            window.Show();
-        }
-
-        private void OnStatusLabelLoaded(object sender, RoutedEventArgs args)
-        {
-            //? save status label;
-            _statusLabel = sender as Label;
-            if (_statusLabel == null)
+            var isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
+            if (isLeftClick)
             {
-                throw new ArgumentNullException(nameof(_statusLabel), "label not founded");
+                OnTrayClickShow(sender, args);
+            }
+        }
+
+        private void OnTrayClickShow(object? sender, EventArgs args)
+        {
+            Activate();
+            Show();
+        }
+
+        private void OnTrayClickExit(object sender, EventArgs args)
+        {
+            _statisticWindow?.Close();
+            _statisticWindow = null;
+            
+            _trayIcon.MouseClick -= OnTrayIconClick;
+            _trayIcon.ContextMenuStrip.Dispose();
+            _trayIcon.Dispose();
+
+            Closing -= HideWindow;
+            Close();
+        }
+
+        private void OnStartClick(object sender, RoutedEventArgs args) => _watcherControl.Start();
+
+        private void OnStopClick(object sender, RoutedEventArgs args) => _watcherControl.StopAsync().Wait();
+
+        private void OnStatisticClick(object sender, RoutedEventArgs e)
+        {
+            if (_statisticWindow == null)
+            {
+                _statisticWindow = new StatisticWindow(_localization, _dayOfWeek, _topApp);
+                _statisticWindow.Closed += NullStaticWindowOnClosed;
             }
 
-            //? update status on label;
-            this.UpdateStatus(isLaunched: false);
+            _statisticWindow.Show();
         }
 
-        private void StatusChangeEvent(object sender, EventArgs args)
+        private void NullStaticWindowOnClosed(object sender, EventArgs args)
         {
-            bool? isLaunched = (args as StatusChangeEventArgs)?.IsLaunched;
-
-            this.UpdateStatus(isLaunched ?? false);
+            _statisticWindow = null;
         }
 
-        private void UpdateStatus(bool isLaunched)
+        private void HideWindow(object sender, CancelEventArgs args)
         {
-            //TODO:add json settnig for this;
-            _statusLabel.Content =    isLaunched ? "запущен"     : "остановлен";
-            _statusLabel.Foreground = isLaunched ? Brushes.Green : Brushes.Red;
+            args.Cancel = true;
+            Hide();
         }
     }
 }

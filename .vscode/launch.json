@@ -11,11 +11,20 @@
             "console": "internalConsole",
             "stopAtEntry": false
         },
+            {        "name": "run://wpf2",
+                    "type": "coreclr",
+                    "request": "launch",
+                    "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Wpf.exe",
+                    "args": [],
+                    "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
+                    "console": "internalConsole",
+                    "stopAtEntry": false
+                },
         {
-            "name": "run://web",
+            "name": "run://worker",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Web.exe",
+            "program": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/Mitheti.Worker.exe",
             "args": [],
             "cwd": "${workspaceFolder}/out/bin/Debug/netcoreapp3.1/",
             "console": "internalConsole",

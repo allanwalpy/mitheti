@@ -1,0 +1,29 @@
+<Window x:Class="Mitheti.Wpf.StatisticWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        Height="500" Width="400">
+    <Grid>
+        <!-- DayOfWeek labels -->
+        <Label Content="{Binding DayOfWeekString[1]}" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding DayOfWeekString[2]}" Margin="0,30,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding DayOfWeekString[3]}" Margin="0,50,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding DayOfWeekString[4]}" Margin="0,70,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding DayOfWeekString[5]}" Margin="0,90,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding DayOfWeekString[6]}" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding DayOfWeekString[0]}" Margin="0,130,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <!-- TopApp labels; -->
+        <Label Content="{Binding TopAppsString[0]}" Margin="0,200,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding TopAppsString[1]}" Margin="0,220,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding TopAppsString[2]}" Margin="0,240,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding TopAppsString[3]}" Margin="0,260,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding TopAppsString[4]}" Margin="0,280,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding TopAppsString[5]}" Margin="0,300,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding TopAppsString[6]}" Margin="0,320,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding TopAppsString[7]}" Margin="0,340,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding TopAppsString[8]}" Margin="0,360,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Content="{Binding TopAppsString[9]}" Margin="0,380,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
+    </Grid>
+</Window>
