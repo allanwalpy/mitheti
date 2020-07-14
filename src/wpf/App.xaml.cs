@@ -39,6 +39,7 @@ namespace Mitheti.Wpf
 
         private async void OnStartup(object sender, StartupEventArgs args)
         {
+            //TODO: use GetService everywhere or manually always create; 
             MainWindow = _host.Services.GetService<MainWindow>();
             MainWindow.Show();
 
