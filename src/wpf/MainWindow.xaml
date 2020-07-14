@@ -3,20 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mitheti.Wpf"
         mc:Ignorable="d"
         Height="600" Width="400" WindowStyle="SingleBorderWindow" Icon="/Resources/app.png">
     <Grid>
         <TabControl>
-            <TabItem x:Name="Main" Header="{Binding Localization[Window:Main:Tab:Title]}">
-                <TabItem.Content>
-                    <StackPanel>
-                        <Label Content="{Binding IsLaunchedString}" />
-                        <Button Click="OnStartClick" Content="{Binding Localization[Window:Main:Button:Start]}" />
-                        <Button Click="OnStopClick" Content="{Binding Localization[Window:Main:Button:Stop]}" />
-                        <Button Click="OnExitClick" Content="{Binding Localization[Window:Main:Button:Exit]}" />
-                    </StackPanel>
-                </TabItem.Content>
-            </TabItem>
+            <TabItem x:Name="Main" Header="{Binding Localization[Window:Main:Tab:Title]}" />
             <TabItem x:Name="Statistic" Header="{Binding Localization[Window:Statistic:Tab:Title]}">
                 <StackPanel>
                     <!-- DayOfWeek labels -->
@@ -43,8 +35,8 @@
             <TabItem x:Name="About" Header="{Binding Localization[Window:About:Tab:Title]}">
                 <Label Content="TODO: NOT IMPLEMENTED" />
             </TabItem>
+            <!-- TODO: add settings changing; -->
+            <!-- TODO: add database management (clear, see size of it); -->
         </TabControl>
-        <!-- TODO: add settings changing; -->
-        <!-- TODO: add database management (clear, see size of it); -->
     </Grid>
 </Window>

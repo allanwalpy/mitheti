@@ -1,45 +1,34 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Windows.Forms;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf.ViewModel
 {
-    public class MainWindowViewModel : BaseViewModel, INotifyPropertyChanged
+    public class MainWindowViewModel : BaseViewModel
     {
         private const int TopAppsCount = 10;
-        
+
         private readonly IStatisticDayOfWeekService _databaseDayOfWeek;
         private readonly IStatisticTopAppService _databaseTopApp;
-        private readonly IWatcherControlService _watcherControl;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        
         public List<string> DayOfWeekString { get; }
         public List<string> TopAppsString { get; }
-        public string IsLaunchedString => Localization[$"Window:Main:StatusLabel:{_watcherControl.IsLaunched}"];
 
-        public MainWindowViewModel(ILocalizationService localization, IWatcherControlService watcherControl, IStatisticDayOfWeekService databaseDayOfWeek, IStatisticTopAppService databaseTopApp)
+        public MainWindowViewModel(ILocalizationService localization, IStatisticDayOfWeekService databaseDayOfWeek,
+            IStatisticTopAppService databaseTopApp)
             : base(localization)
         {
             _databaseDayOfWeek = databaseDayOfWeek;
             _databaseTopApp = databaseTopApp;
-            _watcherControl = watcherControl;
-            
-            _watcherControl.StatusChanged += (sender, args) => { OnPropertyChanged(nameof(IsLaunchedString)); };
-            
+
             DayOfWeekString = Enumerable.Repeat(string.Empty, StatisticDayOfWeekService.DaysOfWeekCount).ToList();
             SetDayOfWeekString();
 
             TopAppsString = GetTopAppsString();
         }
 
-        private void OnPropertyChanged(string propertyName)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        
         private void SetDayOfWeekString()
         {
             var totalString = _databaseDayOfWeek.GetTotal()
@@ -71,10 +60,10 @@ namespace Mitheti.Wpf.ViewModel
         private List<string> GetTopAppsString()
         {
             var data = _databaseTopApp.Get(TopAppsCount);
-            
+
             return data.ConvertAll(
                 (info) => string.Format(Localization[$"Window:Statistic:TopApp:Item"],
-                    string.Format(Localization[$"Window:Statistic:TopApp:Item:AppName"], 
+                    string.Format(Localization[$"Window:Statistic:TopApp:Item:AppName"],
                         info.AppName ?? Localization[$"Window:Statistic:TopApp:Item:AppName:Null"]),
                     string.Format(Localization[$"Window:Statistic:TopApp:Item:Time"],
                         //TODO:FIXME;

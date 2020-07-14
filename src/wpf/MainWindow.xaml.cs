@@ -1,8 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows;
 using Forms = System.Windows.Forms;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
@@ -22,7 +20,7 @@ namespace Mitheti.Wpf
 
         private readonly IWatcherControlService _watcherControl;
         private readonly ILocalizationService _localization;
-        private readonly Forms.NotifyIcon _trayIcon;
+        private readonly Forms.NotifyIcon _tray;
 
         public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl,
             IStatisticDayOfWeekService dayOfWeek, IStatisticTopAppService topApp)
@@ -30,31 +28,31 @@ namespace Mitheti.Wpf
             _localization = localization;
             _watcherControl = watcherControl;
 
-            DataContext = new MainWindowViewModel(localization, watcherControl, dayOfWeek, topApp);
-
+            DataContext = new MainWindowViewModel(localization, dayOfWeek, topApp);
             InitializeComponent();
+            Main.Content = new MainTab(localization, watcherControl);
 
-            _trayIcon = new Forms.NotifyIcon();
+            _tray = new Forms.NotifyIcon();
             ConfigureTray();
-            _watcherControl.StatusChanged += ChangeTray;
 
             Title = _localization[$"Window:Title"];
             Closing += HideWindow;
         }
-
+        
         private void ConfigureTray()
         {
             //TODO: make separate class configuration for tray?;
-            _trayIcon.MouseClick += OnTrayIconClick;
-            _trayIcon.Icon = new Icon(TrayIconDefaultFile);
-            _trayIcon.Visible = true;
+            _tray.MouseClick += OnTrayClick;
+            _tray.Icon = new Icon(TrayIconDefaultFile);
+            _tray.Visible = true;
+            _watcherControl.StatusChanged += ChangeTray;
 
-            _trayIcon.ContextMenuStrip = new Forms.ContextMenuStrip();
-            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Options:Show"]).Click += OnTrayClickShow;
-            _trayIcon.ContextMenuStrip.Items.Add(_localization["Tray:Options:Close"]).Click += OnTrayClickExit;
+            _tray.ContextMenuStrip = new Forms.ContextMenuStrip();
+            _tray.ContextMenuStrip.Items.Add(_localization["Tray:Options:Show"]).Click += OnTrayClickShow;
+            _tray.ContextMenuStrip.Items.Add(_localization["Tray:Options:Close"]).Click += OnTrayClickExit;
         }
 
-        private void OnTrayIconClick(object? sender, Forms.MouseEventArgs args)
+        private void OnTrayClick(object? sender, Forms.MouseEventArgs args)
         {
             var isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
             if (isLeftClick)
@@ -72,28 +70,20 @@ namespace Mitheti.Wpf
         private void OnTrayClickExit(object sender, EventArgs args) => Exit();
 
         private void ChangeTray(object sender, WatcherStatusEventArgs args)
-            => _trayIcon.Icon = new Icon(args.IsLaunched ? TrayIconOnFile : TrayIconOffFile);
+            => _tray.Icon = new Icon(args.IsLaunched ? TrayIconOnFile : TrayIconOffFile);
 
         private void HideWindow(object sender, CancelEventArgs args)
         {
             args.Cancel = true;
             Hide();
         }
-
-        private void OnStartClick(object sender, RoutedEventArgs args) =>
-            Task.Run(_watcherControl.Start).ConfigureAwait(false);
-
-        private void OnStopClick(object sender, RoutedEventArgs args) =>
-            Task.Run(_watcherControl.Stop).ConfigureAwait(false);
-
-        private void OnExitClick(object sender, RoutedEventArgs args) => Exit();
-
-        private void Exit()
+        
+        internal void Exit()
         {
             _watcherControl.StatusChanged -= ChangeTray;
-            _trayIcon.MouseClick -= OnTrayIconClick;
-            _trayIcon.ContextMenuStrip.Dispose();
-            _trayIcon.Dispose();
+            _tray.MouseClick -= OnTrayClick;
+            _tray.ContextMenuStrip.Dispose();
+            _tray.Dispose();
 
             Closing -= HideWindow;
             Close();
