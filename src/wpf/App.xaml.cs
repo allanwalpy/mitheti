@@ -15,9 +15,11 @@ namespace Mitheti.Wpf
     public partial class App
     {
         public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
-        public const int ExitCodeAlreadyLaunched = 101; //? see https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499- ;
         public const string LocalizationFile = "localization.json";
-        private const int WaitForStopSeconds = 5;
+        public const int StopWait = 5000;
+
+        //? see https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499- ;
+        public const int ExitCodeAlreadyLaunched = 101;
 
         public readonly IHost Host;
         private readonly Mutex _instanceMutex;
@@ -35,7 +37,7 @@ namespace Mitheti.Wpf
             Host = GetDefaultHost();
         }
 
-        private async void StartupApp(object sender, StartupEventArgs args)
+        private async void OnStartup(object sender, StartupEventArgs args)
         {
             MainWindow = Host.Services.GetService<MainWindow>();
             MainWindow.Show();
@@ -43,13 +45,10 @@ namespace Mitheti.Wpf
             await Host.StartAsync();
         }
 
-        private async void ExitApp(object sender, ExitEventArgs args)
+        private async void OnExit(object sender, ExitEventArgs args)
         {
-            using (Host)
-            {
-                await Host.StopAsync(TimeSpan.FromSeconds(WaitForStopSeconds));
-            }
-            
+            await Host.StopAsync(TimeSpan.FromMilliseconds(StopWait));
+
             _instanceMutex?.ReleaseMutex();
         }
 

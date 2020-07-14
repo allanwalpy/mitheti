@@ -61,14 +61,12 @@ namespace Mitheti.Wpf
             Show();
         }
 
-        private void OnTrayClickExit(object sender, EventArgs args)
-        {
-            _trayIcon.MouseClick -= OnTrayIconClick;
-            _trayIcon.ContextMenuStrip.Dispose();
-            _trayIcon.Dispose();
+        private void OnTrayClickExit(object sender, EventArgs args) => Exit();
 
-            Closing -= HideWindow;
-            Close();
+        private void HideWindow(object sender, CancelEventArgs args)
+        {
+            args.Cancel = true;
+            Hide();
         }
 
         private void OnStartClick(object sender, RoutedEventArgs args) =>
@@ -77,10 +75,16 @@ namespace Mitheti.Wpf
         private void OnStopClick(object sender, RoutedEventArgs args) =>
             _watcherControl.StopAsync().ConfigureAwait(false);
 
-        private void HideWindow(object sender, CancelEventArgs args)
+        private void OnExitClick(object sender, RoutedEventArgs args) => Exit();
+
+        private void Exit()
         {
-            args.Cancel = true;
-            Hide();
+            _trayIcon.MouseClick -= OnTrayIconClick;
+            _trayIcon.ContextMenuStrip.Dispose();
+            _trayIcon.Dispose();
+
+            Closing -= HideWindow;
+            Close();
         }
     }
 }

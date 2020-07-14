@@ -13,6 +13,7 @@
                         <Label Content="{Binding IsLaunchedString}" />
                         <Button Click="OnStartClick" Content="{Binding Localization[Window:Main:Button:Start]}" />
                         <Button Click="OnStopClick" Content="{Binding Localization[Window:Main:Button:Stop]}" />
+                        <Button Click="OnExitClick" Content="{Binding Localization[Window:Main:Button:Exit]}" />
                     </StackPanel>
                 </TabItem.Content>
             </TabItem>
