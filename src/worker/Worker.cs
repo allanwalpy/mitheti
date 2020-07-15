@@ -8,17 +8,14 @@ namespace Mitheti.Worker
 {
     public class Worker : BackgroundService
     {
-        //readonly
-        private IWatcherService _watcher;
+        private readonly IWatcherService _watcher;
 
         public Worker(IWatcherService watcher)
         {
             _watcher = watcher;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            await _watcher.Run(stoppingToken);
-        }
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+            => _watcher.RunAsync(stoppingToken);
     }
 }

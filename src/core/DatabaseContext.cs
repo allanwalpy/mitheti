@@ -4,7 +4,12 @@ namespace Mitheti.Core
 {
     public sealed class DatabaseContext : DbContext
     {
-        public const string DatabaseFilename = "database.db";
+        public const string DatabaseFilename =
+#if DEBUG
+            "../../../../database.hide.db";
+#else
+        "database.db";
+#endif
 
         public DbSet<AppTimeModel> AppTimes { get; set; }
 

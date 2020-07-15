@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Mitheti.Wpf.Views.StatisticTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="350">
+    <StackPanel>
+        <!-- DayOfWeek labels -->
+        <Label Content="{Binding DayOfWeekString[1]}" />
+        <Label Content="{Binding DayOfWeekString[2]}" />
+        <Label Content="{Binding DayOfWeekString[3]}" />
+        <Label Content="{Binding DayOfWeekString[4]}" />
+        <Label Content="{Binding DayOfWeekString[5]}" />
+        <Label Content="{Binding DayOfWeekString[6]}" />
+        <Label Content="{Binding DayOfWeekString[0]}" />
+        <!-- TopApp labels; -->
+        <Label Content="{Binding TopAppsString[0]}" />
+        <Label Content="{Binding TopAppsString[1]}" />
+        <Label Content="{Binding TopAppsString[2]}" />
+        <Label Content="{Binding TopAppsString[3]}" />
+        <Label Content="{Binding TopAppsString[4]}" />
+        <Label Content="{Binding TopAppsString[5]}" />
+        <Label Content="{Binding TopAppsString[6]}" />
+        <Label Content="{Binding TopAppsString[7]}" />
+        <Label Content="{Binding TopAppsString[8]}" />
+        <Label Content="{Binding TopAppsString[9]}" />
+    </StackPanel>
+</UserControl>

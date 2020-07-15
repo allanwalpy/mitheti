@@ -1,6 +1,6 @@
 using System;
 
-namespace Mitheti.Wpf.Services
+namespace Mitheti.Core.Services
 {
     public class WatcherStatusEventArgs : EventArgs
     {

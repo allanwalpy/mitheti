@@ -1,6 +1,65 @@
 {
-    "MainWindow.xaml.Title": "mitheti://главная",
-    "MainWindow.xaml.ButtonStart": "запустить",
-    "status_label_on": "слежение запущено",
-    "status_label_off": "слежение остановлено"
+    "localization": {
+        "Tray": {
+            "Options": {
+                "Show": "Показать окно",
+                "Close": "Выйти"
+            }
+        },
+        "Window": {
+            "Title": "Mind The Time",
+            "Main": {
+                "Tab:Title": "Отслеживание",
+                "StatusLabel": {
+                    "True": "Слежение активно",
+                    "False": "Слежение отключено"
+                },
+                "Button": {
+                    "Launcher": {
+                        "Comment": "IsLaunchedBeforePressed:IsStatusChanging",
+                        "True:True": "останавливается...",
+                        "True:False": "Остановить",
+                        "False:True": "запускается...",
+                        "False:False": "Запустить"
+                    },
+                    "Start": "Запустить",
+                    "Stop": "Остановить",
+                    "Exit": "Выйти из приложения"
+                }
+            },
+            "Statistic": {
+                "Tab:Title": "Статистика",
+                "DayOfWeek": {
+                    "Percentage:Item": "{0}",
+                    "Total:Item": "{0:F0} дн. {1} ч. {2} мин. {3} сек.",
+                    "Item": "{0}: {1} [{2}]",
+                    "Name": [
+                        "Воскресенье",
+                        "Понедельник",
+                        "Вторник",
+                        "Среда",
+                        "Четверг",
+                        "Пятница",
+                        "Суббота"
+                    ]
+                },
+                "TopApp": {
+                    "Item": "{0}: {1}",
+                    "Item:AppName": "{0}",
+                    "Item:AppName:Null": "--- пусто ---",
+                    "Item:Time": "{0:F0} дн. {1} ч. {2} мин. {3} сек."
+                }
+            },
+            "About": {
+                "Tab:Title": "О приложении",
+                "Collaborators": [
+                    "allan_walpy aka Андрей Лысенков",
+                    "huex aka Стас [classified]"
+                ]
+            }
+        },
+        "Formats": {
+            "Percentage": "P"
+        }
+    }
 }
