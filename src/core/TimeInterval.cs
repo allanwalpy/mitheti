@@ -2,10 +2,11 @@
 
 namespace Mitheti.Core
 {
+    // чем TimeSpan плох???
     public class TimeInterval : IComparable<DateTime>, IEquatable<DateTime>
     {
         public static readonly TimeInterval All = new TimeInterval();
-            
+
         public DateTime Begin { get; }
         public DateTime End { get; }
 
@@ -17,10 +18,10 @@ namespace Mitheti.Core
 
         public TimeInterval(DateTime border, bool isEnd = false)
             : this(
-                begin: isEnd ? DateTime.MinValue : border, 
+                begin: isEnd ? DateTime.MinValue : border,
                 end: isEnd ? border : DateTime.MaxValue)
         { }
-        
+
         private TimeInterval()
             : this(DateTime.MinValue, DateTime.MaxValue)
         { }

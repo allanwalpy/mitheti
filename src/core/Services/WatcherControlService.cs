@@ -12,6 +12,7 @@ namespace Mitheti.Core.Services
         private CancellationTokenSource _tokenSource;
         private Task _watcherTask;
 
+        // это лучше переименовать
         public event StatusChangedHandler StatusChanged;
 
         public bool IsLaunched { get; private set; }
@@ -20,8 +21,11 @@ namespace Mitheti.Core.Services
         {
             _watcher = watcher;
             _tokenSource = null;
+
+            // ненужный сет
             IsLaunched = false;
 
+            // ненужный инвок
             UpdateStatus();
         }
 
@@ -36,7 +40,7 @@ namespace Mitheti.Core.Services
 
             _tokenSource = new CancellationTokenSource();
             _watcherTask = _watcher.RunAsync(_tokenSource.Token);
-            
+
             UpdateStatus();
         }
 

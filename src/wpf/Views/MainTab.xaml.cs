@@ -6,6 +6,7 @@ using Mitheti.Wpf.ViewModels;
 
 namespace Mitheti.Wpf.Views
 {
+    // тоже самое что и для AboutTab
     public partial class MainTab
     {
         private readonly ILocalizationService _localization;

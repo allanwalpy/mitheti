@@ -29,7 +29,8 @@ namespace Mitheti.Core
 
         public bool Equals(AppTimeModel other)
             => (this.AppName == other?.AppName) && (this.CutTimeToHours() == other?.CutTimeToHours());
-        
+
+        // лучше не делать new DateTime(), а сравнивать по старинке
         private DateTime CutTimeToHours() => new DateTime(Time.Year, Time.Month, Time.Day, Time.Hour, 0, 0);
 
         public override string ToString() => $"{AppName}://{Duration}?at={Time.ToString(CultureInfo.CurrentCulture)};";
