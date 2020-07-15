@@ -11,6 +11,11 @@ namespace Mitheti.Wpf.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+
+
+    // здесь лучше избежать взаимодействия с интерфейсом, только логика работы самого Window
+    // всяких табов тут в коде быть не должно
     public partial class MainWindow
     {
         private const string TrayIconBaseFile = "./Resources/tray";
@@ -40,7 +45,7 @@ namespace Mitheti.Wpf.Views
             Title = _localization[$"Window:Title"];
             Closing += HideWindow;
         }
-        
+
         private void ConfigureTray()
         {
             //TODO: make separate class configuration for tray?;
@@ -79,7 +84,7 @@ namespace Mitheti.Wpf.Views
             args.Cancel = true;
             Hide();
         }
-        
+
         internal void Exit()
         {
             _watcherControl.StatusChanged -= ChangeTray;

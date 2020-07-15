@@ -6,6 +6,7 @@ namespace Mitheti.Core.Services
 {
     public class StatisticDayOfWeekService : IStatisticDayOfWeekService
     {
+        // лучше испоьзовать Enum.GetValues(typeof(DayOfWeek)).Length
         public const int DaysOfWeekCount = 7;
 
         private readonly IDatabaseService _database;
@@ -38,6 +39,9 @@ namespace Mitheti.Core.Services
             return result;
         }
 
+        // тут и впринципе в аналогичных методах непонятно что на выходе пока не заглянешь в код
+        // также дни DayOfWeek могут быть перепутаны
+        // лучше возвращать Dictionary<DayOfWeek, ...>
         public List<double> GetPercentage() => GetPercentage(TimeInterval.All);
 
         private List<int> GetList(TimeInterval interval)
@@ -48,12 +52,16 @@ namespace Mitheti.Core.Services
             // TODO: define `==` also;
             if (!interval.Equals(TimeInterval.All))
             {
+                // лучше испоьзовать обычный foreach, чтобы не аллоцировать делегат
+                // так же можно убрать лишнее создание листа
                 // TODO: check if this works;
                 context.AppTimes.Where(interval.Equals).ToList()
                     .ForEach(timeSpan => result[(int) timeSpan.Time.DayOfWeek] += timeSpan.Duration);
             }
             else
             {
+                // можно наверное использовать Parallel.ForEach() вместо таски, не знаю насколько это лучше
+                // но если есть возможность убрать таску, то лучше убрать
                 context.AppTimes
                     .ForEachAsync(timeSpan => result[(int) timeSpan.Time.DayOfWeek] += timeSpan.Duration).Wait();
             }

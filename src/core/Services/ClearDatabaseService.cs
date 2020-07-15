@@ -6,7 +6,10 @@ namespace Mitheti.Core.Services
     public class ClearDatabaseService : IClearDatabaseService
     {
         private readonly IDatabaseService _database;
-        
+
+        // думаю нет смысла разделять код работающий с базой данных
+        // я бы обьединил
+        // разделение уместно еслибы они использовались где-то отдельно
         public ClearDatabaseService(IDatabaseService database)
         {
             _database = database;
@@ -26,6 +29,7 @@ namespace Mitheti.Core.Services
             context.SaveChanges();
         }
 
+        // мне смущает такой Clear лучше переименовать
         public void Clear(DateTime beforeThen) => Clear(DateTime.MinValue, beforeThen);
     }
 }

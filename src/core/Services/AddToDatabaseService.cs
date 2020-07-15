@@ -24,6 +24,9 @@ namespace Mitheti.Core.Services
 
         public void Add(string app, int delay)
         {
+            // меня не покидает чувство что это какое-то странное условие
+            // выглядит как бизнесс логика не отделена от функционала
+            // думаю это проверку нужно делать выше Add
             if (_appList.Count != 0 && !_appList.Contains(app))
             {
                 _logger.LogTrace($"not adding to database: {app} with {delay}ms");

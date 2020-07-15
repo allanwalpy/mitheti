@@ -6,6 +6,14 @@ using Mitheti.Wpf.ViewModels;
 
 namespace Mitheti.Wpf.Views
 {
+    // забудь про существование UserControl это бажно существо которое
+    // вместо UserControl сделай ResourceDictionary и туда положи DataTemplate для своих ViewModel
+    // этот словарь можно будет просто запихнуть в ресурсы окна или какого нить элемента чтобы вьюшки
+    // описанные в DataTemplate`ах работали
+
+    // также тут во View присутствует кодэбихайнд логика этого быть не должно
+    // вся логика работы с данными должна находиться во ViewModel
+    // вся логика работы интерфейса должна быть только в xaml
     public partial class AboutTab
     {
         public AboutTab(ILocalizationService localization)

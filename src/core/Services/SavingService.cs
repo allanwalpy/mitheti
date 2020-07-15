@@ -14,9 +14,9 @@ namespace Mitheti.Core.Services
         public const int StopWait = 500;
 
         private readonly IDatabaseService _database;
-        
+
         private readonly object _lock = new object();
-        
+
         private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
         private readonly List<AppTimeModel> _records = new List<AppTimeModel>();
         private readonly Task _savingTask;
@@ -24,7 +24,7 @@ namespace Mitheti.Core.Services
         public SavingService(IConfiguration config, IDatabaseService database)
         {
             _database = database;
-            
+
             var delayMinutes = config.GetValue(RecordDelayConfigKey, RecordDelayDefault);
             _savingTask = SavingTask(_tokenSource.Token, delayMinutes * MillisecondsInMinute);
         }
@@ -51,25 +51,38 @@ namespace Mitheti.Core.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 SaveToDatabase();
-                
+
                 await Task.Delay(delay, stoppingToken); //.ContinueWith(Extensions.NoErrorOnCancellation);
             }
         }
 
         private void SaveToDatabase()
         {
-            lock (_lock)
+            // достаточно лочить _records, а не _lock
+            // и лочить только там где используется _records
+            lock (_lock) // этот лок убрать
             {
+                //lock(_records)
+                //{
                 if (_records.Count == 0)
                 {
                     return;
                 }
+                //}
 
                 using var context = _database.GetContext();
+
+                //lock(_records)
+                //{
                 context.AddRange(_records);
+                //}
+
                 context.SaveChanges();
 
+                //lock(_records)
+                //{
                 _records.Clear();
+                //}
             }
         }
 
@@ -78,7 +91,7 @@ namespace Mitheti.Core.Services
             _tokenSource.Cancel();
             _savingTask.WaitCancelled(StopWait);
             _tokenSource.Dispose();
-            
+
             //? save leftovers;
             SaveToDatabase();
         }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -41,6 +40,7 @@ namespace Mitheti.Core.Services
         public static List<T> GetList<T>(this IConfigurationSection config, string key, List<T> defaultValue = null)
             => config.GetSection(key).Get<T[]>()?.ToList() ?? defaultValue; //TODO:delete? meaning?;
 
+        // config.GetSection(key) может вернуть null
         public static List<T> GetList<T>(this IConfiguration config, string key, List<T> defaultValue = null)
             => config.GetSection(key).Get<T[]>()?.ToList() ?? defaultValue;
     }

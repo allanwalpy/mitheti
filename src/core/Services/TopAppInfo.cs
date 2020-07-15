@@ -5,6 +5,8 @@ namespace Mitheti.Core.Services
     public class TopAppInfo : IEquatable<TopAppInfo>, IComparable<TopAppInfo>
     {
         public const int NullDuration = -1;
+
+        //AppName = null, TotalDuration = 0 можно убрать
         public static readonly TopAppInfo Empty = new TopAppInfo {AppName = null, TotalDuration = 0};
 
         public string AppName { get; set; }

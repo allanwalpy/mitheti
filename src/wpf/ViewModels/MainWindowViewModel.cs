@@ -37,6 +37,7 @@ namespace Mitheti.Wpf.ViewModels
             var percentageString = _databaseDayOfWeek.GetPercentage()
                 .ConvertAll(PercentageAsLocalizedString);
 
+            // магическое 7
             for (var i = 0; i < 7; i++)
             {
                 DayOfWeekString[i] = string.Format(Localization[$"Window:Statistic:DayOfWeek:Item"],

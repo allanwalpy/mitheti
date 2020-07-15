@@ -16,6 +16,10 @@ namespace Mitheti.Wpf.ViewModels
             : base(localization)
         {
             _watcherControl = watcherControl;
+
+            // опасно такие подписки делать, IWatcherControlService может в контейнере IServiceCollection поменяться а эта подписка останется висеть
+            // нужно прогуглить эту ситуцию, что с евентами делает IServiceCollection с хостом
+            // может он там переподписывается и тогда здесь норм
             _watcherControl.StatusChanged += (sender, args) => { OnPropertyChanged(nameof(IsLaunchedString)); };
         }
 
