@@ -1,11 +1,20 @@
-﻿using Mitheti.Wpf.Services;
+﻿using System.Collections.Generic;
+using Mitheti.Core.Services;
+using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf.ViewModels
 {
-    public class AboutTabViewModel : BaseViewModel
+    public class AboutTabViewModel
     {
+        public Dictionary<string, string> Localization { get; }
+        public string Contributors { get; }
+
         public AboutTabViewModel(ILocalizationService localization)
-            : base(localization)
-        { }
+        {
+            Localization = localization.Data;
+
+            Contributors = string.Join(";\n",
+                localization.Config.GetList("Window:About:Collaborators", new List<string>()));
+        }
     }
 }

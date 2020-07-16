@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -9,10 +10,10 @@ namespace Mitheti.Core.Services
         public const string DelayConfigKey = "service:delay";
         public const int DefaultDelay = 250;
 
-        private readonly IAddToDatabaseService _database;
+        private readonly ISavingService _database;
         private readonly int _delay;
 
-        public WatcherService(IConfiguration config, IAddToDatabaseService database)
+        public WatcherService(IConfiguration config, ISavingService database)
         {
             _database = database;
             _delay = config.GetValue(DelayConfigKey, DefaultDelay);
@@ -25,7 +26,7 @@ namespace Mitheti.Core.Services
                 var processName = WinApiAdapter.GetFocusedWindowInfo()?.ProcessName;
                 if (processName != null)
                 {
-                    _database.Add(processName, _delay);
+                    _database.Save(processName, _delay, DateTime.UtcNow);
                 }
 
                 await Task.Delay(_delay, token);

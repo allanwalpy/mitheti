@@ -11,6 +11,9 @@ namespace Mitheti.Wpf.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    ///
+    // здесь лучше избежать взаимодействия с интерфейсом, только логика работы самого Window
+    // всяких табов тут в коде быть не должно
     public partial class MainWindow
     {
         private const string TrayIconBaseFile = "./Resources/tray";
@@ -23,15 +26,15 @@ namespace Mitheti.Wpf.Views
         private readonly Forms.NotifyIcon _tray;
 
         public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl,
-            IStatisticDayOfWeekService dayOfWeek, IStatisticTopAppService topApp)
+            IStatisticDatabaseService statisticDatabase)
         {
             _localization = localization;
             _watcherControl = watcherControl;
 
-            DataContext = new MainWindowViewModel(localization, dayOfWeek, topApp);
+            DataContext = new MainWindowViewModel(localization);
             InitializeComponent();
             TabMain.Content = new MainTab(localization, watcherControl);
-            TabStatistic.Content = new StatisticTab(localization, dayOfWeek, topApp);
+            TabStatistic.Content = new StatisticTab(localization, statisticDatabase);
             TabAbout.Content = new AboutTab(localization);
 
             _tray = new Forms.NotifyIcon();
@@ -40,14 +43,14 @@ namespace Mitheti.Wpf.Views
             Title = _localization[$"Window:Title"];
             Closing += HideWindow;
         }
-        
+
         private void ConfigureTray()
         {
             //TODO: make separate class configuration for tray?;
             _tray.MouseClick += OnTrayClick;
             _tray.Icon = new Icon(TrayIconDefaultFile);
             _tray.Visible = true;
-            _watcherControl.StatusChanged += ChangeTray;
+            _watcherControl.WatcherStatusChanged += ChangeTray;
 
             _tray.ContextMenuStrip = new Forms.ContextMenuStrip();
             _tray.ContextMenuStrip.Items.Add(_localization["Tray:Options:Show"]).Click += OnTrayClickShow;
@@ -79,10 +82,10 @@ namespace Mitheti.Wpf.Views
             args.Cancel = true;
             Hide();
         }
-        
+
         internal void Exit()
         {
-            _watcherControl.StatusChanged -= ChangeTray;
+            _watcherControl.WatcherStatusChanged -= ChangeTray;
             _tray.MouseClick -= OnTrayClick;
             _tray.ContextMenuStrip.Dispose();
             _tray.Dispose();

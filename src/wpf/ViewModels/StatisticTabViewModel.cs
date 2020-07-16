@@ -1,27 +1,28 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.VisualBasic;
+using Mitheti.Core;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf.ViewModels
 {
-    public class StatisticTabViewModel : BaseViewModel
+    public class StatisticTabViewModel
     {
-        private const int TopAppsCount = 10;
+        public const int TopAppsCount = 10;
+        private static readonly int DaysOfWeeksCount = StatisticDatabaseService.DaysOfWeekCount;
 
-        private readonly IStatisticDayOfWeekService _databaseDayOfWeek;
-        private readonly IStatisticTopAppService _databaseTopApp;
+        private readonly IStatisticDatabaseService _statisticDatabase;
 
+        public Dictionary<string, string> Localization { get; }
         public List<string> DayOfWeekString { get; private set; }
         public List<string> TopAppsString { get; private set; }
 
-        public StatisticTabViewModel(ILocalizationService localization, IStatisticDayOfWeekService databaseDayOfWeek,
-            IStatisticTopAppService databaseTopApp)
-            : base(localization)
+        public StatisticTabViewModel(ILocalizationService localization, IStatisticDatabaseService statisticDatabase)
         {
-            _databaseDayOfWeek = databaseDayOfWeek;
-            _databaseTopApp = databaseTopApp;
-            
+            Localization = localization.Data;
+            _statisticDatabase=statisticDatabase;
+
             PopulateWithData();
         }
 
@@ -33,19 +34,26 @@ namespace Mitheti.Wpf.ViewModels
 
         private List<string> GetDayOfWeekString()
         {
-            var totalString = _databaseDayOfWeek.GetTotal()
-                .ConvertAll(TimeSpanAsLocalizedString);
+            _statisticDatabase.GetStatisticByDayOfWeek(TimePeriod.All,
+                out var durations, out var percentages );
 
-            var percentageString = _databaseDayOfWeek.GetPercentage()
-                .ConvertAll(PercentageAsLocalizedString);
+            var durationsString = new List<string>();
+            var percentagesString = new List<string>();
 
-            const int daysOfWeek = StatisticDayOfWeekService.DaysOfWeekCount;
+            for (var i = 0; i < DaysOfWeeksCount; i++)
+            {
+                var dayOfWeek = (DayOfWeek) i;
+
+                durationsString.Add(TimeSpanAsLocalizedString(durations[dayOfWeek]));
+                percentagesString.Add(PercentageAsLocalizedString(percentages[dayOfWeek]));
+            }
+
             var result = new List<string>();
-            for (var i = 0; i < daysOfWeek; i++)
+            for (var i = 0; i < DaysOfWeeksCount; i++)
             {
                 result.Add(string.Format(Localization[$"Window:Statistic:DayOfWeek:Item"],
                     Localization[$"Window:Statistic:DayOfWeek:Name:{i}"],
-                    totalString[i], percentageString[i]));
+                    durationsString[i], percentagesString[i]));
             }
 
             return result;
@@ -65,19 +73,31 @@ namespace Mitheti.Wpf.ViewModels
 
         private List<string> GetTopAppsString()
         {
-            var data = _databaseTopApp.Get(TopAppsCount);
+            _statisticDatabase.GetStatisticByAppName(TopAppsCount, TimePeriod.All,
+                out var durations, out var percentages);
 
-            return data.ConvertAll(
-                (info) => string.Format(Localization[$"Window:Statistic:TopApp:Item"],
-                    string.Format(Localization[$"Window:Statistic:TopApp:Item:AppName"],
-                        info.AppName ?? Localization[$"Window:Statistic:TopApp:Item:AppName:Null"]),
-                    string.Format(Localization[$"Window:Statistic:TopApp:Item:Time"],
-                        //TODO:FIXME;
-                        TimeSpan.FromMilliseconds(info.TotalDuration).TotalDays,
-                        TimeSpan.FromMilliseconds(info.TotalDuration).Hours,
-                        TimeSpan.FromMilliseconds(info.TotalDuration).Minutes,
-                        TimeSpan.FromMilliseconds(info.TotalDuration).Seconds
-                    )));
+            var result = new List<string>();
+
+            foreach (var item in durations)
+            {
+                var timeSpan = TimeSpan.FromSeconds(item.Duration);
+
+                var timeSpanString = string.Format(Localization[$"Window:Statistic:TopApp:Item:Time"],
+                    timeSpan.TotalDays, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+                var percentString = string.Format(Localization["Formats:Percentage"], percentages[item.AppName]);
+                var appNameString = string.Format(Localization[$"Window:Statistic:TopApp:Item:AppName"], item.AppName);
+
+                result.Add(string.Format(Localization[$"Window:Statistic:TopApp:Item"],
+                        appNameString, timeSpanString, percentString));
+            }
+
+            for (var i = result.Count; i < TopAppsCount; i++)
+            {
+                result.Add(Localization[$"Window:Statistic:TopApp:Item:Null"]);
+            }
+
+
+            return result;
         }
     }
 }

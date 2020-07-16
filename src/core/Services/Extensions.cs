@@ -16,13 +16,11 @@ namespace Mitheti.Core.Services
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             services.TryAddSingleton<IDatabaseService, DatabaseService>();
-            services.TryAddSingleton<IAddToDatabaseService, AddToDatabaseService>();
+            services.TryAddSingleton<IAddFilterService, AddFilterService>();
             services.TryAddSingleton<ISavingService, SavingService>();
-            services.TryAddSingleton<IClearDatabaseService, ClearDatabaseService>();
             services.TryAddSingleton<IWatcherService, WatcherService>();
             services.TryAddSingleton<IWatcherControlService, WatcherControlService>();
-            services.TryAddSingleton<IStatisticDayOfWeekService, StatisticDayOfWeekService>();
-            services.TryAddSingleton<IStatisticTopAppService, StatisticTopAppService>();
+            services.TryAddSingleton<IStatisticDatabaseService, StatisticDatabaseService>();
 
             return services;
         }
@@ -39,9 +37,12 @@ namespace Mitheti.Core.Services
 
         //? on `"someKey": []`, `GetSection(key).Get<string[]>()` returns `null`, not `string[0]`; `GetValue<T[]>` not working for array/list;
         public static List<T> GetList<T>(this IConfigurationSection config, string key, List<T> defaultValue = null)
-            => config.GetSection(key).Get<T[]>()?.ToList() ?? defaultValue; //TODO:delete? meaning?;
+            => config.GetSection(key)?.Get<T[]>()?.ToList() ?? defaultValue;
 
         public static List<T> GetList<T>(this IConfiguration config, string key, List<T> defaultValue = null)
-            => config.GetSection(key).Get<T[]>()?.ToList() ?? defaultValue;
+            => config.GetSection(key)?.Get<T[]>()?.ToList() ?? defaultValue;
+
+        public static IQueryable<AppTimeModel> WhereTimePeriod(this IQueryable<AppTimeModel> query, TimePeriod period)
+            => period.Equals(TimePeriod.All) ? query : query.Where(item => period.Equals(item.Time));
     }
 }

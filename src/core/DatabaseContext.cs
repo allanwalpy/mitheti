@@ -25,14 +25,5 @@ namespace Mitheti.Core
 
             base.OnConfiguring(optionsBuilder);
         }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.Entity<AppTimeModel>()
-                .HasIndex(x => x.Id)
-                .IsUnique();
-        }
     }
 }

@@ -14,6 +14,6 @@ namespace Mitheti.Core.Services
             _appList = config.GetList(AppListConfigKey, new List<string>());
         }
 
-        public bool Pass(string app) => _appList.Count == 0 || _appList.Contains(app);
+        public bool HavePassed(string app) => _appList.Count == 0 || _appList.Contains(app);
     }
 }

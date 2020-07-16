@@ -1,10 +1,10 @@
 namespace Mitheti.Core.Services
 {
-    public delegate void StatusChangedHandler(object sender, WatcherStatusEventArgs args);
+    public delegate void WatcherStatusChangedHandler(object sender, WatcherStatusEventArgs args);
 
     public interface IWatcherControlService
     {
-        event StatusChangedHandler StatusChanged;
+        event WatcherStatusChangedHandler WatcherStatusChanged;
 
         bool IsLaunched { get; }
 

@@ -12,7 +12,7 @@ namespace Mitheti.Core.Services
         private CancellationTokenSource _tokenSource;
         private Task _watcherTask;
 
-        public event StatusChangedHandler StatusChanged;
+        public event WatcherStatusChangedHandler WatcherStatusChanged;
 
         public bool IsLaunched { get; private set; }
 
@@ -20,9 +20,9 @@ namespace Mitheti.Core.Services
         {
             _watcher = watcher;
             _tokenSource = null;
-            IsLaunched = false;
 
-            UpdateStatus();
+            //? initial state, before `Start()` or `Stop()` called;
+            IsLaunched = false;
         }
 
         public void Start()
@@ -36,7 +36,7 @@ namespace Mitheti.Core.Services
 
             _tokenSource = new CancellationTokenSource();
             _watcherTask = _watcher.RunAsync(_tokenSource.Token);
-            
+
             UpdateStatus();
         }
 
@@ -58,7 +58,7 @@ namespace Mitheti.Core.Services
             UpdateStatus();
         }
 
-        private void UpdateStatus() => StatusChanged?.Invoke(this, new WatcherStatusEventArgs(IsLaunched));
+        private void UpdateStatus() => WatcherStatusChanged?.Invoke(this, new WatcherStatusEventArgs(IsLaunched));
 
         public void Dispose() => Stop();
     }

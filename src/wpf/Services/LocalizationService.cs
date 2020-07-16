@@ -9,10 +9,7 @@ namespace Mitheti.Wpf.Services
     {
         private const string SectionKey = "localization";
 
-        public string this[string key, string defaultValue]
-        {
-            get => Config.GetValue(key, defaultValue); //TODO:FIXME: Data.Keys.Contains(key) ? Data[key] : defaultValue;
-        }
+        public string this[string key, string defaultValue] => Config.GetValue(key, defaultValue);
 
         public Dictionary<string, string> Data { get; }
         public IConfigurationSection Config { get; }

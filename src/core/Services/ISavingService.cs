@@ -1,10 +1,9 @@
+using System;
+
 namespace Mitheti.Core.Services
 {
     public interface ISavingService
     {
-        /// <summary>
-        /// register delay milliseconds of <paramref name="info" /> process;
-        /// </summary>
-        void Add(AppTimeModel info);
+        void Save(string info, int duration, DateTime timestamp);
     }
 }

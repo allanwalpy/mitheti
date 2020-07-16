@@ -6,6 +6,7 @@ using Mitheti.Wpf.ViewModels;
 
 namespace Mitheti.Wpf.Views
 {
+    // тоже самое что и для AboutTab
     public partial class MainTab
     {
         private readonly ILocalizationService _localization;
@@ -16,7 +17,7 @@ namespace Mitheti.Wpf.Views
         {
             _localization = localization;
             _watcherControl = watcherControl;
-            watcherControl.StatusChanged += OnStatusChanged;
+            watcherControl.WatcherStatusChanged += OnStatusChanged;
 
             DataContext = new MainTabViewModel(localization, watcherControl);
             InitializeComponent();
@@ -59,7 +60,7 @@ namespace Mitheti.Wpf.Views
 
         private void OnExitClick(object sender, RoutedEventArgs args)
         {
-            _watcherControl.StatusChanged -= OnStatusChanged;
+            _watcherControl.WatcherStatusChanged -= OnStatusChanged;
             _window.Exit();
         }
     }

@@ -14,34 +14,40 @@ namespace Mitheti.Core.Services
         public const int StopWait = 500;
 
         private readonly IDatabaseService _database;
-        
-        private readonly object _lock = new object();
-        
+        private readonly IAddFilterService _filter;
+
         private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
         private readonly List<AppTimeModel> _records = new List<AppTimeModel>();
         private readonly Task _savingTask;
 
-        public SavingService(IConfiguration config, IDatabaseService database)
+        public SavingService(IConfiguration config, IAddFilterService filter, IDatabaseService database)
         {
             _database = database;
-            
+            _filter = filter;
+
             var delayMinutes = config.GetValue(RecordDelayConfigKey, RecordDelayDefault);
             _savingTask = SavingTask(_tokenSource.Token, delayMinutes * MillisecondsInMinute);
         }
 
-        public void Add(AppTimeModel data)
+        public void Save(string appName, int duration, DateTime timestamp)
         {
-            lock (_lock)
+            if (!_filter.HavePassed(appName))
             {
-                var sameRecord = _records.Find(data.Equals);
+                return;
+            }
+
+            lock (_records)
+            {
+                var sameRecord = _records.Find(
+                    item => item.Equals(appName) && item.Equals(timestamp));
 
                 if (sameRecord == null)
                 {
-                    _records.Add(data);
+                    _records.Add(new AppTimeModel { AppName = appName, Duration = duration, Time = timestamp});
                 }
                 else
                 {
-                    sameRecord.Duration += data.Duration;
+                    sameRecord.Duration += duration;
                 }
             }
         }
@@ -51,24 +57,21 @@ namespace Mitheti.Core.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 SaveToDatabase();
-                
-                await Task.Delay(delay, stoppingToken); //.ContinueWith(Extensions.NoErrorOnCancellation);
+
+                await Task.Delay(delay, stoppingToken);
             }
         }
 
         private void SaveToDatabase()
         {
-            lock (_lock)
+            lock (_records)
             {
                 if (_records.Count == 0)
                 {
                     return;
                 }
 
-                using var context = _database.GetContext();
-                context.AddRange(_records);
-                context.SaveChanges();
-
+                _database.Add(_records);
                 _records.Clear();
             }
         }
@@ -78,7 +81,7 @@ namespace Mitheti.Core.Services
             _tokenSource.Cancel();
             _savingTask.WaitCancelled(StopWait);
             _tokenSource.Dispose();
-            
+
             //? save leftovers;
             SaveToDatabase();
         }
