@@ -7,7 +7,7 @@ namespace Mitheti.Wpf.Models
     {
         public Dictionary<string, string> Localization { get; set; }
 
-        public List<string> DayOfWeekString { get; set; }
+        public ObservableCollection<DayOfWeekModel> DayOfWeekData { get; set; }
         public ObservableCollection<TopAppModel> TopAppsData { get; set; }
     }
 }

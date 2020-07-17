@@ -8,13 +8,15 @@
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="800">
     <StackPanel>
-        <Label Content="{Binding DayOfWeekString[1]}" />
-        <Label Content="{Binding DayOfWeekString[2]}" />
-        <Label Content="{Binding DayOfWeekString[3]}" />
-        <Label Content="{Binding DayOfWeekString[4]}" />
-        <Label Content="{Binding DayOfWeekString[5]}" />
-        <Label Content="{Binding DayOfWeekString[6]}" />
-        <Label Content="{Binding DayOfWeekString[0]}" />
+        <ListView ItemsSource="{Binding DayOfWeekData}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding DayOfWeek}" Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:DayOfWeek]}" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Duration}" Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:TimeSpan]}" />
+                    <GridViewColumn DisplayMemberBinding="{Binding PercentageString}" Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:Percentage]}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
         <ListView ItemsSource="{Binding TopAppsData}">
             <ListView.View>
                 <GridView>

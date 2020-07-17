@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Microsoft.VisualBasic;
 using Mitheti.Core;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Models;
@@ -12,65 +11,52 @@ namespace Mitheti.Wpf.ViewModels
     public class StatisticTabViewModel
     {
         public const int TopAppsCount = 10;
-        private static readonly int DaysOfWeeksCount = StatisticDatabaseService.DaysOfWeekCount;
 
         private readonly IStatisticDatabaseService _statisticDatabase;
+        private readonly ILocalizationService _localization;
 
         public Dictionary<string, string> Localization { get; }
-        public List<string> DayOfWeekString { get; private set; }
-        public ObservableCollection<TopAppModel> TopAppsData { get; private set; }
+        public ObservableCollection<TopAppModel> TopAppsData { get; }
+        public ObservableCollection<DayOfWeekModel> DayOfWeekData { get; }
 
         public StatisticTabViewModel(ILocalizationService localization, IStatisticDatabaseService statisticDatabase)
         {
             Localization = localization.Data;
+            _localization = localization;
             _statisticDatabase = statisticDatabase;
 
-            PopulateWithData();
-        }
-
-        private void PopulateWithData()
-        {
-            DayOfWeekString = GetDayOfWeekString();
+            DayOfWeekData = GetDayOfWeekString();
             TopAppsData = GetTopAppsDataView();
         }
 
-        private List<string> GetDayOfWeekString()
+        private ObservableCollection<DayOfWeekModel> GetDayOfWeekString()
         {
             _statisticDatabase.GetStatisticByDayOfWeek(TimePeriod.All,
                 out var durations, out var percentages);
 
-            var durationsString = new List<string>();
-            var percentagesString = new List<string>();
+            // TODO: compact "Window:Statistic:DayOfWeek/TopApp" to consts;
+            var dayOfWeekOrder = _localization.Config.GetList<int>("Window:Statistic:DayOfWeek:Order");
+            var dayOfWeekNames = _localization.Config.GetList<string>("Window:Statistic:DayOfWeek:Name");
 
-            for (var i = 0; i < DaysOfWeeksCount; i++)
+            var result = new ObservableCollection<DayOfWeekModel>();
+
+            foreach (var dayOfWeekNumber in dayOfWeekOrder)
             {
-                var dayOfWeek = (DayOfWeek) i;
+                var dayOfWeek = (DayOfWeek)dayOfWeekNumber;
+                var duration = TimeSpan.FromMilliseconds(durations[dayOfWeek]);
+                var percent = percentages[dayOfWeek];
 
-                durationsString.Add(TimeSpanAsLocalizedString(durations[dayOfWeek]));
-                percentagesString.Add(PercentageAsLocalizedString(percentages[dayOfWeek]));
-            }
-
-            var result = new List<string>();
-            for (var i = 0; i < DaysOfWeeksCount; i++)
-            {
-                result.Add(string.Format(Localization[$"Window:Statistic:DayOfWeek:Item"],
-                    Localization[$"Window:Statistic:DayOfWeek:Name:{i}"],
-                    durationsString[i], percentagesString[i]));
+                result.Add(new DayOfWeekModel
+                    {
+                        DayOfWeek = dayOfWeekNames[dayOfWeekNumber],
+                        Duration = string.Format(Localization["Window:Statistic:DayOfWeek:Item:Time"], duration),
+                        Percentage = (int)(percent * 1000),
+                        PercentageString = percent.ToString(Localization["Formats:Percentage"]),
+                    }
+                );
             }
 
             return result;
-        }
-
-        private string PercentageAsLocalizedString(double value)
-            => string.Format(Localization[$"Window:Statistic:DayOfWeek:Percentage:Item"],
-                value.ToString(format: Localization["Formats:Percentage"]));
-
-        private string TimeSpanAsLocalizedString(int milliseconds)
-        {
-            var timeSpan = TimeSpan.FromMilliseconds(milliseconds);
-            // TODO: fix format, deleting zeroes, except 0 seconds;
-            return string.Format(Localization[$"Window:Statistic:DayOfWeek:Total:Item"],
-                timeSpan.TotalDays, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
         }
 
         private ObservableCollection<TopAppModel> GetTopAppsDataView()
@@ -95,5 +81,7 @@ namespace Mitheti.Wpf.ViewModels
 
             return result;
         }
+
+
     }
 }
