@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Microsoft.VisualBasic;
 using Mitheti.Core;
 using Mitheti.Core.Services;
+using Mitheti.Wpf.Models;
 using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf.ViewModels
@@ -16,26 +18,26 @@ namespace Mitheti.Wpf.ViewModels
 
         public Dictionary<string, string> Localization { get; }
         public List<string> DayOfWeekString { get; private set; }
-        public List<string> TopAppsString { get; private set; }
+        public ObservableCollection<TopAppModel> TopAppsData { get; private set; }
 
         public StatisticTabViewModel(ILocalizationService localization, IStatisticDatabaseService statisticDatabase)
         {
             Localization = localization.Data;
-            _statisticDatabase=statisticDatabase;
+            _statisticDatabase = statisticDatabase;
 
             PopulateWithData();
         }
 
-        public void PopulateWithData()
+        private void PopulateWithData()
         {
             DayOfWeekString = GetDayOfWeekString();
-            TopAppsString = GetTopAppsString();
+            TopAppsData = GetTopAppsDataView();
         }
 
         private List<string> GetDayOfWeekString()
         {
             _statisticDatabase.GetStatisticByDayOfWeek(TimePeriod.All,
-                out var durations, out var percentages );
+                out var durations, out var percentages);
 
             var durationsString = new List<string>();
             var percentagesString = new List<string>();
@@ -71,31 +73,25 @@ namespace Mitheti.Wpf.ViewModels
                 timeSpan.TotalDays, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
         }
 
-        private List<string> GetTopAppsString()
+        private ObservableCollection<TopAppModel> GetTopAppsDataView()
         {
             _statisticDatabase.GetStatisticByAppName(TopAppsCount, TimePeriod.All,
                 out var durations, out var percentages);
 
-            var result = new List<string>();
+            var result = new ObservableCollection<TopAppModel>();
 
             foreach (var item in durations)
             {
-                var timeSpan = TimeSpan.FromSeconds(item.Duration);
+                var percent = percentages[item.AppName];
 
-                var timeSpanString = string.Format(Localization[$"Window:Statistic:TopApp:Item:Time"],
-                    timeSpan.TotalDays, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
-                var percentString = string.Format(Localization["Formats:Percentage"], percentages[item.AppName]);
-                var appNameString = string.Format(Localization[$"Window:Statistic:TopApp:Item:AppName"], item.AppName);
-
-                result.Add(string.Format(Localization[$"Window:Statistic:TopApp:Item"],
-                        appNameString, timeSpanString, percentString));
+                result.Add(new TopAppModel
+                {
+                    AppName = item.AppName,
+                    Duration = string.Format(Localization["Window:Statistic:TopApp:Item:Time"], TimeSpan.FromMilliseconds(item.Duration)),
+                    PercentageString = percent.ToString(Localization["Formats:Percentage"]),
+                    Percentage = (int)(percent * 1000)
+                });
             }
-
-            for (var i = result.Count; i < TopAppsCount; i++)
-            {
-                result.Add(Localization[$"Window:Statistic:TopApp:Item:Null"]);
-            }
-
 
             return result;
         }

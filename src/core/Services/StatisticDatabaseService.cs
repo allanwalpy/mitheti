@@ -122,6 +122,7 @@ namespace Mitheti.Core.Services
                 return result;
             }
 
+            // TODO: fix percentage calculation;
             var max = data.Aggregate((r, item) => item.Duration > r.Duration ? item : r).Duration;
             if (max == 0)
             {

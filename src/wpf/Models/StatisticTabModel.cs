@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Mitheti.Wpf.Models
 {
@@ -7,6 +8,6 @@ namespace Mitheti.Wpf.Models
         public Dictionary<string, string> Localization { get; set; }
 
         public List<string> DayOfWeekString { get; set; }
-        public List<string> TopAppsString { get; set; }
+        public ObservableCollection<TopAppModel> TopAppsData { get; set; }
     }
 }

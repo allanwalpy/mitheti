@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:material="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="350">
+             d:DesignHeight="500" d:DesignWidth="800">
     <StackPanel>
-        <!-- DayOfWeek labels -->
         <Label Content="{Binding DayOfWeekString[1]}" />
         <Label Content="{Binding DayOfWeekString[2]}" />
         <Label Content="{Binding DayOfWeekString[3]}" />
@@ -14,16 +15,22 @@
         <Label Content="{Binding DayOfWeekString[5]}" />
         <Label Content="{Binding DayOfWeekString[6]}" />
         <Label Content="{Binding DayOfWeekString[0]}" />
-        <!-- TopApp labels; -->
-        <Label Content="{Binding TopAppsString[0]}" />
-        <Label Content="{Binding TopAppsString[1]}" />
-        <Label Content="{Binding TopAppsString[2]}" />
-        <Label Content="{Binding TopAppsString[3]}" />
-        <Label Content="{Binding TopAppsString[4]}" />
-        <Label Content="{Binding TopAppsString[5]}" />
-        <Label Content="{Binding TopAppsString[6]}" />
-        <Label Content="{Binding TopAppsString[7]}" />
-        <Label Content="{Binding TopAppsString[8]}" />
-        <Label Content="{Binding TopAppsString[9]}" />
+        <ListView ItemsSource="{Binding TopAppsData}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding AppName}" Header="{Binding Localization[Window:Statistic:TopApp:Header:AppName]}" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Duration}" Header="{Binding Localization[Window:Statistic:TopApp:Header:TimeSpan]}" />
+                    <GridViewColumn DisplayMemberBinding="{Binding PercentageString}" Header="{Binding Localization[Window:Statistic:TopApp:Header:Percentage]}" />
+                    <!-- TODO: fix this;
+                    <GridViewColumn Header="{Binding Localization[Window:Statistic:TopApp:Header:ProgressBar]}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ProgressBar Minimum="0" Maximum="1000" Value="{Binding Percentage}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn> -->
+                </GridView>
+            </ListView.View>
+        </ListView>
     </StackPanel>
 </UserControl>
