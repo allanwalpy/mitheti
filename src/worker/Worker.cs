@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-
 using Mitheti.Core.Services;
 
 namespace Mitheti.Worker

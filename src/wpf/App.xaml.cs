@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
+using Mitheti.Wpf.ViewModels;
 using Mitheti.Wpf.Views;
 
 namespace Mitheti.Wpf
@@ -68,9 +69,17 @@ namespace Mitheti.Wpf
                 .ConfigureServices((hostingContext, services) =>
                 {
                     services.AddCoreServices();
-                    services.AddSingleton(this);
                     services.AddSingleton<ILocalizationService, LocalizationService>();
+
+                    services.AddTransient<MainWindowViewModel>();
+                    services.AddTransient<MainTabViewModel>();
+                    services.AddTransient<StatisticTabViewModel>();
+                    services.AddTransient<AboutTabViewModel>();
+
                     services.AddSingleton<MainWindow>();
+                    services.AddSingleton<MainTab>();
+                    services.AddSingleton<StatisticTab>();
+                    services.AddSingleton<AboutTab>();
                 })
                 .Build();
         }

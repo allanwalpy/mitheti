@@ -20,9 +20,7 @@ namespace Mitheti.Wpf.ViewModels
             Localization = localization.Data;
 
             _watcherControl = watcherControl;
-            // опасно такие подписки делать, IWatcherControlService может в контейнере IServiceCollection поменяться а эта подписка останется висеть
-            // нужно прогуглить эту ситуцию, что с евентами делает IServiceCollection с хостом
-            // может он там переподписывается и тогда здесь норм
+            //? for singleton lifetime reference see https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1#singleton ;
             _watcherControl.WatcherStatusChanged += (sender, args) => { OnPropertyChanged(nameof(IsLaunchedString)); };
         }
 

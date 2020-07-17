@@ -8,7 +8,7 @@ namespace Mitheti.Core
 #if DEBUG
             "../../../../database.hide.db";
 #else
-        "database.db";
+            "database.db";
 #endif
 
         public DbSet<AppTimeModel> AppTimes { get; set; }

@@ -13,13 +13,13 @@ namespace Mitheti.Wpf.Views
         private readonly IWatcherControlService _watcherControl;
         private MainWindow _window;
 
-        public MainTab(ILocalizationService localization, IWatcherControlService watcherControl)
+        public MainTab(MainTabViewModel viewModel,  ILocalizationService localization, IWatcherControlService watcherControl)
         {
             _localization = localization;
             _watcherControl = watcherControl;
             watcherControl.WatcherStatusChanged += OnStatusChanged;
 
-            DataContext = new MainTabViewModel(localization, watcherControl);
+            DataContext = viewModel;
             InitializeComponent();
 
             SetLauncherButton(false, false);

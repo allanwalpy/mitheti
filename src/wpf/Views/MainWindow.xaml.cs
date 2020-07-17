@@ -11,9 +11,6 @@ namespace Mitheti.Wpf.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    ///
-    // здесь лучше избежать взаимодействия с интерфейсом, только логика работы самого Window
-    // всяких табов тут в коде быть не должно
     public partial class MainWindow
     {
         private const string TrayIconBaseFile = "./Resources/tray";
@@ -26,16 +23,17 @@ namespace Mitheti.Wpf.Views
         private readonly Forms.NotifyIcon _tray;
 
         public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl,
-            IStatisticDatabaseService statisticDatabase)
+            MainTab mainTab, StatisticTab statisticTab, AboutTab aboutTab)
         {
             _localization = localization;
             _watcherControl = watcherControl;
 
             DataContext = new MainWindowViewModel(localization);
             InitializeComponent();
-            TabMain.Content = new MainTab(localization, watcherControl);
-            TabStatistic.Content = new StatisticTab(localization, statisticDatabase);
-            TabAbout.Content = new AboutTab(localization);
+            //TODO: get rid off (to MainWindowViewModel may be);
+            TabMain.Content = mainTab;
+            TabStatistic.Content = statisticTab;
+            TabAbout.Content = aboutTab;
 
             _tray = new Forms.NotifyIcon();
             ConfigureTray();
