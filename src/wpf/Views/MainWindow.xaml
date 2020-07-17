@@ -1,12 +1,21 @@
-<Window x:Class="Mitheti.Wpf.Views.MainWindow" xml:lang="en-US"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Height="600" Width="400" WindowStyle="SingleBorderWindow" Icon="/Resources/app.png">
+<controls:MaterialWindow x:Class="Mitheti.Wpf.Views.MainWindow" xml:lang="en-US"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                     xmlns:controls="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+                     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                     TextElement.FontWeight="Regular"
+                     TextElement.FontSize="13"
+                     TextOptions.TextFormattingMode="Ideal"
+                     TextOptions.TextRenderingMode="Auto"
+                     Background="{DynamicResource MaterialDesignPaper}"
+                     FontFamily="{DynamicResource MaterialDesignFont}"
+                     mc:Ignorable="d"
+                     Height="600" Width="400" WindowStyle="SingleBorderWindow" Icon="/Resources/app.png">
     <Grid>
-        <TabControl>
+        <TabControl Style="{StaticResource MaterialDesignTabControl}">
             <TabItem x:Name="TabMain" Header="{Binding Localization[Window:Main:Tab:Title]}" />
             <TabItem x:Name="TabStatistic" Header="{Binding Localization[Window:Statistic:Tab:Title]}" />
             <TabItem x:Name="TabAbout" Header="{Binding Localization[Window:About:Tab:Title]}" />
@@ -14,4 +23,4 @@
             <!-- TODO: add database management (clear, see size of it); -->
         </TabControl>
     </Grid>
-</Window>
+</controls:MaterialWindow>
