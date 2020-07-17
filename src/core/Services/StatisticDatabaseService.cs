@@ -39,16 +39,16 @@ namespace Mitheti.Core.Services
         private static Dictionary<DayOfWeek, double> GetPercentagesFromDurationByDayOfWeek(Dictionary<DayOfWeek, int> durations)
         {
             var result = GetEmptyDictionaryByDayOfWeek<double>(0.0);
-            var max = durations.Aggregate((aggregated, item) => item.Value > aggregated.Value ? item : aggregated).Value;
-            if (max == 0)
+            var summary = durations.Sum(item => item.Value);
+            if (summary == 0)
             {
                 //? avoiding 0/0 resulting in NaN;
-                max = 1;
+                summary = 1;
             }
 
             foreach (var (key, value) in durations)
             {
-                result[key] = (double)value / max;
+                result[key] = (double)value / summary;
             }
 
             return result;
@@ -118,18 +118,18 @@ namespace Mitheti.Core.Services
             var result = new Dictionary<string, double>();
             if (data.Count == 0)
             {
-                //? avoid exception on `data.Aggregate`;
+                //? avoid exception on `data.Sum`;
                 return result;
             }
 
-            // TODO: fix percentage calculation;
-            var max = data.Aggregate((r, item) => item.Duration > r.Duration ? item : r).Duration;
-            if (max == 0)
+            // TODO: combine two uses of this code into one;
+            var summary = data.Sum(item => item.Duration);
+            if (summary == 0)
             {
-                max = 1;
+                summary = 1;
             }
 
-            data.ForEach(item => result.Add(item.AppName, (double)item.Duration / max));
+            data.ForEach(item => result.Add(item.AppName, (double)item.Duration / summary));
             return result;
         }
     }
