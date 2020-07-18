@@ -122,7 +122,6 @@ namespace Mitheti.Core.Services
                 return result;
             }
 
-            // TODO: combine two uses of this code into one;
             var summary = data.Sum(item => item.Duration);
             if (summary == 0)
             {

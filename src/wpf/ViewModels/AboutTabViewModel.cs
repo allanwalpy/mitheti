@@ -13,7 +13,7 @@ namespace Mitheti.Wpf.ViewModels
         {
             Localization = localization.Data;
 
-            // TODO: use github api?
+            // TODO: use github api?;
             Contributors = string.Join(";\n",
                 localization.Config.GetList("Window:About:Collaborators", new List<string>())) + ";";
         }

@@ -6,8 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:material="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
              mc:Ignorable="d"
-             Loaded="OnLoaded"
-             d:DesignHeight="500" d:DesignWidth="800">
+             Loaded="OnLoaded">
     <StackPanel>
         <materialDesign:Card Padding="32" Margin="16">
             <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Text="{Binding IsLaunchedString}" />

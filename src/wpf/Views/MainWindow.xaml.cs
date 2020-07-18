@@ -22,18 +22,14 @@ namespace Mitheti.Wpf.Views
         private readonly ILocalizationService _localization;
         private readonly Forms.NotifyIcon _tray;
 
-        public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl,
-            MainTab mainTab, StatisticTab statisticTab, AboutTab aboutTab)
+        public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl, MainWindowViewModel viewModel)
         {
             _localization = localization;
             _watcherControl = watcherControl;
 
-            DataContext = new MainWindowViewModel(localization);
+            DataContext = viewModel;
             InitializeComponent();
-            //TODO: get rid off (to MainWindowViewModel may be);
-            TabMain.Content = mainTab;
-            TabStatistic.Content = statisticTab;
-            TabAbout.Content = aboutTab;
+            viewModel.SetTabs(TabControl);
 
             _tray = new Forms.NotifyIcon();
             ConfigureTray();

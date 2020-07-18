@@ -5,25 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:material="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
-             mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="800">
-    <StackPanel>
-        <ListView ItemsSource="{Binding DayOfWeekData}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding DayOfWeek}" Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:DayOfWeek]}" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Duration}" Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:TimeSpan]}" />
-                    <GridViewColumn DisplayMemberBinding="{Binding PercentageString}" Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:Percentage]}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <ListView ItemsSource="{Binding TopAppsData}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding AppName}" Header="{Binding Localization[Window:Statistic:TopApp:Header:AppName]}" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Duration}" Header="{Binding Localization[Window:Statistic:TopApp:Header:TimeSpan]}" />
-                    <GridViewColumn DisplayMemberBinding="{Binding PercentageString}" Header="{Binding Localization[Window:Statistic:TopApp:Header:Percentage]}" />
-                    <!-- TODO: fix this;
+             mc:Ignorable="d">
+    <ScrollViewer PreviewMouseWheel="OnMouseScroll">
+        <StackPanel>
+            <ListView ItemsSource="{Binding DayOfWeekData}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding DayOfWeek}"
+                                        Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:DayOfWeek]}" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Duration}"
+                                        Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:TimeSpan]}" />
+                        <GridViewColumn DisplayMemberBinding="{Binding PercentageString}"
+                                        Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:Percentage]}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView ItemsSource="{Binding TopAppsData}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding AppName}"
+                                        Header="{Binding Localization[Window:Statistic:TopApp:Header:AppName]}" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Duration}"
+                                        Header="{Binding Localization[Window:Statistic:TopApp:Header:TimeSpan]}" />
+                        <GridViewColumn DisplayMemberBinding="{Binding PercentageString}"
+                                        Header="{Binding Localization[Window:Statistic:TopApp:Header:Percentage]}" />
+                        <!-- TODO: fix this;
                     <GridViewColumn Header="{Binding Localization[Window:Statistic:TopApp:Header:ProgressBar]}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -31,8 +37,9 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn> -->
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </StackPanel>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

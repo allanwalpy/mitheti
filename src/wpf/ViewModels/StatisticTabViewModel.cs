@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Mitheti.Core;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Models;
@@ -10,7 +11,9 @@ namespace Mitheti.Wpf.ViewModels
 {
     public class StatisticTabViewModel
     {
+        // TODO: add selector for value;
         public const int TopAppsCount = 10;
+        private const string ConfigKey = "Window:Statistic";
 
         private readonly IStatisticDatabaseService _statisticDatabase;
         private readonly ILocalizationService _localization;
@@ -25,20 +28,25 @@ namespace Mitheti.Wpf.ViewModels
             _localization = localization;
             _statisticDatabase = statisticDatabase;
 
-            DayOfWeekData = GetDayOfWeekString();
-            TopAppsData = GetTopAppsDataView();
+            DayOfWeekData = new ObservableCollection<DayOfWeekModel>();;
+            TopAppsData = new ObservableCollection<TopAppModel>();
+
+            PopulateDayOfWeek().ConfigureAwait(false);
+            PopulateTopApps().ConfigureAwait(false);
         }
 
-        private ObservableCollection<DayOfWeekModel> GetDayOfWeekString()
+        private async Task PopulateDayOfWeek()
         {
             _statisticDatabase.GetStatisticByDayOfWeek(TimePeriod.All,
                 out var durations, out var percentages);
 
-            // TODO: compact "Window:Statistic:DayOfWeek/TopApp" to consts;
-            var dayOfWeekOrder = _localization.Config.GetList<int>("Window:Statistic:DayOfWeek:Order");
-            var dayOfWeekNames = _localization.Config.GetList<string>("Window:Statistic:DayOfWeek:Name");
+            var dayOfWeekOrder = _localization.Config.GetList<int>($"{ConfigKey}:DayOfWeek:Order");
+            var dayOfWeekNames = _localization.Config.GetList<string>($"{ConfigKey}:DayOfWeek:Name");
 
-            var result = new ObservableCollection<DayOfWeekModel>();
+            if (DayOfWeekData.Count > 0)
+            {
+                DayOfWeekData.Clear();
+            }
 
             foreach (var dayOfWeekNumber in dayOfWeekOrder)
             {
@@ -46,40 +54,40 @@ namespace Mitheti.Wpf.ViewModels
                 var duration = TimeSpan.FromMilliseconds(durations[dayOfWeek]);
                 var percent = percentages[dayOfWeek];
 
-                result.Add(new DayOfWeekModel
+                DayOfWeekData.Add(new DayOfWeekModel
                     {
                         DayOfWeek = dayOfWeekNames[dayOfWeekNumber],
-                        Duration = string.Format(Localization["Window:Statistic:DayOfWeek:Item:Time"], duration),
+                        Duration = string.Format(Localization[$"{ConfigKey}:DayOfWeek:Item:Time"], duration),
                         Percentage = (int)(percent * 1000),
                         PercentageString = percent.ToString(Localization["Formats:Percentage"]),
                     }
                 );
             }
-
-            return result;
         }
 
-        private ObservableCollection<TopAppModel> GetTopAppsDataView()
+        private async Task PopulateTopApps()
         {
             _statisticDatabase.GetStatisticByAppName(TopAppsCount, TimePeriod.All,
                 out var durations, out var percentages);
 
-            var result = new ObservableCollection<TopAppModel>();
+            if (TopAppsData.Count > 0)
+            {
+                TopAppsData.Clear();
+            }
 
             foreach (var item in durations)
             {
                 var percent = percentages[item.AppName];
 
-                result.Add(new TopAppModel
+                TopAppsData.Add(new TopAppModel
                 {
                     AppName = item.AppName,
-                    Duration = string.Format(Localization["Window:Statistic:TopApp:Item:Time"], TimeSpan.FromMilliseconds(item.Duration)),
+                    Duration = string.Format(Localization[$"{ConfigKey}:TopApp:Item:Time"],
+                        TimeSpan.FromMilliseconds(item.Duration)),
                     PercentageString = percent.ToString(Localization["Formats:Percentage"]),
-                    Percentage = (int)(percent * 1000)
+                    Percentage = (int) (percent * 1000)
                 });
             }
-
-            return result;
         }
 
 
