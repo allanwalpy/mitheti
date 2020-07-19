@@ -6,7 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:material="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
              mc:Ignorable="d">
-    <ScrollViewer PreviewMouseWheel="OnMouseScroll">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" PreviewMouseWheel="OnMouseScroll">
         <StackPanel>
             <ListView ItemsSource="{Binding DayOfWeekData}">
                 <ListView.View>

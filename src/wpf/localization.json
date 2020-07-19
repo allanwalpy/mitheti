@@ -60,8 +60,21 @@
             "About": {
                 "Tab:Title": "О приложении",
                 "Contributor": {
-                    "GithubLink": "ссылка на github",
-                    "PersonalLink": "ссылка на персональную страницу"
+                    "Header": "Разработчики",
+                    "GithubLink": "страница github",
+                    "PersonalLink": "персональная страница",
+                    "SeparatorLink": "; ",
+                    "Name": "{0} aka {1}"
+                },
+                "License": {
+                    "Header": "Лицензия",
+                    "Template": "{0}; \n\n{1}:\n{2}",
+                    "Main": "Mitheti 2020 MIT © Аднрей Лысенков aka allan walpy",
+                    "Uses": "с использованием",
+                    "Attributes:Separator": "\n",
+                    "Attributes": [
+                        "иконки в оконном интерфейсе и трей иконки от https://www.flaticon.com/authors/fjstudio на сайте www.flaticon.com/ с дополнительным редактированием allan-walpy в программе gimp"
+                    ]
                 }
             }
         },

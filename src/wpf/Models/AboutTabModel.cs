@@ -6,6 +6,6 @@ namespace Mitheti.Wpf.Models
     {
         public Dictionary<string, string> Localization { get; set; }
 
-        public string Contributors { get; set; }
+        public string License { get; set; }
     }
 }

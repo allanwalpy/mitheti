@@ -6,9 +6,17 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:material="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
              mc:Ignorable="d">
-    <StackPanel>
-        <TextBlock Style="{DynamicResource MaterialDesignBody1TextBlock}" Text="mitheti" />
-        <TextBlock Style="{DynamicResource MaterialDesignBody1TextBlock}" Text="Contributors" />
-        <StackPanel x:Name="Contributors" />
-    </StackPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
+                       Text="{Binding Localization[Window:About:License:Header]}" Padding="16" Margin="16" />
+            <materialDesign:Card Padding="32" Margin="16">
+                <TextBlock Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="{Binding License}"
+                           TextWrapping="Wrap" />
+            </materialDesign:Card>
+            <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
+                       Text="{Binding Localization[Window:About:Contributor:Header]}" Padding="16" Margin="16" />
+            <StackPanel x:Name="Contributors" />
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
