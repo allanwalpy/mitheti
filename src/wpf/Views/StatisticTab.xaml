@@ -8,6 +8,7 @@
              mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto" PreviewMouseWheel="OnMouseScroll">
         <StackPanel>
+            <materialDesign:Card x:Name="DayOfWeekGraph" />
             <ListView ItemsSource="{Binding DayOfWeekData}">
                 <ListView.View>
                     <GridView>

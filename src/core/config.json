@@ -4,6 +4,6 @@
         "delay": 250
     },
     "database": {
-        "delay": 1
+        "delay": 30
     }
 }

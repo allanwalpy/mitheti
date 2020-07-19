@@ -22,6 +22,7 @@ namespace Mitheti.Wpf.Views
             _viewModel = viewModel;
             DataContext = viewModel;
             InitializeComponent();
+            viewModel.Initialize(this).ConfigureAwait(false);
 
             _updateInfoTask = UpdateInfo(_tokenSource.Token);
         }
