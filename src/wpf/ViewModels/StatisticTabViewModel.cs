@@ -31,14 +31,20 @@ namespace Mitheti.Wpf.ViewModels
             DayOfWeekData = new ObservableCollection<DayOfWeekModel>();;
             TopAppsData = new ObservableCollection<TopAppModel>();
 
-            PopulateDayOfWeek().ConfigureAwait(false);
-            PopulateTopApps().ConfigureAwait(false);
+            UpdateInfo().ConfigureAwait(false);
+        }
+
+        public async Task UpdateInfo()
+        {
+            var updateDayOfWeek = PopulateDayOfWeek();
+            var updateTopApps = PopulateTopApps();
+            await Task.WhenAll(updateDayOfWeek, updateTopApps);
         }
 
         private async Task PopulateDayOfWeek()
         {
-            _statisticDatabase.GetStatisticByDayOfWeek(TimePeriod.All,
-                out var durations, out var percentages);
+            var (durations, percentages)
+                = await _statisticDatabase.GetStatisticByDayOfWeek(TimePeriod.All);
 
             var dayOfWeekOrder = _localization.Config.GetList<int>($"{ConfigKey}:DayOfWeek:Order");
             var dayOfWeekNames = _localization.Config.GetList<string>($"{ConfigKey}:DayOfWeek:Name");
@@ -67,8 +73,8 @@ namespace Mitheti.Wpf.ViewModels
 
         private async Task PopulateTopApps()
         {
-            _statisticDatabase.GetStatisticByAppName(TopAppsCount, TimePeriod.All,
-                out var durations, out var percentages);
+            var (durations, percentages) =
+                await _statisticDatabase.GetStatisticByAppName(TopAppsCount, TimePeriod.All);
 
             if (TopAppsData.Count > 0)
             {

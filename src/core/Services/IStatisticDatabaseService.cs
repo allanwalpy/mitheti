@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mitheti.Core.Services
 {
     public interface IStatisticDatabaseService
     {
-        void GetStatisticByDayOfWeek(TimePeriod period,
-            out Dictionary<DayOfWeek, int> duration, out Dictionary<DayOfWeek, double> percentages);
+        Task<(Dictionary<DayOfWeek, int> duration, Dictionary<DayOfWeek, double> percentage)>
+            GetStatisticByDayOfWeek(TimePeriod period);
 
-        void GetStatisticByAppName(int maximumApps, TimePeriod period,
-            out List<TopAppInfo> durations, out Dictionary<string, double> percentages);
+        Task<(List<TopAppInfo> durations, Dictionary<string, double> percentages)>
+            GetStatisticByAppName(int maximumApps, TimePeriod period);
     }
 }

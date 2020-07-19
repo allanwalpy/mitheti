@@ -21,7 +21,7 @@ namespace Mitheti.Wpf
         //? see https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499- ;
         public const int ExitCodeAlreadyLaunched = 101;
 
-        public IServiceProvider Container { get; private set; }
+        public ServiceProvider Container { get; private set; }
 
         private readonly Mutex _instanceMutex;
 
@@ -44,12 +44,18 @@ namespace Mitheti.Wpf
             MainWindow.Show();
         }
 
-        private void OnExit(object sender, ExitEventArgs args) => _instanceMutex?.ReleaseMutex();
+        private void OnExit(object sender, ExitEventArgs args)
+        {
+            Container.Dispose();
+
+            _instanceMutex?.ReleaseMutex();
+        }
 
         private void ConfigureServices()
         {
             var services = new ServiceCollection();
 
+            //TODO: add log files;
             services.AddLogging();
             services.AddCoreServices();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mitheti.Core.Services
@@ -16,17 +17,20 @@ namespace Mitheti.Core.Services
             _database = database;
         }
 
-        public void GetStatisticByDayOfWeek(TimePeriod period, out Dictionary<DayOfWeek, int> duration, out Dictionary<DayOfWeek, double> percentages)
+        public async Task<(Dictionary<DayOfWeek, int> duration, Dictionary<DayOfWeek, double> percentage)>
+            GetStatisticByDayOfWeek(TimePeriod period)
         {
-            duration = GetDurationByDayOfWeek(period);
-            percentages = GetPercentagesFromDurationByDayOfWeek(duration);
+            var duration = await GetDurationByDayOfWeek(period);
+            var percentage = GetPercentagesFromDurationByDayOfWeek(duration);
+
+            return (duration, percentage);
         }
 
-        private Dictionary<DayOfWeek, int> GetDurationByDayOfWeek(TimePeriod period)
+        private async Task<Dictionary<DayOfWeek, int>> GetDurationByDayOfWeek(TimePeriod period)
         {
             var result = GetEmptyDictionaryByDayOfWeek<int>(0);
 
-            using var context = _database.GetContext();
+            await using var context = _database.GetContext();
             var data = context.AppTimes.WhereTimePeriod(period);
 
             //? `ForEachAsync` is preferred to `Parallel.ForEach` for databases;
@@ -36,7 +40,8 @@ namespace Mitheti.Core.Services
             return result;
         }
 
-        private static Dictionary<DayOfWeek, double> GetPercentagesFromDurationByDayOfWeek(Dictionary<DayOfWeek, int> durations)
+        private static Dictionary<DayOfWeek, double> GetPercentagesFromDurationByDayOfWeek(
+            Dictionary<DayOfWeek, int> durations)
         {
             var result = GetEmptyDictionaryByDayOfWeek<double>(0.0);
             var summary = durations.Sum(item => item.Value);
@@ -48,7 +53,7 @@ namespace Mitheti.Core.Services
 
             foreach (var (key, value) in durations)
             {
-                result[key] = (double)value / summary;
+                result[key] = (double) value / summary;
             }
 
             return result;
@@ -65,18 +70,20 @@ namespace Mitheti.Core.Services
             return result;
         }
 
-        public void GetStatisticByAppName(int maximumApps, TimePeriod period, out List<TopAppInfo> durations, out Dictionary<string, double> percentages)
+        public async Task<(List<TopAppInfo> durations, Dictionary<string, double> percentages)>
+            GetStatisticByAppName(int maximumApps, TimePeriod period)
         {
-            durations = GetDurationByAppName(period);
-            percentages = GetPercentagesFromDurationByAppName(durations);
+            var durations = await GetDurationByAppName(period);
+            var percentage = GetPercentagesFromDurationByAppName(durations, maximumApps);
 
             TruncateList(durations, maximumApps);
+            return (durations, percentage);
         }
 
 
-        private List<TopAppInfo> GetDurationByAppName(TimePeriod period)
+        private async Task<List<TopAppInfo>> GetDurationByAppName(TimePeriod period)
         {
-            using var context = _database.GetContext();
+            await using var context = _database.GetContext();
             var data = context.AppTimes.WhereTimePeriod(period);
 
             var result = new List<TopAppInfo>();
@@ -92,7 +99,7 @@ namespace Mitheti.Core.Services
 
             if (founded == null)
             {
-                result.Add(new TopAppInfo { AppName = item.AppName, Duration = item.Duration});
+                result.Add(new TopAppInfo {AppName = item.AppName, Duration = item.Duration});
             }
             else
             {
@@ -113,7 +120,7 @@ namespace Mitheti.Core.Services
             }
         }
 
-        private static Dictionary<string, double> GetPercentagesFromDurationByAppName(List<TopAppInfo> data)
+        private static Dictionary<string, double> GetPercentagesFromDurationByAppName(List<TopAppInfo> data, int maximumApps)
         {
             var result = new Dictionary<string, double>();
             if (data.Count == 0)
@@ -128,7 +135,11 @@ namespace Mitheti.Core.Services
                 summary = 1;
             }
 
-            data.ForEach(item => result.Add(item.AppName, (double)item.Duration / summary));
+            var size = Math.Min(data.Count, maximumApps);
+            for (var i = 0; i < size; i++)
+            {
+                result.Add(data[i].AppName, (double) data[i].Duration / summary);
+            }
             return result;
         }
     }

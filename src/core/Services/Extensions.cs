@@ -32,7 +32,7 @@ namespace Mitheti.Core.Services
             return config.AddJsonFile(filePath, isOptional, false);
         }
 
-        internal static void WaitCancelled(this Task task, int timeoutMilliseconds)
+        public static void WaitCancelled(this Task task, int timeoutMilliseconds)
             => Task.WaitAny(new[] {task}, timeoutMilliseconds);
 
         //? on `"someKey": []`, `GetSection(key).Get<string[]>()` returns `null`, not `string[0]`; `GetValue<T[]>` not working for array/list;

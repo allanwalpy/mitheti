@@ -61,10 +61,19 @@ namespace Mitheti.Wpf.Services
 
         public void Dispose()
         {
-            _watcherControl.WatcherStatusChanged -= ChangeTray;
-            _tray.MouseClick -= OnTrayClick;
-            _tray.ContextMenuStrip.Dispose();
-            _tray.Dispose();
+            try
+            {
+                //TODO:FIXME: crash on exit without try catch block;
+                _watcherControl.WatcherStatusChanged -= ChangeTray;
+                _tray.MouseClick -= OnTrayClick;
+                _tray.ContextMenuStrip.Dispose();
+                _tray.Dispose();
+            }
+            catch (Exception)
+            {
+                //TODO: add log of exception;
+            }
+
         }
     }
 }

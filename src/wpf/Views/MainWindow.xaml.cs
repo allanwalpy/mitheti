@@ -13,7 +13,6 @@ namespace Mitheti.Wpf.Views
 
         public MainWindow(ILocalizationService localization, MainWindowViewModel viewModel, ITrayManagerService tray)
         {
-
             DataContext = viewModel;
             InitializeComponent();
             viewModel.SetTabs(TabControl);
