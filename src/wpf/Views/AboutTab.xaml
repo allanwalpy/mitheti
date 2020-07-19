@@ -7,8 +7,8 @@
              xmlns:material="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
              mc:Ignorable="d">
     <StackPanel>
-        <materialDesign:Card Padding="32" Margin="16">
-            <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Text="{Binding Contributors}" />
-        </materialDesign:Card>
+        <TextBlock Style="{DynamicResource MaterialDesignBody1TextBlock}" Text="mitheti" />
+        <TextBlock Style="{DynamicResource MaterialDesignBody1TextBlock}" Text="Contributors" />
+        <StackPanel x:Name="Contributors" />
     </StackPanel>
 </UserControl>

@@ -59,10 +59,10 @@
             },
             "About": {
                 "Tab:Title": "О приложении",
-                "Collaborators": [
-                    "allan_walpy aka Андрей Лысенков",
-                    "huex aka Стас [classified]"
-                ]
+                "Contributor": {
+                    "GithubLink": "ссылка на github",
+                    "PersonalLink": "ссылка на персональную страницу"
+                }
             }
         },
         "Formats": {

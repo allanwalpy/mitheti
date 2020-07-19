@@ -1,8 +1,4 @@
-using System;
 using System.ComponentModel;
-using System.Drawing;
-using Forms = System.Windows.Forms;
-using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
 using Mitheti.Wpf.ViewModels;
 
@@ -13,63 +9,21 @@ namespace Mitheti.Wpf.Views
     /// </summary>
     public partial class MainWindow
     {
-        private const string TrayIconBaseFile = "./Resources/tray";
-        public const string TrayIconOnFile = TrayIconBaseFile + ".on.ico";
-        public const string TrayIconOffFile = TrayIconBaseFile + ".off.ico";
-        public const string TrayIconDefaultFile = TrayIconOffFile;
+        private readonly ITrayManagerService _tray;
 
-        private readonly IWatcherControlService _watcherControl;
-        private readonly ILocalizationService _localization;
-        private readonly Forms.NotifyIcon _tray;
-
-        public MainWindow(ILocalizationService localization, IWatcherControlService watcherControl, MainWindowViewModel viewModel)
+        public MainWindow(ILocalizationService localization, MainWindowViewModel viewModel, ITrayManagerService tray)
         {
-            _localization = localization;
-            _watcherControl = watcherControl;
 
             DataContext = viewModel;
             InitializeComponent();
             viewModel.SetTabs(TabControl);
 
-            _tray = new Forms.NotifyIcon();
-            ConfigureTray();
-
-            Title = _localization[$"Window:Title"];
+            Title = localization[$"Window:Title"];
             Closing += HideWindow;
+
+            _tray = tray;
+            _tray.Initialize(this);
         }
-
-        private void ConfigureTray()
-        {
-            //TODO: make separate class configuration for tray?;
-            _tray.MouseClick += OnTrayClick;
-            _tray.Icon = new Icon(TrayIconDefaultFile);
-            _tray.Visible = true;
-            _watcherControl.WatcherStatusChanged += ChangeTray;
-
-            _tray.ContextMenuStrip = new Forms.ContextMenuStrip();
-            _tray.ContextMenuStrip.Items.Add(_localization["Tray:Options:Show"]).Click += OnTrayClickShow;
-            _tray.ContextMenuStrip.Items.Add(_localization["Tray:Options:Close"]).Click += OnTrayClickExit;
-        }
-
-        private void OnTrayClick(object? sender, Forms.MouseEventArgs args)
-        {
-            var isLeftClick = ((args.Button & Forms.MouseButtons.Left) != 0);
-            if (isLeftClick)
-            {
-                OnTrayClickShow(sender, args);
-            }
-        }
-
-        private void OnTrayClickShow(object? sender, EventArgs args)
-        {
-            Activate();
-            Show();
-        }
-
-        private void OnTrayClickExit(object sender, EventArgs args) => Exit();
-
-        private void ChangeTray(object sender, WatcherStatusEventArgs args)
-            => _tray.Icon = new Icon(args.IsLaunched ? TrayIconOnFile : TrayIconOffFile);
 
         private void HideWindow(object sender, CancelEventArgs args)
         {
@@ -79,9 +33,6 @@ namespace Mitheti.Wpf.Views
 
         internal void Exit()
         {
-            _watcherControl.WatcherStatusChanged -= ChangeTray;
-            _tray.MouseClick -= OnTrayClick;
-            _tray.ContextMenuStrip.Dispose();
             _tray.Dispose();
 
             Closing -= HideWindow;

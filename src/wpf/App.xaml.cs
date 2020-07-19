@@ -70,6 +70,7 @@ namespace Mitheti.Wpf
             services.AddSingleton<AboutTab>();
             services.AddSingleton<MainWindow>();
 
+            services.AddSingleton<ITrayManagerService, TrayManagerService>();
             services.AddSingleton<App>(this);
 
             Container = services.BuildServiceProvider();

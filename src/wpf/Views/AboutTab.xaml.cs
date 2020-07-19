@@ -9,6 +9,7 @@ namespace Mitheti.Wpf.Views
         {
             DataContext = viewModel;
             InitializeComponent();
+            viewModel.Initialize(this);
         }
     }
 }

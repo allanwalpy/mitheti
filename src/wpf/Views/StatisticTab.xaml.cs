@@ -12,7 +12,7 @@ namespace Mitheti.Wpf.Views
             InitializeComponent();
         }
 
-        //? see https://stackoverflow.com/a/16235785 ;
+        //? fix no scroll on content mouse scroll; see https://stackoverflow.com/a/16235785 ;
         private void OnMouseScroll(object sender, MouseWheelEventArgs args)
         {
             var scroll = sender as ScrollViewer;
