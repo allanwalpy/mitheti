@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading.Tasks;
+using Humanizer;
+using Humanizer.Localisation;
 using Mitheti.Core;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Models;
@@ -28,7 +31,8 @@ namespace Mitheti.Wpf.ViewModels
             _localization = localization;
             _statisticDatabase = statisticDatabase;
 
-            DayOfWeekData = new ObservableCollection<DayOfWeekModel>();;
+            DayOfWeekData = new ObservableCollection<DayOfWeekModel>();
+            ;
             TopAppsData = new ObservableCollection<TopAppModel>();
 
             UpdateInfo().ConfigureAwait(false);
@@ -56,15 +60,15 @@ namespace Mitheti.Wpf.ViewModels
 
             foreach (var dayOfWeekNumber in dayOfWeekOrder)
             {
-                var dayOfWeek = (DayOfWeek)dayOfWeekNumber;
+                var dayOfWeek = (DayOfWeek) dayOfWeekNumber;
                 var duration = TimeSpan.FromMilliseconds(durations[dayOfWeek]);
                 var percent = percentages[dayOfWeek];
 
                 DayOfWeekData.Add(new DayOfWeekModel
                     {
                         DayOfWeek = dayOfWeekNames[dayOfWeekNumber],
-                        Duration = string.Format(Localization[$"{ConfigKey}:DayOfWeek:Item:Time"], duration),
-                        Percentage = (int)(percent * 1000),
+                        Duration = HumanizeTimeSpan(duration),
+                        Percentage = (int) (percent * 1000),
                         PercentageString = percent.ToString(Localization["Formats:Percentage"]),
                     }
                 );
@@ -88,14 +92,19 @@ namespace Mitheti.Wpf.ViewModels
                 TopAppsData.Add(new TopAppModel
                 {
                     AppName = item.AppName,
-                    Duration = string.Format(Localization[$"{ConfigKey}:TopApp:Item:Time"],
-                        TimeSpan.FromMilliseconds(item.Duration)),
+                    Duration = HumanizeTimeSpan(TimeSpan.FromMilliseconds(item.Duration)),
                     PercentageString = percent.ToString(Localization["Formats:Percentage"]),
                     Percentage = (int) (percent * 1000)
                 });
             }
         }
 
-
+        private string HumanizeTimeSpan(TimeSpan timeSpan) => timeSpan.Humanize(
+            precision: 3,
+            countEmptyUnits: true,
+            culture: new CultureInfo(Localization["Language:Code"]),
+            minUnit: TimeUnit.Second,
+            maxUnit: TimeUnit.Day,
+            toWords: false);
     }
 }
