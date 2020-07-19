@@ -7,6 +7,6 @@ namespace Mitheti.Wpf.Models
         public string AppName { get; set; }
         public string Duration { get; set; }
         public string PercentageString { get; set; }
-        public int Percentage { get; set; }
+        public double Percentage { get; set; }
     }
 }

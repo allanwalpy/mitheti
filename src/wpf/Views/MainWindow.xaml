@@ -13,7 +13,7 @@
                      Background="{DynamicResource MaterialDesignPaper}"
                      FontFamily="{DynamicResource MaterialDesignFont}"
                      mc:Ignorable="d"
-                     Height="500" Width="700" ResizeMode="NoResize" Icon="/Resources/app.png">
+                     Height="500" Width="800" Icon="/Resources/app.png">
     <Grid>
         <!-- TODO: add settings changing; -->
         <!-- TODO: add database management (clear, see size of it); -->

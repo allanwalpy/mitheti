@@ -2,17 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using Humanizer;
 using Humanizer.Localisation;
 using Mitheti.Core;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Models;
 using Mitheti.Wpf.Services;
-using Mitheti.Wpf.Views;
 
 namespace Mitheti.Wpf.ViewModels
 {
@@ -43,6 +39,7 @@ namespace Mitheti.Wpf.ViewModels
 
         public async Task UpdateInfo()
         {
+            //TODO: update without clearing values from list;
             var updateDayOfWeek = PopulateDayOfWeek();
             var updateTopApps = PopulateTopApps();
             await Task.WhenAll(updateDayOfWeek, updateTopApps);
@@ -71,7 +68,7 @@ namespace Mitheti.Wpf.ViewModels
                     {
                         DayOfWeek = dayOfWeekNames[dayOfWeekNumber],
                         Duration = HumanizeTimeSpan(duration),
-                        Percentage = (int) (percent * 1000),
+                        Percentage = percent,
                         PercentageString = percent.ToString(Localization["Formats:Percentage"]),
                     }
                 );
@@ -97,41 +94,13 @@ namespace Mitheti.Wpf.ViewModels
                     AppName = item.AppName,
                     Duration = HumanizeTimeSpan(TimeSpan.FromMilliseconds(item.Duration)),
                     PercentageString = percent.ToString(Localization["Formats:Percentage"]),
-                    Percentage = (int) (percent * 1000)
+                    Percentage = percent
                 });
             }
         }
 
-        public async Task Initialize(StatisticTab tab)
-        {
-            var plot = new ScottPlot.Plot(400, 400);
-            var daysOfWeek = _localization.Config.GetList<int>($"{ConfigKey}:DayOfWeek:Order");
-            var (duration, percentages) = await _statisticDatabase.GetStatisticByDayOfWeek(TimePeriod.All);
-            var xValues = Enumerable.Range(0, daysOfWeek.Count).ToList().ConvertAll<double>(item => (double)item);
-            var yValues = new List<double>();
-            var labels = new List<string>();
-            for (var i = 0; i < daysOfWeek.Count; i++)
-            {
-                var index = daysOfWeek[i];
-                yValues.Add(percentages[(DayOfWeek)index] * 100);
-                labels.Add(Localization[$"{ConfigKey}:DayOfWeek:Name:{index}"]);
-            }
-
-            plot.PlotBar(xValues.ToArray(), yValues.ToArray());
-
-            //plot.Axis();
-            plot.Grid(enable: true, color: System.Drawing.Color.Indigo, enableHorizontal: true, enableVertical: false);
-
-            plot.XTicks(xValues.ToArray(), labels.ToArray());
-
-            plot.SaveFig("tmp.png", true);
-            //TODO: change to different library;
-            var image = new Image {Source = new BitmapImage(new Uri("tmp.png", UriKind.Relative))};
-            tab.DayOfWeekGraph.Content = image;
-        }
-
         private string HumanizeTimeSpan(TimeSpan timeSpan) => timeSpan.Humanize(
-            precision: 3,
+            precision: 2,
             countEmptyUnits: true,
             culture: new CultureInfo(Localization["Language:Code"]),
             minUnit: TimeUnit.Second,
