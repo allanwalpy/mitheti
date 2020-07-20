@@ -21,6 +21,7 @@ namespace Mitheti.Core.Services
             services.TryAddSingleton<IWatcherService, WatcherService>();
             services.TryAddSingleton<IWatcherControlService, WatcherControlService>();
             services.TryAddSingleton<IStatisticDatabaseService, StatisticDatabaseService>();
+            services.TryAddSingleton<ISizeLimitDatabaseService, SizeLimitDatabaseService>();
 
             return services;
         }

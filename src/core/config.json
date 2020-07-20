@@ -4,6 +4,7 @@
         "delay": 250
     },
     "database": {
-        "delay": 30
+        "delay": 30,
+        "maxSizeMb": 1
     }
 }
