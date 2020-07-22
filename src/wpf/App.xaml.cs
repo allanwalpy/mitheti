@@ -63,6 +63,7 @@ namespace Mitheti.Wpf
             config.AddJsonFile(LocalizationFile, false, false);
             services.AddSingleton<IConfiguration>(config.Build());
 
+            services.AddSingleton<ISettingsManager, SettingsManager>();
             services.AddSingleton<ILocalizationService, LocalizationService>();
 
             services.AddSingleton<MainWindowViewModel>();
