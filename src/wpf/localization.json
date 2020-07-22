@@ -59,26 +59,28 @@
             "Setting": {
                 "Tab:Title": "Настройки",
                 "Option": {
+                    "Header": "Опции",
                     "TrackingDelay": {
-                        "Label:Begin": "Фиксировать окно в фокусе каждые",
-                        "Label:End": "миллисекунд"
+                        "Label:Begin": "Фиксировать окно в фокусе каждые ",
+                        "Label:End": " миллисекунд"
                     },
                     "SavingDelay": {
-                        "Label:Begin": "Сохранять информацию каждые",
-                        "Label:End": "минут"
+                        "Label:Begin": "Сохранять информацию каждые ",
+                        "Label:End": " минут"
                     },
                     "DatabaseSize": {
-                        "Label:Begin": "Удалять старые записи об активности при размере данных более",
-                        "Label:End": "мегабайт"
+                        "Label:Begin": "Удалять старые записи об активности при размере данных более ",
+                        "Label:End": " мегабайт"
                     },
                     "Save": "Сохранить"
                 },
                 "Action": {
+                    "Header": "Действия",
                     "Clear": {
                         "Button": "Удалить",
-                        "Label:Begin": "Удалить записи об активности с",
-                        "Label:Middle": "до",
-                        "Label:End": "временного отрезка"
+                        "Label:Begin": "Удалить записи об активности с ",
+                        "Label:Middle": " до ",
+                        "Label:End": ""
                     }
                 }
             },

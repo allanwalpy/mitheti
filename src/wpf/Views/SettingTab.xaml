@@ -4,51 +4,77 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:materialEx="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
-             xmlns:local="clr-namespace:Mitheti.Wpf.Views"
              mc:Ignorable="d">
     <ScrollViewer>
         <StackPanel Orientation="Vertical">
-            <material:Card>
+            <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
+                       Text="{Binding Localization[Window:Setting:Option:Header]}" Padding="16" Margin="16" />
+            <material:Card Padding="32" Margin="16">
                 <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:TrackingDelay:Label:Begin]}" />
-                        <Slider Value="{Binding TrackingDelaySetting.Value}"
-                                Minimum="{Binding TrackingDelaySetting.Min}"
-                                Maximum="{Binding TrackingDelaySetting.Max}"
-                                Width="300" />
-                        <TextBlock Text="{Binding TrackingDelaySetting.Value}" />
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:TrackingDelay:Label:End]}" />
+                    <StackPanel Orientation="Horizontal" Margin="8">
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:TrackingDelay:Label:Begin]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                        <TextBlock Text="{Binding TrackingDelaySetting.Value}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:TrackingDelay:Label:End]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:SavingDelay:Label:Begin]}" />
-                        <Slider Value="{Binding SavingDelaySetting.Value}" Minimum="{Binding SavingDelaySetting.Min}"
-                                Maximum="{Binding SavingDelaySetting.Max}"
-                                Width="300" />
-                        <TextBlock Text="{Binding SavingDelaySetting.Value}" />
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:SavingDelay:Label:End]}" />
+                    <Slider Value="{Binding TrackingDelaySetting.Value}"
+                            Minimum="{Binding TrackingDelaySetting.Min}"
+                            Maximum="{Binding TrackingDelaySetting.Max}"
+                            Width="300" Margin="8, 8, 8, 32" />
+                    <StackPanel Orientation="Horizontal" Margin="8">
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:SavingDelay:Label:Begin]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                        <TextBlock Text="{Binding SavingDelaySetting.Value}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:SavingDelay:Label:End]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:DatabaseSize:Label:Begin]}" />
-                        <Slider Value="{Binding DatabaseSizeSetting.Value}" Minimum="{Binding DatabaseSizeSetting.Min}"
-                                Maximum="{Binding DatabaseSizeSetting.Max}"
-                                Width="300" />
-                        <TextBlock Text="{Binding DatabaseSizeSetting.Value}" />
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:DatabaseSize:Label:End]}" />
+                    <Slider Value="{Binding SavingDelaySetting.Value}" Minimum="{Binding SavingDelaySetting.Min}"
+                            Maximum="{Binding SavingDelaySetting.Max}"
+                            Width="300" Margin="8, 8, 8, 32" />
+                    <StackPanel Orientation="Horizontal" Margin="8">
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:DatabaseSize:Label:Begin]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                        <TextBlock Text="{Binding DatabaseSizeSetting.Value}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:DatabaseSize:Label:End]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
                     </StackPanel>
-                    <Button Click="OnSaveClick" Content="{Binding Localization[Window:Setting:Option:Save]}" />
+                    <Slider Value="{Binding DatabaseSizeSetting.Value}" Minimum="{Binding DatabaseSizeSetting.Min}"
+                            Maximum="{Binding DatabaseSizeSetting.Max}"
+                            Width="300" Margin="8, 8, 8, 32" />
+                    <Button Click="OnSaveClick" Content="{Binding Localization[Window:Setting:Option:Save]}"
+                            Width="150" HorizontalAlignment="Center" />
                 </StackPanel>
             </material:Card>
-            <material:Card>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Begin]}" />
-                    <DatePicker x:Name="ClearSettingBeginDate" SelectedDate="{Binding ClearSetting.Begin}" />
-                    <material:TimePicker x:Name="ClearSettingBeginTime" SelectedTime="{Binding ClearSetting.Begin}" Is24Hours="True" />
-                    <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Middle]}" />
-                    <DatePicker x:Name="ClearSettingEndDate" SelectedDate="{Binding ClearSetting.End}" />
-                    <material:TimePicker x:Name="ClearSettingEndTime" SelectedTime="{Binding ClearSetting.End}" Is24Hours="True" />
-                    <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:End]}" />
-                    <Button Click="OnClearClick" Content="{Binding Localization[Window:Setting:Action:Clear:Button]}" />
+            <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
+                       Text="{Binding Localization[Window:Setting:Action:Header]}" Padding="16" Margin="16" />
+            <material:Card Padding="32" Margin="16">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="8">
+                    <StackPanel Orientation="Horizontal" Width="650" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Begin]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+
+                        <DatePicker x:Name="ClearSettingBeginDate" SelectedDate="{Binding ClearSetting.Begin}"
+                                    Margin="8, 0" />
+                        <material:TimePicker x:Name="ClearSettingBeginTime" SelectedTime="{Binding ClearSetting.Begin}"
+                                             Is24Hours="True" Margin="8, 0" />
+
+                        <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Middle]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+
+                        <DatePicker x:Name="ClearSettingEndDate" SelectedDate="{Binding ClearSetting.End}"
+                                    Margin="8, 0" />
+                        <material:TimePicker x:Name="ClearSettingEndTime" SelectedTime="{Binding ClearSetting.End}"
+                                             Is24Hours="True" Margin="8, 0" />
+
+                        <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:End]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                    </StackPanel>
+                    <Button Click="OnClearClick" Content="{Binding Localization[Window:Setting:Action:Clear:Button]}"
+                            Margin="8, 16" />
                 </StackPanel>
             </material:Card>
         </StackPanel>
