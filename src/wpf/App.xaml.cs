@@ -1,4 +1,5 @@
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,8 @@ using Mitheti.Wpf.Views;
 
 namespace Mitheti.Wpf
 {
+    //TODO: configure repository with travis/codacy or other CI or so;
+
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
@@ -41,7 +44,11 @@ namespace Mitheti.Wpf
 
             MainWindow = Container.GetRequiredService<MainWindow>();
             MainWindow.Show();
+
+            ClearDatabase().ConfigureAwait(false);
         }
+
+        private async Task ClearDatabase() => await Container.GetService<ISizeLimitDatabaseService>().LimitDatabase();
 
         private void OnExit(object sender, ExitEventArgs args)
         {

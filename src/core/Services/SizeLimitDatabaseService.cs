@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
 namespace Mitheti.Core.Services
@@ -24,7 +25,7 @@ namespace Mitheti.Core.Services
             _maxSizeMb = config.GetValue(ConfigKey, DefaultSize).LimitTo(MinSize, MaxSize);
         }
 
-        public void LimitDatabase()
+        public async Task LimitDatabase()
         {
             var size = GetSizeMb();
             if (size < _maxSizeMb)
@@ -32,13 +33,13 @@ namespace Mitheti.Core.Services
                 return;
             }
 
-            ClearUntilSizeIs(_maxSizeMb);
+            await ClearUntilSizeIs(_maxSizeMb);
         }
 
         public long GetSizeMb() => new FileInfo(DatabaseFilename).Length / BytesInMb;
 
         //TODO: check if works;
-        private void ClearUntilSizeIs(int sizeMb)
+        private async Task ClearUntilSizeIs(int sizeMb)
         {
             var timePeriod = new TimePeriod
             {
@@ -47,7 +48,7 @@ namespace Mitheti.Core.Services
 
             while ((sizeMb < GetSizeMb()) && !timePeriod.Equals(DateTime.Now))
             {
-                _database.ClearAsync(timePeriod).Wait();
+                await _database.ClearAsync(timePeriod);
                 timePeriod.Begin = timePeriod.Begin.Add(TimeSpan.FromDays(DaysStep));
             }
         }
