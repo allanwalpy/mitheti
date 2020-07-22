@@ -8,8 +8,10 @@ namespace Mitheti.Core.Services
 {
     public class SavingService : ISavingService, IDisposable
     {
-        public const string RecordDelayConfigKey = "database:delay";
-        public const int RecordDelayDefault = 1;
+        public const string DelayConfigKey = "database:delay";
+        public const int DefaultDelay = 1;
+        public const int MinDelay = 1;
+        public const int MaxDelay = 2 *60; //? 2 hours;
         public const int MillisecondsInMinute = 60 * 1000;
         public const int StopWait = 500;
 
@@ -25,7 +27,7 @@ namespace Mitheti.Core.Services
             _database = database;
             _filter = filter;
 
-            var delayMinutes = config.GetValue(RecordDelayConfigKey, RecordDelayDefault);
+            var delayMinutes = config.GetValue(DelayConfigKey, DefaultDelay).LimitTo(MinDelay, MaxDelay);
             _savingTask = SavingTask(_tokenSource.Token, delayMinutes * MillisecondsInMinute);
         }
 
@@ -71,7 +73,7 @@ namespace Mitheti.Core.Services
                     return;
                 }
 
-                _database.Add(_records);
+                _database.AddAsync(_records).Wait();
                 _records.Clear();
             }
         }

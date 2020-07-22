@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mitheti.Core.Services
 {
@@ -7,16 +8,16 @@ namespace Mitheti.Core.Services
     {
         public DatabaseContext GetContext() => new DatabaseContext();
 
-        public void Add(IEnumerable<AppTimeModel> list)
+        public async Task AddAsync(IEnumerable<AppTimeModel> list)
         {
-            using var context = GetContext();
-            context.AddRange(list);
-            context.SaveChanges();
+            await using var context = GetContext();
+            await context.AddRangeAsync(list);
+            await context.SaveChangesAsync();
         }
 
-        public void Clear(TimePeriod period)
+        public async Task ClearAsync(TimePeriod period)
         {
-            using var context = GetContext();
+            await using var context = GetContext();
 
             var forDeletion = context.AppTimes.Where(
                 item => item.Time > period.Begin && item.Time < period.End);
@@ -26,7 +27,7 @@ namespace Mitheti.Core.Services
             }
 
             context.AppTimes.RemoveRange(forDeletion);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

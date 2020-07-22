@@ -6,8 +6,10 @@ namespace Mitheti.Core.Services
 {
     public class SizeLimitDatabaseService : ISizeLimitDatabaseService
     {
-        public const string MaxSizeMbConfigKey = "database:maxSizeMb";
-        public const int MaxSizeMbDefault = 1;
+        public const string ConfigKey = "database:maxSizeMb";
+        public const int DefaultSize = 1;
+        public const int MinSize = 1;
+        public const int MaxSize = 128;
         public const string DatabaseFilename = DatabaseContext.DatabaseFilename;
         public const long BytesInMb = 1024 * 1024;
         public const int StartWithLastYears = 2;
@@ -19,7 +21,7 @@ namespace Mitheti.Core.Services
         public SizeLimitDatabaseService(IConfiguration config, IDatabaseService database)
         {
             _database = database;
-            _maxSizeMb = config.GetValue(MaxSizeMbConfigKey, MaxSizeMbDefault);
+            _maxSizeMb = config.GetValue(ConfigKey, DefaultSize).LimitTo(MinSize, MaxSize);
         }
 
         public void LimitDatabase()
@@ -45,7 +47,7 @@ namespace Mitheti.Core.Services
 
             while ((sizeMb < GetSizeMb()) && !timePeriod.Equals(DateTime.Now))
             {
-                _database.Clear(timePeriod);
+                _database.ClearAsync(timePeriod).Wait();
                 timePeriod.Begin = timePeriod.Begin.Add(TimeSpan.FromDays(DaysStep));
             }
         }

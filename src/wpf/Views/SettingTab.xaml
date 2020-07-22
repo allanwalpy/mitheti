@@ -8,34 +8,49 @@
              xmlns:local="clr-namespace:Mitheti.Wpf.Views"
              mc:Ignorable="d">
     <ScrollViewer>
-        <material:Card>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Localization[Window:Setting:TrackingDelay:Label:Begin]}"/>
-                <Slider Minimum="100" Maximum="1500" Width="300" Delay="250" Value="250" />
-                <TextBox Text="250" />
-                <TextBlock Text="{Binding Localization[Window:Setting:TrackingDelay:Label:End]}"/>
-            </StackPanel>
-        </material:Card>
+        <StackPanel Orientation="Vertical">
+            <material:Card>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:TrackingDelay:Label:Begin]}" />
+                        <Slider Value="{Binding TrackingDelaySetting.Value}"
+                                Minimum="{Binding TrackingDelaySetting.Min}"
+                                Maximum="{Binding TrackingDelaySetting.Max}"
+                                Width="300" />
+                        <TextBlock Text="{Binding TrackingDelaySetting.Value}" />
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:TrackingDelay:Label:End]}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:SavingDelay:Label:Begin]}" />
+                        <Slider Value="{Binding SavingDelaySetting.Value}" Minimum="{Binding SavingDelaySetting.Min}"
+                                Maximum="{Binding SavingDelaySetting.Max}"
+                                Width="300" />
+                        <TextBlock Text="{Binding SavingDelaySetting.Value}" />
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:SavingDelay:Label:End]}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:DatabaseSize:Label:Begin]}" />
+                        <Slider Value="{Binding DatabaseSizeSetting.Value}" Minimum="{Binding DatabaseSizeSetting.Min}"
+                                Maximum="{Binding DatabaseSizeSetting.Max}"
+                                Width="300" />
+                        <TextBlock Text="{Binding DatabaseSizeSetting.Value}" />
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:DatabaseSize:Label:End]}" />
+                    </StackPanel>
+                    <Button Click="OnSaveClick" Content="{Binding Localization[Window:Setting:Option:Save]}" />
+                </StackPanel>
+            </material:Card>
+            <material:Card>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Begin]}" />
+                    <DatePicker x:Name="ClearSettingBeginDate" SelectedDate="{Binding ClearSetting.Begin}" />
+                    <material:TimePicker x:Name="ClearSettingBeginTime" SelectedTime="{Binding ClearSetting.Begin}" Is24Hours="True" />
+                    <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Middle]}" />
+                    <DatePicker x:Name="ClearSettingEndDate" SelectedDate="{Binding ClearSetting.End}" />
+                    <material:TimePicker x:Name="ClearSettingEndTime" SelectedTime="{Binding ClearSetting.End}" Is24Hours="True" />
+                    <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:End]}" />
+                    <Button Click="OnClearClick" Content="{Binding Localization[Window:Setting:Action:Clear:Button]}" />
+                </StackPanel>
+            </material:Card>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>
-
-<!--<TextBox Text="{Binding ElementName=slValue, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
-        <Slider Maximum="255" TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="True" Name="slValue" />
-<Slider HorizontalAlignment="Left"
-                Margin="10,10,0,0"
-                VerticalAlignment="Top"
-                Width="250"
-                ValueChanged="Slider_ValueChanged"/>
-
-                 private void Slider_ValueChanged(object sender,
-            RoutedPropertyChangedEventArgs<double> e)
-        {
-            // ... Get Slider reference.
-            var slider = sender as Slider;
-            // ... Get Value.
-            double value = slider.Value;
-            // ... Set Window Title.
-            this.Title = "Value: " + value.ToString("0.0") + "/" + slider.Maximum;
-        }
-
--->

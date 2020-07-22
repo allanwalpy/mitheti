@@ -10,6 +10,8 @@ namespace Mitheti.Core.Services
     {
         public const string DelayConfigKey = "service:delay";
         public const int DefaultDelay = 250;
+        public const int MinDelay = 100;
+        public const int MaxDelay = 5000;
 
         private readonly ILogger<WatcherService> _logger;
         private readonly ISavingService _database;
@@ -19,7 +21,8 @@ namespace Mitheti.Core.Services
         {
             _logger = logger;
             _database = database;
-            _delay = config.GetValue(DelayConfigKey, DefaultDelay);
+            _delay = config.GetValue(DelayConfigKey, DefaultDelay)
+                .LimitTo(MinDelay, MaxDelay);
         }
 
         public async Task RunAsync(CancellationToken token)

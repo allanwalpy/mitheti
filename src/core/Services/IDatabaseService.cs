@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mitheti.Core.Services
 {
@@ -6,8 +7,8 @@ namespace Mitheti.Core.Services
     {
         DatabaseContext GetContext();
 
-        void Add(IEnumerable<AppTimeModel> list);
+        Task AddAsync(IEnumerable<AppTimeModel> list);
 
-        void Clear(TimePeriod period);
+        Task ClearAsync(TimePeriod period);
     }
 }

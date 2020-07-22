@@ -44,5 +44,7 @@ namespace Mitheti.Core.Services
 
         public static IQueryable<AppTimeModel> WhereTimePeriod(this IQueryable<AppTimeModel> query, TimePeriod period)
             => period.Equals(TimePeriod.All) ? query : query.Where(item => period.Equals(item.Time));
+
+        public static int LimitTo(this int value, int min, int max) => value < min ? min : (value > max ? max : value);
     }
 }
