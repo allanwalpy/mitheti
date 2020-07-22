@@ -69,15 +69,17 @@ namespace Mitheti.Wpf
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<MainTabViewModel>();
             services.AddSingleton<StatisticTabViewModel>();
+            services.AddSingleton<SettingTabViewModel>();
             services.AddSingleton<AboutTabViewModel>();
 
             services.AddSingleton<MainTab>();
             services.AddSingleton<StatisticTab>();
             services.AddSingleton<AboutTab>();
+            services.AddSingleton<SettingTab>();
             services.AddSingleton<MainWindow>();
 
             services.AddSingleton<ITrayManagerService, TrayManagerService>();
-            services.AddSingleton<App>(this);
+            services.AddSingleton(this);
 
             Container = services.BuildServiceProvider();
         }

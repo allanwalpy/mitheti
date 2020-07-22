@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mitheti.Wpf.Models
+﻿namespace Mitheti.Wpf.Models
 {
     public class TopAppModel
     {

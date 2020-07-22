@@ -28,7 +28,7 @@ namespace Mitheti.Core.Services
 
         private async Task<Dictionary<DayOfWeek, int>> GetDurationByDayOfWeek(TimePeriod period)
         {
-            var result = GetEmptyDictionaryByDayOfWeek<int>(0);
+            var result = GetEmptyDictionaryByDayOfWeek(0);
 
             await using var context = _database.GetContext();
             var data = context.AppTimes.WhereTimePeriod(period);
@@ -43,7 +43,7 @@ namespace Mitheti.Core.Services
         private static Dictionary<DayOfWeek, double> GetPercentagesFromDurationByDayOfWeek(
             Dictionary<DayOfWeek, int> durations)
         {
-            var result = GetEmptyDictionaryByDayOfWeek<double>(0.0);
+            var result = GetEmptyDictionaryByDayOfWeek(0.0);
             var summary = durations.Sum(item => item.Value);
             if (summary == 0)
             {

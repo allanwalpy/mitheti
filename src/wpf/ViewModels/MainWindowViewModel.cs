@@ -9,17 +9,19 @@ namespace Mitheti.Wpf.ViewModels
     {
         private readonly MainTab _mainTab;
         private readonly StatisticTab _statisticTab;
+        private readonly SettingTab _settingTab;
         private readonly AboutTab _aboutTab;
 
         public Dictionary<string, string> Localization { get; }
 
         public MainWindowViewModel(ILocalizationService localization,
-            MainTab mainTab, StatisticTab statisticTab, AboutTab aboutTab)
+            MainTab mainTab, StatisticTab statisticTab, SettingTab settingTab, AboutTab aboutTab)
         {
             Localization = localization.Data;
 
             _mainTab = mainTab;
             _statisticTab = statisticTab;
+            _settingTab = settingTab;
             _aboutTab = aboutTab;
         }
 
@@ -27,7 +29,8 @@ namespace Mitheti.Wpf.ViewModels
         {
             tabControl.Items.Insert(0, GetTabItem("Window:Main:Tab:Title", _mainTab));
             tabControl.Items.Insert(1, GetTabItem("Window:Statistic:Tab:Title", _statisticTab));
-            tabControl.Items.Insert(2, GetTabItem("Window:About:Tab:Title", _aboutTab));
+            tabControl.Items.Insert(2, GetTabItem("Window:Setting:Tab:Title", _settingTab));
+            tabControl.Items.Insert(3, GetTabItem("Window:About:Tab:Title", _aboutTab));
         }
 
         private TabItem GetTabItem(string header, UserControl content)

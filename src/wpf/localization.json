@@ -56,6 +56,13 @@
                     }
                 }
             },
+            "Setting": {
+                "Tab:Title": "Настройки",
+                "TrackingDelay": {
+                    "Label:Begin": "Фиксировать окно в фокусе каждые",
+                    "Label:End": "миллисекунд"
+                }
+            },
             "About": {
                 "Tab:Title": "О приложении",
                 "Contributor": {

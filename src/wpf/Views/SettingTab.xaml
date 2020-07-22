@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Mitheti.Wpf.Views.SettingTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialEx="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             xmlns:local="clr-namespace:Mitheti.Wpf.Views"
+             mc:Ignorable="d">
+    <ScrollViewer>
+        <material:Card>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Localization[Window:Setting:TrackingDelay:Label:Begin]}"/>
+                <Slider Minimum="100" Maximum="1500" Width="300" Delay="250" Value="250" />
+                <TextBox Text="250" />
+                <TextBlock Text="{Binding Localization[Window:Setting:TrackingDelay:Label:End]}"/>
+            </StackPanel>
+        </material:Card>
+    </ScrollViewer>
+</UserControl>
+
+<!--<TextBox Text="{Binding ElementName=slValue, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right" Width="40" />
+        <Slider Maximum="255" TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="True" Name="slValue" />
+<Slider HorizontalAlignment="Left"
+                Margin="10,10,0,0"
+                VerticalAlignment="Top"
+                Width="250"
+                ValueChanged="Slider_ValueChanged"/>
+
+                 private void Slider_ValueChanged(object sender,
+            RoutedPropertyChangedEventArgs<double> e)
+        {
+            // ... Get Slider reference.
+            var slider = sender as Slider;
+            // ... Get Value.
+            double value = slider.Value;
+            // ... Set Window Title.
+            this.Title = "Value: " + value.ToString("0.0") + "/" + slider.Maximum;
+        }
+
+-->
