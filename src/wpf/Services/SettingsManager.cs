@@ -13,7 +13,7 @@ namespace Mitheti.Wpf.Services
         public const string DefaultFilename = Extensions.ConfigFile;
         public const string LocalizationSectionKey = LocalizationService.SectionKey;
         public static readonly string[] DefaultIgnoreSections = {LocalizationSectionKey};
-        public const string AlwaysIgnoreSection = "NLog";
+        public static readonly string[] AlwaysIgnoreSections = { App.LoggingSectionKey };
 
         public Dictionary<string, string> GetConfigSectionAsDictionary(IConfigurationSection config,
             List<string> ignoreSections = null)
@@ -23,7 +23,7 @@ namespace Mitheti.Wpf.Services
             List<string> ignoreSections = null)
         {
             var ignore = ignoreSections ?? DefaultIgnoreSections.ToList();
-            ignore.Add(AlwaysIgnoreSection);
+            ignore.AddRange(AlwaysIgnoreSections);
 
             var records = config.GetChildren().ToList();
             var result = new Dictionary<string, string>();

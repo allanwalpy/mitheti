@@ -4,11 +4,7 @@
         "targets": {
             "fileMain": {
                 "type": "File",
-                "fileName": "logging-main.log"
-            },
-            "fileTrace": {
-                "type": "File",
-                "fileName": "logging-trace.log"
+                "fileName": "mitheti.wpf.log"
             },
             "console": {
                 "type": "Console"
@@ -24,11 +20,6 @@
                 "logger": "*",
                 "minLevel": "Debug",
                 "writeTo": "fileMain"
-            },
-            {
-                "logger": "*",
-                "minLevel": "Trace",
-                "writeTo": "fileTrace"
             }
         ]
     }

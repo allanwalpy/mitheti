@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Humanizer;
 using Humanizer.Localisation;
 using Mitheti.Core;
@@ -16,19 +17,19 @@ namespace Mitheti.Wpf.ViewModels
     {
         // TODO: add selector for value;
         public const int TopAppsCount = 10;
-        private const string ConfigKey = "Window:Statistic";
 
+        private readonly IConfiguration _config;
         private readonly IStatisticDatabaseService _statisticDatabase;
-        private readonly ILocalizationService _localization;
 
         public Dictionary<string, string> Localization { get; }
         public ObservableCollection<TopAppModel> TopAppsData { get; }
         public ObservableCollection<DayOfWeekModel> DayOfWeekData { get; }
 
-        public StatisticTabViewModel(ILocalizationService localization, IStatisticDatabaseService statisticDatabase)
+        public StatisticTabViewModel(ILocalizationService localization, IConfiguration config,
+            IStatisticDatabaseService statisticDatabase)
         {
             Localization = localization.Data;
-            _localization = localization;
+            _config = config;
             _statisticDatabase = statisticDatabase;
 
             DayOfWeekData = new ObservableCollection<DayOfWeekModel>();
@@ -37,41 +38,39 @@ namespace Mitheti.Wpf.ViewModels
             UpdateInfo().ConfigureAwait(false);
         }
 
-        public async Task UpdateInfo()
-        {
-            //TODO: update without clearing values from list;
-            var updateDayOfWeek = PopulateDayOfWeek();
-            var updateTopApps = PopulateTopApps();
-            await Task.WhenAll(updateDayOfWeek, updateTopApps);
-        }
+        public async Task UpdateInfo() => await Task.WhenAll(PopulateDayOfWeek(), PopulateTopApps());
 
         private async Task PopulateDayOfWeek()
         {
             var (durations, percentages)
                 = await _statisticDatabase.GetStatisticByDayOfWeek(TimePeriod.All);
 
-            var dayOfWeekOrder = _localization.Config.GetList<int>($"{ConfigKey}:DayOfWeek:Order");
-            var dayOfWeekNames = _localization.Config.GetList<string>($"{ConfigKey}:DayOfWeek:Name");
+            var dayOfWeekOrder = _config.GetList<int>($"{LocalizationService.SectionKey}:Window:Statistic:DayOfWeek:Order");
+            var dayOfWeekNames = _config.GetList<string>($"{LocalizationService.SectionKey}:Window:Statistic:DayOfWeek:Name");
 
-            if (DayOfWeekData.Count > 0)
+            for (var i = 1; i < dayOfWeekOrder.Count; i++)
             {
-                DayOfWeekData.Clear();
-            }
-
-            foreach (var dayOfWeekNumber in dayOfWeekOrder)
-            {
+                var dayOfWeekNumber = dayOfWeekOrder[i];
                 var dayOfWeek = (DayOfWeek) dayOfWeekNumber;
                 var duration = TimeSpan.FromMilliseconds(durations[dayOfWeek]);
                 var percent = percentages[dayOfWeek];
 
-                DayOfWeekData.Add(new DayOfWeekModel
-                    {
-                        DayOfWeek = dayOfWeekNames[dayOfWeekNumber],
-                        Duration = HumanizeTimeSpan(duration),
-                        Percentage = percent,
-                        PercentageString = percent.ToString(Localization["Formats:Percentage"]),
-                    }
-                );
+                var item = new DayOfWeekModel
+                {
+                    DayOfWeek = dayOfWeekNames[dayOfWeekNumber],
+                    Duration = HumanizeTimeSpan(duration),
+                    Percentage = percent,
+                    PercentageString = percent.ToString(Localization["Formats:Percentage"]),
+                };
+
+                if (DayOfWeekData.Count <= i)
+                {
+                    DayOfWeekData.Add(item);
+                }
+                else
+                {
+                    DayOfWeekData[i] = item;
+                }
             }
         }
 
@@ -80,31 +79,37 @@ namespace Mitheti.Wpf.ViewModels
             var (durations, percentages) =
                 await _statisticDatabase.GetStatisticByAppName(TopAppsCount, TimePeriod.All);
 
-            if (TopAppsData.Count > 0)
+            for (var i = 0; i < durations.Count; i++)
             {
-                TopAppsData.Clear();
-            }
-
-            foreach (var item in durations)
-            {
+                var item = durations[i];
                 var percent = percentages[item.AppName];
 
-                TopAppsData.Add(new TopAppModel
+                var info = new TopAppModel
                 {
                     AppName = item.AppName,
                     Duration = HumanizeTimeSpan(TimeSpan.FromMilliseconds(item.Duration)),
                     PercentageString = percent.ToString(Localization["Formats:Percentage"]),
                     Percentage = percent
-                });
+                };
+
+                if (TopAppsData.Count <= i)
+                {
+                    TopAppsData.Add(info);
+                }
+                else
+                {
+                    TopAppsData[i] = info;
+                }
             }
         }
 
-        private string HumanizeTimeSpan(TimeSpan timeSpan) => timeSpan.Humanize(
-            precision: 2,
-            countEmptyUnits: true,
-            culture: new CultureInfo(Localization["Language:Code"]),
-            minUnit: TimeUnit.Second,
-            maxUnit: TimeUnit.Day,
-            toWords: false);
+        private string HumanizeTimeSpan(TimeSpan timeSpan)
+            => timeSpan.Humanize(
+                precision: 2,
+                countEmptyUnits: true,
+                culture: new CultureInfo(Localization["Language:Code"]),
+                minUnit: TimeUnit.Second,
+                maxUnit: TimeUnit.Day,
+                toWords: false);
     }
 }

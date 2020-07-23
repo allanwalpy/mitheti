@@ -6,21 +6,23 @@
              mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto" PreviewMouseWheel="OnMouseScroll">
         <StackPanel>
-            <ListView ItemsSource="{Binding DayOfWeekData}" Margin="16" Style="{DynamicResource MaterialDesignListView}">
+            <ListView ItemsSource="{Binding DayOfWeekData}" Margin="16"
+                      Style="{DynamicResource MaterialDesignListView}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding DayOfWeek}"
                                         Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:DayOfWeek]}" />
                         <GridViewColumn DisplayMemberBinding="{Binding Duration}"
                                         Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:TimeSpan]}" />
-                        <GridViewColumn DisplayMemberBinding="{Binding PercentageString}"
-                                        Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:Percentage]}" />
-                        <GridViewColumn Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:PercentBar]}">
+                        <GridViewColumn Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:Percentage]}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ProgressBar Style="{DynamicResource MaterialDesignLinearProgressBar}"
-                                                 Minimum="0" Maximum="1" Width="250" Height="30"
-                                                 Value="{Binding Percentage}" />
+                                    <Grid>
+                                        <ProgressBar Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                                     Minimum="0" Maximum="1" Width="300" Height="24"
+                                                     Value="{Binding Percentage}" />
+                                        <TextBlock Text="{Binding PercentageString}" Foreground="White" Padding="4" />
+                                    </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -34,14 +36,15 @@
                                         Header="{Binding Localization[Window:Statistic:TopApp:Header:AppName]}" />
                         <GridViewColumn DisplayMemberBinding="{Binding Duration}"
                                         Header="{Binding Localization[Window:Statistic:TopApp:Header:TimeSpan]}" />
-                        <GridViewColumn DisplayMemberBinding="{Binding PercentageString}"
-                                        Header="{Binding Localization[Window:Statistic:TopApp:Header:Percentage]}" />
-                        <GridViewColumn Header="{Binding Localization[Window:Statistic:TopApp:Header:PercentBar]}">
+                        <GridViewColumn Header="{Binding Localization[Window:Statistic:TopApp:Header:Percentage]}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ProgressBar Style="{DynamicResource MaterialDesignLinearProgressBar}"
-                                                 Minimum="0" Maximum="1" Width="250" Height="30"
-                                                 Value="{Binding Percentage}" />
+                                    <Grid>
+                                        <ProgressBar Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                                     Minimum="0" Maximum="1" Width="300" Height="24"
+                                                     Value="{Binding Percentage}" />
+                                        <TextBlock Text="{Binding PercentageString}" Foreground="White" Padding="4" />
+                                    </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
