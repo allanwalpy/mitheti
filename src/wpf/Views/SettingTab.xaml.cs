@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using Mitheti.Core;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.ViewModels;
@@ -22,22 +24,35 @@ namespace Mitheti.Wpf.Views
 
         private void OnSaveClick(object sender, RoutedEventArgs e) => _viewModel.OnSaveClick(sender, e);
 
-        private async void OnClearClick(object sender, RoutedEventArgs e)
+        private void OnClearClick(object sender, RoutedEventArgs e)
         {
-            var dateBegin = ClearSettingBeginDate.SelectedDate ?? throw new ArgumentNullException(nameof(ClearSettingBeginDate.SelectedDate));
-            var timeBegin = ClearSettingBeginTime.SelectedTime ?? throw new ArgumentNullException(nameof(ClearSettingBeginTime.SelectedTime));
-            var begin = new DateTime(dateBegin.Year, dateBegin.Month, dateBegin.Day, timeBegin.Hour, timeBegin.Minute, timeBegin.Second);
+            var button = (sender as Button) ?? throw new ArgumentNullException(nameof(sender));
+            button.IsEnabled = false;
 
-            var dateEnd = ClearSettingEndDate.SelectedDate ?? throw new ArgumentNullException(nameof(ClearSettingEndDate.SelectedDate));
-            var timeEnd = ClearSettingEndTime.SelectedTime ?? throw new ArgumentNullException(nameof(ClearSettingEndTime.SelectedTime));
-            var end = new DateTime(dateEnd.Year, dateEnd.Month, dateEnd.Day, timeEnd.Hour, timeEnd.Minute, timeEnd.Second);
+            ClearAction(button).ConfigureAwait(false);
+        }
 
-            //TODO: make button disabled during clearing;
+        private async Task ClearAction(UIElement button)
+        {
+            var dateBegin = ClearSettingBeginDate.SelectedDate
+                            ?? throw new ArgumentNullException(nameof(ClearSettingBeginDate.SelectedDate));
+            var timeBegin = ClearSettingBeginTime.SelectedTime
+                            ?? throw new ArgumentNullException(nameof(ClearSettingBeginTime.SelectedTime));
+            var begin = new DateTime(dateBegin.Year, dateBegin.Month, dateBegin.Day,
+                timeBegin.Hour, timeBegin.Minute,0);
+
+            var dateEnd = ClearSettingEndDate.SelectedDate
+                          ?? throw new ArgumentNullException(nameof(ClearSettingEndDate.SelectedDate));
+            var timeEnd = ClearSettingEndTime.SelectedTime
+                          ?? throw new ArgumentNullException(nameof(ClearSettingEndTime.SelectedTime));
+            var end = new DateTime(dateEnd.Year, dateEnd.Month, dateEnd.Day, timeEnd.Hour, timeEnd.Minute, 0);
+
             await _database.ClearAsync(new TimePeriod
-            {
-                Begin = begin,
-                End = end
-            });
+                {
+                    Begin = begin,
+                    End = end
+                })
+                .ContinueWith((task) => Dispatcher.Invoke(() => button.IsEnabled = true));
         }
     }
 }
