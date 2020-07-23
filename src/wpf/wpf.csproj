@@ -74,8 +74,5 @@
     <ItemGroup>
         <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <Reference Include="System.Web" />
-    </ItemGroup>
 
 </Project>
