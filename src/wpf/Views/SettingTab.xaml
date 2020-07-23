@@ -45,6 +45,66 @@
                     <Slider Value="{Binding DatabaseSizeSetting.Value}" Minimum="{Binding DatabaseSizeSetting.Min}"
                             Maximum="{Binding DatabaseSizeSetting.Max}"
                             Width="500" Margin="8, 8, 8, 32" />
+                    <StackPanel Orientation="Horizontal" Margin="8">
+                        <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Forbidden]}" Margin="4" />
+                        <ToggleButton
+                            Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
+                            IsChecked="{Binding FilterMode}" />
+                        <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Allowed]}" Margin="4" />
+                        <TextBlock Text="{Binding Localization[Window:Setting:Option:FilterMode:Label:End]}"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="400"
+                                Margin="0, 0, 0, 32">
+                        <m:DialogHost DialogClosing="Option_FilterList_OnDialogClosing" HorizontalAlignment="Center"
+                                      VerticalAlignment="Center">
+                            <m:DialogHost.DialogContent>
+                                <StackPanel Margin="16">
+                                    <TextBlock
+                                        Text="{Binding Localization[Window:Setting:Option:FilterList:Add:Dialog:Label]}" />
+                                    <TextBox Margin="0, 8, 0, 0" HorizontalAlignment="Stretch"
+                                             x:Name="FilterListAddTextBox" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Content="{Binding Localization[Window:Setting:Option:FilterList:Add:Dialog:Accept]}"
+                                            Style="{DynamicResource MaterialDesignFlatButton}" IsDefault="True"
+                                            Margin="0, 8, 8, 0" Command="m:DialogHost.CloseDialogCommand">
+                                            <Button.CommandParameter>
+                                                <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">True</system:Boolean>
+                                            </Button.CommandParameter>
+                                        </Button>
+                                        <Button
+                                            Content="{Binding Localization[Window:Setting:Option:FilterList:Add:Dialog:Cancel]}"
+                                            Style="{DynamicResource MaterialDesignFlatButton}" IsCancel="True"
+                                            Margin="0, 8, 8, 0" Command="m:DialogHost.CloseDialogCommand">
+                                            <Button.CommandParameter>
+                                                <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">False</system:Boolean>
+                                            </Button.CommandParameter>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </m:DialogHost.DialogContent>
+                            <Button Style="{DynamicResource MaterialDesignIconButton}"
+                                    Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
+                                    Command="{x:Static m:DialogHost.OpenDialogCommand}"
+                                    Margin="8">
+                                <m:PackIcon Kind="Plus" Height="16" Width="16" />
+                            </Button>
+                        </m:DialogHost>
+                        <ItemsControl ItemsSource="{Binding FilterList}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <m:Chip Content="{Binding}" IsDeletable="true" Margin="8"
+                                            DeleteClick="Option_FilterList_DeleteItem" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
                     <Button Click="OnSaveClick" Content="{Binding Localization[Window:Setting:Option:Save]}"
                             Width="250" HorizontalAlignment="Center" />
                 </StackPanel>
@@ -60,7 +120,7 @@
                         <DatePicker x:Name="ClearSettingBeginDate" SelectedDate="{Binding ClearSetting.Begin}"
                                     Margin="8, 0" />
                         <m:TimePicker x:Name="ClearSettingBeginTime" SelectedTime="{Binding ClearSetting.Begin}"
-                                             Is24Hours="True" Margin="8, 0" />
+                                      Is24Hours="True" Margin="8, 0" />
 
                         <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Middle]}"
                                    Style="{DynamicResource MaterialDesignBody2TextBlock}" />
@@ -68,7 +128,7 @@
                         <DatePicker x:Name="ClearSettingEndDate" SelectedDate="{Binding ClearSetting.End}"
                                     Margin="8, 0" />
                         <m:TimePicker x:Name="ClearSettingEndTime" SelectedTime="{Binding ClearSetting.End}"
-                                             Is24Hours="True" Margin="8, 0" />
+                                      Is24Hours="True" Margin="8, 0" />
 
                         <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:End]}"
                                    Style="{DynamicResource MaterialDesignBody2TextBlock}" />

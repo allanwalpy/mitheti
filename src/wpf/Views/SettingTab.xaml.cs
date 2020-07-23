@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using MaterialDesignThemes.Wpf;
 using Mitheti.Core;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.ViewModels;
@@ -54,5 +55,11 @@ namespace Mitheti.Wpf.Views
                 })
                 .ContinueWith((task) => Dispatcher.Invoke(() => button.IsEnabled = true));
         }
+
+        private void Option_FilterList_DeleteItem(object sender, RoutedEventArgs e)
+            => _viewModel.DeleteFilterListItem(sender, e);
+
+        private void Option_FilterList_OnDialogClosing(object sender, DialogClosingEventArgs args)
+            => _viewModel.AddFilterListItem(FilterListAddTextBox.Text, args);
     }
 }

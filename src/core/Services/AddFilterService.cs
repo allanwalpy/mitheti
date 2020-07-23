@@ -6,16 +6,16 @@ namespace Mitheti.Core.Services
 {
     public class AddFilterService : IAddFilterService
     {
-        public const string AppListConfigKey = "filter:list";
-        public const string AppModeConfigKey = "filter:allowed";
+        public const string ListConfigKey = "filter:list";
+        public const string ModeConfigKey = "filter:allowed";
 
         private readonly List<string> _list;
         private readonly bool _mode;
 
         public AddFilterService(IConfiguration config)
         {
-            _list = config.GetList(AppListConfigKey, new List<string>());
-            _mode = config.GetValue(AppModeConfigKey, false);
+            _list = config.GetList(ListConfigKey, new List<string>());
+            _mode = config.GetValue(ModeConfigKey, false);
         }
 
         //? always true on empty list;

@@ -36,7 +36,8 @@ namespace Mitheti.Wpf.Services
                 records.AddRange(record.GetChildren());
 
                 if (record.Value == null) continue;
-                result.Add(GetKey(record, configKey), record.Value);
+                var key = GetKey(record, configKey);
+                result.Add(key, record.Value);
             }
 
             return result;

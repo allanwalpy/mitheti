@@ -1,6 +1,6 @@
 {
     "filter": {
-        "list": [],
+        "list": [ "Idle", "explorer" ],
         "allowed": false
     },
     "service": {
