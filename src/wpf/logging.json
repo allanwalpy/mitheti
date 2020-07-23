@@ -1,0 +1,35 @@
+{
+    "NLog": {
+        "throwConfigExceptions": true,
+        "targets": {
+            "fileMain": {
+                "type": "File",
+                "fileName": "logging-main.log"
+            },
+            "fileTrace": {
+                "type": "File",
+                "fileName": "logging-trace.log"
+            },
+            "console": {
+                "type": "Console"
+            }
+        },
+        "rules": [
+            {
+                "logger": "*",
+                "minLevel": "Info",
+                "writeTo": "console"
+            },
+            {
+                "logger": "*",
+                "minLevel": "Debug",
+                "writeTo": "fileMain"
+            },
+            {
+                "logger": "*",
+                "minLevel": "Trace",
+                "writeTo": "fileTrace"
+            }
+        ]
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Microsoft.Extensions.Logging;
 using Forms = System.Windows.Forms;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Views;
@@ -12,16 +13,18 @@ namespace Mitheti.Wpf.Services
         public const string TrayIconOnFile = TrayIconBaseFile + ".on.ico";
         public const string TrayIconOffFile = TrayIconBaseFile + ".off.ico";
 
+        private readonly  ILogger<TrayManagerService> _logger;
         private readonly IWatcherControlService _watcherControl;
         private readonly ILocalizationService _localization;
 
         private MainWindow _window;
         private Forms.NotifyIcon _tray;
 
-        public TrayManagerService(ILocalizationService localization, IWatcherControlService watcherControl)
+        public TrayManagerService(ILogger<TrayManagerService> logger, ILocalizationService localization, IWatcherControlService watcherControl)
         {
             _watcherControl = watcherControl;
             _localization = localization;
+            _logger = logger;
         }
 
         public void Initialize(MainWindow window)
@@ -69,9 +72,9 @@ namespace Mitheti.Wpf.Services
                 _tray.ContextMenuStrip.Dispose();
                 _tray.Dispose();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                //TODO: add log of exception;
+                _logger.LogWarning($"Exit with exception on {nameof(Dispose)}: \n{e}");
             }
 
         }

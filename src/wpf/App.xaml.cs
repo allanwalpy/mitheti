@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Services;
 using Mitheti.Wpf.ViewModels;
 using Mitheti.Wpf.Views;
+using NLog.Extensions.Logging;
 
 namespace Mitheti.Wpf
 {
@@ -19,6 +21,7 @@ namespace Mitheti.Wpf
     {
         public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
         public const string LocalizationFile = "localization.json";
+        public const string LoggingConfigFile = "logging.json";
 
         //? see https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499- ;
         public const int ExitCodeAlreadyLaunched = 101;
@@ -60,35 +63,47 @@ namespace Mitheti.Wpf
         private void ConfigureServices()
         {
             var services = new ServiceCollection();
+            var config = GetConfig();
 
-            //TODO: add log files;
-            services.AddLogging();
+            services.AddLogging(builder => SetLogging(builder, config));
+            services.AddSingleton(config);
             services.AddCoreServices();
 
-            var config = new ConfigurationBuilder();
-            config.AddCoreConfiguration();
-            config.AddJsonFile(LocalizationFile, false, false);
-            services.AddSingleton<IConfiguration>(config.Build());
-
+            //? main services;
             services.AddSingleton<ISettingsManager, SettingsManager>();
             services.AddSingleton<ILocalizationService, LocalizationService>();
 
+            //? viewModels;
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<MainTabViewModel>();
             services.AddSingleton<StatisticTabViewModel>();
             services.AddSingleton<SettingTabViewModel>();
             services.AddSingleton<AboutTabViewModel>();
 
+            //? views;
             services.AddSingleton<MainTab>();
             services.AddSingleton<StatisticTab>();
             services.AddSingleton<AboutTab>();
             services.AddSingleton<SettingTab>();
             services.AddSingleton<MainWindow>();
 
+            //? views services;
             services.AddSingleton<ITrayManagerService, TrayManagerService>();
             services.AddSingleton(this);
 
             Container = services.BuildServiceProvider();
         }
+
+        private static ILoggingBuilder SetLogging(ILoggingBuilder builder, IConfiguration config)
+            => builder.ClearProviders()
+                .SetMinimumLevel(LogLevel.Trace)
+                .AddNLog(new NLogLoggingConfiguration(config.GetSection("NLog")));
+
+        private static IConfiguration GetConfig()
+            => new ConfigurationBuilder()
+                .AddCoreConfiguration()
+                .AddJsonFile(LocalizationFile, false, false)
+                .AddJsonFile(LoggingConfigFile, false, false)
+                .Build();
     }
 }

@@ -17,7 +17,7 @@ namespace Mitheti.Wpf.Services
         {
             Data = new Dictionary<string, string>();
             Config = config.GetSection(SectionKey);
-            Data = settingsManager.GetConfigAsDictionary(config, SectionKey, new string[0]);
+            Data = settingsManager.GetConfigAsDictionary(config, SectionKey, new List<string>());
         }
     }
 }

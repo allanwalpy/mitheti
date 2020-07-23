@@ -44,6 +44,7 @@
     <ItemGroup>
         <Content Include="./Resources/**" CopyToOutputDirectory="Always" />
         <Content Include="./localization.json" CopyToOutputDirectory="Always" />
+        <Content Include="./logging.json" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
     <!-- debug configuration; -->
@@ -68,6 +69,8 @@
         <PackageReference Include="Octokit" Version="0.48.*" />
         <PackageReference Include="Humanizer" Version="2.8.*" />
         <PackageReference Include="Newtonsoft.Json" Version="12.0.*" />
+        <PackageReference Include="NLog" Version="4.*" />
+        <PackageReference Include="NLog.Web.AspNetCore" Version="4.*" />
     </ItemGroup>
 
     <!-- inner solution dependancy; -->
