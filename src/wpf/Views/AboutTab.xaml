@@ -3,16 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
                        Text="{Binding Localization[Window:About:License:Header]}" Padding="16" Margin="16" />
-            <material:Card Padding="32" Margin="16">
+            <m:Card Padding="32" Margin="16">
                 <TextBlock Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="{Binding License}"
                            TextWrapping="Wrap" />
-            </material:Card>
+            </m:Card>
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
                        Text="{Binding Localization[Window:About:Contributor:Header]}" Padding="16" Margin="16" />
             <StackPanel x:Name="Contributors" />

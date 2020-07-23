@@ -22,6 +22,7 @@ namespace Mitheti.Wpf
         public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
         public const string LocalizationFile = "localization.json";
         public const string LoggingConfigFile = "logging.json";
+        public const string LoggingSectionKey = "NLog";
 
         //? see https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499- ;
         public const int ExitCodeAlreadyLaunched = 101;
@@ -97,7 +98,7 @@ namespace Mitheti.Wpf
         private static ILoggingBuilder SetLogging(ILoggingBuilder builder, IConfiguration config)
             => builder.ClearProviders()
                 .SetMinimumLevel(LogLevel.Trace)
-                .AddNLog(new NLogLoggingConfiguration(config.GetSection("NLog")));
+                .AddNLog(new NLogLoggingConfiguration(config.GetSection(LoggingSectionKey)));
 
         private static IConfiguration GetConfig()
             => new ConfigurationBuilder()

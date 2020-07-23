@@ -6,7 +6,7 @@ namespace Mitheti.Wpf.Services
     //TODO:FIXME: rethink the way app localized;
     public class LocalizationService : ILocalizationService
     {
-        public const string SectionKey = "localization";
+        public const string SectionKey = "Localization";
 
         public string this[string key, string defaultValue] => Config.GetValue(key, defaultValue);
 

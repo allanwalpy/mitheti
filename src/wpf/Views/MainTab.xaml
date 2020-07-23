@@ -3,14 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              Loaded="OnLoaded">
     <StackPanel>
-        <material:Card Padding="32" Margin="16">
+        <m:Card Padding="32" Margin="16">
             <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Text="{Binding IsLaunchedString}" />
-        </material:Card>
-        <Button x:Name="LauncherButton" Click="OnLauncherClick" Content="{Binding Localization[Window:Main:Button:Launcher:Undefined]}" Margin="8" Height="32" />
+        </m:Card>
+        <Button x:Name="LauncherButton" Click="OnLauncherClick"
+                Content="{Binding Localization[Window:Main:Button:Launcher:Undefined]}" Margin="8" Height="32" />
         <Button Click="OnExitClick" Content="{Binding Localization[Window:Main:Button:Exit]}" Margin="8" Height="32" />
     </StackPanel>
 </UserControl>

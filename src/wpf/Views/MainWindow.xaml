@@ -1,9 +1,9 @@
-<materialEx:MaterialWindow x:Class="Mitheti.Wpf.Views.MainWindow" xml:lang="en-US"
+<me:MaterialWindow x:Class="Mitheti.Wpf.Views.MainWindow" xml:lang="en-US"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:materialEx="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+                     xmlns:me="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
                      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                      TextElement.FontWeight="Regular"
                      TextElement.FontSize="12"
@@ -17,4 +17,4 @@
         <!-- TODO: add database management (clear, see size of it); -->
         <TabControl x:Name="TabControl" Style="{StaticResource MaterialDesignTabControl}" />
     </Grid>
-</materialEx:MaterialWindow>
+</me:MaterialWindow>
