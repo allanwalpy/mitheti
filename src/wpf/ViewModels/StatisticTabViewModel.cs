@@ -37,13 +37,7 @@ namespace Mitheti.Wpf.ViewModels
             UpdateInfo().ConfigureAwait(false);
         }
 
-        public async Task UpdateInfo()
-        {
-            //TODO: update without clearing values from list;
-            var updateDayOfWeek = PopulateDayOfWeek();
-            var updateTopApps = PopulateTopApps();
-            await Task.WhenAll(updateDayOfWeek, updateTopApps);
-        }
+        public async Task UpdateInfo() => await Task.WhenAll(PopulateDayOfWeek(), PopulateTopApps());
 
         private async Task PopulateDayOfWeek()
         {

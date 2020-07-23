@@ -3,19 +3,57 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
                        Text="{Binding Localization[Window:About:License:Header]}" Padding="16" Margin="16" />
-            <material:Card Padding="32" Margin="16">
+            <m:Card Padding="32" Margin="16">
                 <TextBlock Style="{DynamicResource MaterialDesignBody2TextBlock}" Text="{Binding License}"
                            TextWrapping="Wrap" />
-            </material:Card>
+            </m:Card>
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
                        Text="{Binding Localization[Window:About:Contributor:Header]}" Padding="16" Margin="16" />
-            <StackPanel x:Name="Contributors" />
+            <ItemsControl ItemsSource="{Binding Contributors}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <m:Card Padding="32" Margin="16">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding AvatarUrl}" Width="52" Height="52" HorizontalAlignment="Left" />
+                                <StackPanel Orientation="Vertical" Margin="8">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}"
+                                                   Style="{DynamicResource MaterialDesignHeadline6TextBlock}" />
+                                        <TextBlock Text="{Binding Locialization[Window:About:Contributor:Name]}"
+                                                   Style="{DynamicResource MaterialDesignHeadline6TextBlock}" />
+                                        <TextBlock Text="{Binding Login}"
+                                                   Style="{DynamicResource MaterialDesignHeadline6TextBlock}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="{Binding GithubUrl}" RequestNavigate="OpenInBrowser">
+                                                <TextBlock
+                                                    Text="{Binding Localization[Window:About:Contributor:GithubLink]}"
+                                                    Style="{DynamicResource MaterialDesignHeadline6Hyperlink}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock
+                                            Text="{Binding Localization[Window:About:Contributor:SeparatorLink]}" />
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="{Binding PersonalUrl}" RequestNavigate="OpenInBrowser">
+                                                <TextBlock
+                                                    Text="{Binding Localization[Window:About:Contributor:PersonalLink]}"
+                                                    Style="{DynamicResource MaterialDesignHeadline6Hyperlink}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </m:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
