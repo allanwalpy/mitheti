@@ -1,10 +1,13 @@
 {
-    "applist": [],
+    "filter": {
+        "list": [],
+        "allowed": false
+    },
     "service": {
         "delay": 250
     },
     "database": {
         "delay": 30,
-        "maxSizeMb": 1
+        "maxSize": 1
     }
 }

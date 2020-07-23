@@ -7,7 +7,7 @@ namespace Mitheti.Core.Services
 {
     public class SizeLimitDatabaseService : ISizeLimitDatabaseService
     {
-        public const string ConfigKey = "database:maxSizeMb";
+        public const string ConfigKey = "database:maxSize";
         public const int DefaultSize = 1;
         public const int MinSize = 1;
         public const int MaxSize = 128;

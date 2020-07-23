@@ -46,7 +46,7 @@
                             Maximum="{Binding DatabaseSizeSetting.Max}"
                             Width="500" Margin="8, 8, 8, 32" />
                     <Button Click="OnSaveClick" Content="{Binding Localization[Window:Setting:Option:Save]}"
-                            Width="250" Padding="32" HorizontalAlignment="Center" />
+                            Width="250" HorizontalAlignment="Center" />
                 </StackPanel>
             </m:Card>
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"

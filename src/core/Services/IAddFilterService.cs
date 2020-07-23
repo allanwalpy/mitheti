@@ -1,6 +1,6 @@
 namespace Mitheti.Core.Services
 {
-    //TODO: add ignore filter as well, or change filtering;
+    //TODO: add setting for app list;
     public interface IAddFilterService
     {
         bool HavePassed(string app);
