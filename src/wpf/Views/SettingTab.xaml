@@ -4,21 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d">
     <Control.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Templates/NumberRangeSettingTemplate.xaml" />
+                <ResourceDictionary Source="Templates/DateTimePicker.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Control.Resources>
     <ScrollViewer>
         <StackPanel Orientation="Vertical">
+            <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
+                       Text="{Binding Localization[Window:Setting:Option:Header]}" Padding="16" Margin="16" />
             <m:Card Padding="32" Margin="16">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
-                               Text="{Binding Localization[Window:Setting:Option:Header]}" Padding="16" Margin="16" />
-                    <ItemsControl ItemTemplate="{StaticResource NumberRangeSettingTemplate}" ItemsSource="{Binding NumberRangeSettingsList}" />
+                    <ContentControl Content="{Binding TrackingDelaySetting}"
+                                    ContentTemplate="{StaticResource NumberRangeSettingTemplate}" />
+                    <ContentControl Content="{Binding SavingDelaySetting}"
+                                    ContentTemplate="{StaticResource NumberRangeSettingTemplate}" />
+                    <ContentControl Content="{Binding DatabaseSizeSetting}"
+                                    ContentTemplate="{StaticResource NumberRangeSettingTemplate}" />
                     <StackPanel Orientation="Horizontal" Margin="8">
                         <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Forbidden]}"
                                 Margin="4" />
@@ -46,7 +53,7 @@
                                             Style="{DynamicResource MaterialDesignFlatButton}" IsDefault="True"
                                             Margin="0, 8, 8, 0" Command="m:DialogHost.CloseDialogCommand">
                                             <Button.CommandParameter>
-                                                <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">True</system:Boolean>
+                                                <system:Boolean>True</system:Boolean>
                                             </Button.CommandParameter>
                                         </Button>
                                         <Button
@@ -54,7 +61,7 @@
                                             Style="{DynamicResource MaterialDesignFlatButton}" IsCancel="True"
                                             Margin="0, 8, 8, 0" Command="m:DialogHost.CloseDialogCommand">
                                             <Button.CommandParameter>
-                                                <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">False</system:Boolean>
+                                                <system:Boolean>False</system:Boolean>
                                             </Button.CommandParameter>
                                         </Button>
                                     </StackPanel>
@@ -92,6 +99,9 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Begin]}"
                                    Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+
+                        <ContentControl Content="{Binding ClearSetting.Begin}"
+                                        ContentTemplate="{StaticResource DateTimePickerTemplate}"/>
 
                         <DatePicker x:Name="ClearSettingBeginDate" SelectedDate="{Binding ClearSetting.Begin}"
                                     Margin="8, 0" />

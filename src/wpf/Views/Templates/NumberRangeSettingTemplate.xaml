@@ -2,21 +2,22 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:local="clr-namespace:Mitheti.Wpf.Models;assembly=Mitheti.Wpf">
-    <DataTemplate x:Key="NumberRangeSettingTemplate">
-        <StackPanel>
-            <TextBlock Style="{DynamicResource MaterialDesignBody2TextBlock}">
-                <Run Text="{Binding Labels[0]}" />
-                <m:Chip>
-                    <StackPanel Orientation="Horizontal">
+    <DataTemplate x:Key="NumberRangeSettingTemplate" DataType="local:NumberRangeSetting">
+
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding SettingLabel}" Style="{DynamicResource MaterialDesignBody2TextBlock}"
+                               VerticalAlignment="Center" />
+                    <m:Chip>
                         <TextBlock Style="{DynamicResource MaterialDesignBody2TextBlock}">
                             <Run Text="{Binding Value}" />
-                            <Run Text="{Binding Labels[1]}" />
+                            <Run Text="{Binding ValueLabel}" />
                         </TextBlock>
-                    </StackPanel>
-                </m:Chip>
-            </TextBlock>
-            <Slider Value="{Binding Value}" Minimum="{Binding Min}" Maximum="{Binding Max}"
-                    Width="500" Margin="8, 8, 8, 32" />
-        </StackPanel>
+                    </m:Chip>
+                </StackPanel>
+                <Slider Value="{Binding Value}" Minimum="{Binding Min}" Maximum="{Binding Max}"
+                        Width="500" Margin="8" />
+            </StackPanel>
+
     </DataTemplate>
 </ResourceDictionary>

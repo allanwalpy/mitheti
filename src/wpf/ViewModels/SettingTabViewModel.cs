@@ -22,13 +22,11 @@ namespace Mitheti.Wpf.ViewModels
         private readonly IConfiguration _config;
         private readonly ISettingsManager _manager;
 
-        private NumberRangeSetting _trackingDelaySetting;
-        private NumberRangeSetting _savingDelaySetting;
-        private NumberRangeSetting _databaseSizeSetting;
-
         public Dictionary<string, string> Localization { get; }
 
-        public List<NumberRangeSetting> NumberRangeSettingsList { get; set; }
+        public NumberRangeSetting TrackingDelaySetting { get; set; }
+        public NumberRangeSetting SavingDelaySetting { get; set; }
+        public NumberRangeSetting DatabaseSizeSetting { get; set; }
         public bool FilterMode { get; set; }
         public ObservableCollection<string> FilterList { get; set; }
         public TimePeriod ClearSetting { get; set; }
@@ -36,9 +34,9 @@ namespace Mitheti.Wpf.ViewModels
 
         public SettingTabViewModel(ILocalizationService localization, IConfiguration config, ISettingsManager manager)
         {
+            Localization = localization.Data;
             _config = config;
             _manager = manager;
-            Localization = localization.Data;
 
             SetSettings();
         }
@@ -46,48 +44,36 @@ namespace Mitheti.Wpf.ViewModels
         private void SetSettings()
         {
             //TODO:FIXME:all method;
-            const string templateBase = "Window:Setting:Option:{0}:Label:";
-            const string labelConfigTemplateBegin = templateBase + "Begin";
-            const string labelConfigTemplateEnd = templateBase + "End";
+            const string templateBase = "Window:Setting:Option:{0}:";
+            const string settingLabel = templateBase + "Label";
+            const string valueLabel = templateBase + "Value:Label";
 
-            _trackingDelaySetting = new NumberRangeSetting
+            TrackingDelaySetting = new NumberRangeSetting
             {
                 Value = _config.GetValue<int>(TrackingDelayConfigKey),
                 Min = WatcherService.MinDelay,
                 Max = WatcherService.MaxDelay,
-                Labels = new List<string>(new[]
-                {
-                    Localization[string.Format(labelConfigTemplateBegin, "TrackingDelay")],
-                    Localization[string.Format(labelConfigTemplateEnd, "TrackingDelay")]
-                })
+                SettingLabel = Localization[string.Format(settingLabel, "TrackingDelay")],
+                ValueLabel = Localization[string.Format(valueLabel, "TrackingDelay")]
             };
 
-            _savingDelaySetting = new NumberRangeSetting
+            SavingDelaySetting = new NumberRangeSetting
             {
                 Value = _config.GetValue<int>(SavingDelayConfigKey),
                 Min = SavingService.MinDelay,
                 Max = SavingService.MaxDelay,
-                Labels = new List<string>(new[]
-                {
-                    Localization[string.Format(labelConfigTemplateBegin, "SavingDelay")],
-                    Localization[string.Format(labelConfigTemplateEnd, "SavingDelay")]
-                })
+                SettingLabel = Localization[string.Format(settingLabel, "SavingDelay")],
+                ValueLabel = Localization[string.Format(valueLabel, "SavingDelay")]
             };
 
-            _databaseSizeSetting = new NumberRangeSetting
+            DatabaseSizeSetting = new NumberRangeSetting
             {
                 Value = _config.GetValue<int>(DatabaseSizeConfigKey),
                 Min = SizeLimitDatabaseService.MinSize,
                 Max = SizeLimitDatabaseService.MaxSize,
-                Labels = new List<string>(new[]
-                {
-                    Localization[string.Format(labelConfigTemplateBegin, "DatabaseSize")],
-                    Localization[string.Format(labelConfigTemplateEnd, "DatabaseSize")]
-                })
+                SettingLabel = Localization[string.Format(settingLabel, "DatabaseSize")],
+                ValueLabel = Localization[string.Format(valueLabel, "DatabaseSize")]
             };
-
-            NumberRangeSettingsList = new List<NumberRangeSetting>(new[]
-                {_trackingDelaySetting, _savingDelaySetting, _databaseSizeSetting});
 
             ClearSetting = new TimePeriod
             {
@@ -114,9 +100,9 @@ namespace Mitheti.Wpf.ViewModels
                 data[$"{FilterListConfigKey}:{i}"] = FilterList[i];
             }
 
-            data[TrackingDelayConfigKey] = _trackingDelaySetting.Value.ToString();
-            data[SavingDelayConfigKey] = _savingDelaySetting.Value.ToString();
-            data[DatabaseSizeConfigKey] = _databaseSizeSetting.Value.ToString();
+            data[TrackingDelayConfigKey] = TrackingDelaySetting.Value.ToString();
+            data[SavingDelayConfigKey] = SavingDelaySetting.Value.ToString();
+            data[DatabaseSizeConfigKey] = DatabaseSizeSetting.Value.ToString();
 
             _manager.SaveConfiguration(data);
         }

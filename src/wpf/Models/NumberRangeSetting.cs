@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Mitheti.Wpf.Models
+﻿namespace Mitheti.Wpf.Models
 {
     public class NumberRangeSetting
     {
@@ -8,6 +6,7 @@ namespace Mitheti.Wpf.Models
         public int Min { get; set; }
         public int Max { get; set; }
 
-        public List<string> Labels { get; set; }
+        public string SettingLabel { get; set; }
+        public string ValueLabel { get; set; }
     }
 }
