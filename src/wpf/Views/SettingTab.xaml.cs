@@ -54,6 +54,8 @@ namespace Mitheti.Wpf.Views
                     End = end
                 })
                 .ContinueWith((task) => Dispatcher.Invoke(() => button.IsEnabled = true));
+
+            _viewModel.UpdateClearButtonLabel();
         }
 
         private void Option_FilterList_DeleteItem(object sender, RoutedEventArgs e)

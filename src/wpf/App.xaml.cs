@@ -102,7 +102,7 @@ namespace Mitheti.Wpf
 
         private static IConfiguration GetConfig()
             => new ConfigurationBuilder()
-                .AddCoreConfiguration()
+                .AddCoreConfiguration(isReload: true) //? for setting tab, to reload on settings change;
                 .AddJsonFile(LocalizationFile, false, false)
                 .AddJsonFile(LoggingConfigFile, false, false)
                 .Build();

@@ -12,6 +12,7 @@
         </m:Card>
         <Button x:Name="LauncherButton" Click="OnLauncherClick"
                 Content="{Binding Localization[Window:Main:Button:Launcher:Undefined]}" Margin="8" Height="32" />
-        <Button Click="OnExitClick" Content="{Binding Localization[Window:Main:Button:Exit]}" Margin="8" Height="32" />
+        <Button Click="OnExitClick" Content="{Binding Localization[Window:Main:Button:Exit]}" Margin="8" Height="32"
+                Style="{DynamicResource MaterialDesignRaisedAccentButton}" />
     </StackPanel>
 </UserControl>

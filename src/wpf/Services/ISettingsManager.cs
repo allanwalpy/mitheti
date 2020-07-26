@@ -13,5 +13,7 @@ namespace Mitheti.Wpf.Services
             string configKey = null, List<string> ignoreSections = null);
 
         Task SaveConfiguration(Dictionary<string, string> data, string filename = null);
+
+        long GetDatabaseSize();
     }
 }

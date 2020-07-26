@@ -12,7 +12,6 @@ namespace Mitheti.Core.Services
         public const int MinSize = 1;
         public const int MaxSize = 128;
         public const string DatabaseFilename = DatabaseContext.DatabaseFilename;
-        public const long BytesInMb = 1024 * 1024;
         public const int StartWithLastYears = 2;
         public const int DaysStep = 7 * 14;
 
@@ -27,7 +26,7 @@ namespace Mitheti.Core.Services
 
         public async Task LimitDatabase()
         {
-            var size = GetSizeMb();
+            var size = GetSize();
             if (size < _maxSizeMb)
             {
                 return;
@@ -36,7 +35,9 @@ namespace Mitheti.Core.Services
             await ClearUntilSizeIs(_maxSizeMb);
         }
 
-        public long GetSizeMb() => new FileInfo(DatabaseFilename).Length / BytesInMb;
+        public long GetSize() => new FileInfo(DatabaseFilename).Length;
+
+        private long GetSizeMb() => GetSize() / (1024 * 1024);
 
         //TODO: check if works;
         private async Task ClearUntilSizeIs(int sizeMb)

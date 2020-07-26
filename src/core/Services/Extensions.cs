@@ -26,10 +26,10 @@ namespace Mitheti.Core.Services
         }
 
         public static IConfigurationBuilder AddCoreConfiguration(this IConfigurationBuilder config,
-            bool isOptional = true)
+            bool isOptional = true, bool isReload = false)
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), ConfigFile);
-            return config.AddJsonFile(filePath, isOptional, false);
+            return config.AddJsonFile(filePath, isOptional, isReload);
         }
 
         public static void WaitCancelled(this Task task, int timeoutMilliseconds)

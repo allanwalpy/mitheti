@@ -93,10 +93,12 @@
                 "Action": {
                     "Header": "Действия",
                     "Clear": {
-                        "Button": "Удалить",
+                        "Button": "Удалить [{0}]",
                         "Label:Begin": "Удалить записи об активности с ",
                         "Label:Middle": " до ",
-                        "Label:End": ""
+                        "Label:End": "",
+                        "Info:Bytes": 1024,
+                        "Info:Label": "текущий размер - {0:0,0} Кб"
                     }
                 }
             },

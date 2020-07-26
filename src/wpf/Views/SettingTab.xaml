@@ -46,11 +46,13 @@
                             Maximum="{Binding DatabaseSizeSetting.Max}"
                             Width="500" Margin="8, 8, 8, 32" />
                     <StackPanel Orientation="Horizontal" Margin="8">
-                        <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Forbidden]}" Margin="4" />
+                        <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Forbidden]}"
+                                Margin="4" />
                         <ToggleButton
                             Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
                             IsChecked="{Binding FilterMode}" />
-                        <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Allowed]}" Margin="4" />
+                        <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Allowed]}"
+                                Margin="4" />
                         <TextBlock Text="{Binding Localization[Window:Setting:Option:FilterMode:Label:End]}"
                                    Style="{DynamicResource MaterialDesignBody2TextBlock}" />
                     </StackPanel>
@@ -133,8 +135,8 @@
                         <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:End]}"
                                    Style="{DynamicResource MaterialDesignBody2TextBlock}" />
                     </StackPanel>
-                    <Button Click="OnClearClick" Content="{Binding Localization[Window:Setting:Action:Clear:Button]}"
-                            Margin="8, 16" />
+                    <Button Click="OnClearClick" Content="{Binding ClearButtonLabel}" Margin="8, 16"
+                            Style="{DynamicResource MaterialDesignRaisedAccentButton}" />
                 </StackPanel>
             </m:Card>
         </StackPanel>

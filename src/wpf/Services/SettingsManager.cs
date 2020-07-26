@@ -15,6 +15,13 @@ namespace Mitheti.Wpf.Services
         public static readonly string[] DefaultIgnoreSections = {LocalizationSectionKey};
         public static readonly string[] AlwaysIgnoreSections = { App.LoggingSectionKey };
 
+        private ISizeLimitDatabaseService _sizeService { get; }
+
+        public SettingsManager(ISizeLimitDatabaseService sizeService)
+        {
+            _sizeService = sizeService;
+        }
+
         public Dictionary<string, string> GetConfigSectionAsDictionary(IConfigurationSection config,
             List<string> ignoreSections = null)
             => GetConfigAsDictionary(config, config.Path, ignoreSections);
@@ -48,5 +55,7 @@ namespace Mitheti.Wpf.Services
 
         public async Task SaveConfiguration(Dictionary<string, string> data, string filename = null)
             => await File.WriteAllTextAsync(filename ?? DefaultFilename,JsonConvert.SerializeObject(data));
+
+        public long GetDatabaseSize() => _sizeService.GetSize();
     }
 }

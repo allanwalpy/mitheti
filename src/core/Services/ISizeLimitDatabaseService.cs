@@ -7,6 +7,6 @@ namespace Mitheti.Core.Services
     {
         Task LimitDatabase();
 
-        long GetSizeMb();
+        long GetSize();
     }
 }

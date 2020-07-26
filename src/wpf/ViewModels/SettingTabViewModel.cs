@@ -31,6 +31,7 @@ namespace Mitheti.Wpf.ViewModels
         public ObservableCollection<string> FilterList { get; set; }
 
         public TimePeriod ClearSetting { get; set; }
+        public string ClearButtonLabel { get; set; }
 
         public SettingTabViewModel(ILocalizationService localization, IConfiguration config, ISettingsManager manager)
         {
@@ -68,6 +69,8 @@ namespace Mitheti.Wpf.ViewModels
             FilterMode = _config.GetValue<bool>(FilterModeConfigKey);
             FilterList = new ObservableCollection<string>(
                 _config.GetList<string>(FilterListConfigKey));
+
+            UpdateClearButtonLabel();
         }
 
         public void OnSaveClick(object sender, RoutedEventArgs e) => Save();
@@ -87,8 +90,6 @@ namespace Mitheti.Wpf.ViewModels
             data[DatabaseSizeConfigKey] = DatabaseSizeSetting.Value.ToString();
 
             _manager.SaveConfiguration(data);
-
-            //TODO: reload config;
         }
 
         public void DeleteFilterListItem(object sender, RoutedEventArgs args)
@@ -102,6 +103,19 @@ namespace Mitheti.Wpf.ViewModels
             }
 
             FilterList.Add(value);
+        }
+
+        private string GetDatabaseSizeString()
+        {
+            var bytes = Localization["Window:Setting:Action:Clear:Info:Bytes"];
+            var size = _manager.GetDatabaseSize() / int.Parse(bytes);
+            return string.Format(Localization["Window:Setting:Action:Clear:Info:Label"], size);
+        }
+
+        public void UpdateClearButtonLabel()
+        {
+            var size = GetDatabaseSizeString();
+            ClearButtonLabel = string.Format(Localization["Window:Setting:Action:Clear:Button"], size);
         }
     }
 }

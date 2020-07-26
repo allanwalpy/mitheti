@@ -15,5 +15,6 @@ namespace Mitheti.Wpf.Models
         public ObservableCollection<string> FilterList { get; set; }
 
         public TimePeriod ClearSetting { get; set; }
+        public string ClearButtonLabel { get; set; }
     }
 }
