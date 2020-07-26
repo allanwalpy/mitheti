@@ -8,9 +8,7 @@ namespace Mitheti.Wpf.Models
     {
         public Dictionary<string, string> Localization { get; set; }
 
-        public LimitedCountableSetting<int> TrackingDelaySetting { get; set; }
-        public LimitedCountableSetting<int> SavingDelaySetting { get; set; }
-        public LimitedCountableSetting<int> DatabaseSizeSetting { get; set; }
+        public List<NumberRangeSetting> NumberRangeSettingsList { get; set; }
         public bool FilterMode { get; set; }
         public ObservableCollection<string> FilterList { get; set; }
 

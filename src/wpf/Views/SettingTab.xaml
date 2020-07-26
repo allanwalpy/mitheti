@@ -5,46 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
+    <Control.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Templates/NumberRangeSettingTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Control.Resources>
     <ScrollViewer>
         <StackPanel Orientation="Vertical">
-            <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
-                       Text="{Binding Localization[Window:Setting:Option:Header]}" Padding="16" Margin="16" />
             <m:Card Padding="32" Margin="16">
                 <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal" Margin="8">
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:TrackingDelay:Label:Begin]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-                        <TextBlock Text="{Binding TrackingDelaySetting.Value}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:TrackingDelay:Label:End]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-                    </StackPanel>
-                    <Slider Value="{Binding TrackingDelaySetting.Value}"
-                            Minimum="{Binding TrackingDelaySetting.Min}"
-                            Maximum="{Binding TrackingDelaySetting.Max}"
-                            Width="500" Margin="8, 8, 8, 32" />
-                    <StackPanel Orientation="Horizontal" Margin="8">
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:SavingDelay:Label:Begin]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-                        <TextBlock Text="{Binding SavingDelaySetting.Value}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:SavingDelay:Label:End]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-                    </StackPanel>
-                    <Slider Value="{Binding SavingDelaySetting.Value}" Minimum="{Binding SavingDelaySetting.Min}"
-                            Maximum="{Binding SavingDelaySetting.Max}"
-                            Width="500" Margin="8, 8, 8, 32" />
-                    <StackPanel Orientation="Horizontal" Margin="8">
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:DatabaseSize:Label:Begin]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-                        <TextBlock Text="{Binding DatabaseSizeSetting.Value}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:DatabaseSize:Label:End]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-                    </StackPanel>
-                    <Slider Value="{Binding DatabaseSizeSetting.Value}" Minimum="{Binding DatabaseSizeSetting.Min}"
-                            Maximum="{Binding DatabaseSizeSetting.Max}"
-                            Width="500" Margin="8, 8, 8, 32" />
+                    <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
+                               Text="{Binding Localization[Window:Setting:Option:Header]}" Padding="16" Margin="16" />
+                    <ItemsControl ItemTemplate="{StaticResource NumberRangeSettingTemplate}" ItemsSource="{Binding NumberRangeSettingsList}" />
                     <StackPanel Orientation="Horizontal" Margin="8">
                         <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Forbidden]}"
                                 Margin="4" />

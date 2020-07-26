@@ -6,6 +6,10 @@
              mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto" PreviewMouseWheel="OnMouseScroll">
         <StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+                           Text="{Binding Localization[Window:Statistic:DayOfWeek:Title]}" />
+            </StackPanel>
             <ListView ItemsSource="{Binding DayOfWeekData}" Margin="16"
                       Style="{DynamicResource MaterialDesignListView}">
                 <ListView.View>
@@ -29,6 +33,10 @@
                     </GridView>
                 </ListView.View>
             </ListView>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+                           Text="{Binding Localization[Window:Statistic:TopApp:Title]}" />
+            </StackPanel>
             <ListView ItemsSource="{Binding TopAppsData}" Margin="16" Style="{DynamicResource MaterialDesignListView}">
                 <ListView.View>
                     <GridView>

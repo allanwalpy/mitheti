@@ -76,7 +76,6 @@ namespace Mitheti.Wpf.Services
             {
                 _logger.LogWarning($"Exit with exception on {nameof(TrayManagerService)}.{nameof(Dispose)}: \n{e}");
             }
-
         }
     }
 }
