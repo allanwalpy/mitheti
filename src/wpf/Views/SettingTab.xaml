@@ -5,28 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:Mitheti.Wpf.Models"
              mc:Ignorable="d">
     <Control.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Templates/NumberRangeSettingTemplate.xaml" />
-                <ResourceDictionary Source="Templates/DateTimePicker.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Control.Resources>
     <ScrollViewer>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" d:DataContext="{d:DesignInstance local:SettingTabModel}">
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
                        Text="{Binding Localization[Window:Setting:Option:Header]}" Padding="16" Margin="16" />
             <m:Card Padding="32" Margin="16">
                 <StackPanel Orientation="Vertical">
                     <ContentControl Content="{Binding TrackingDelaySetting}"
-                                    ContentTemplate="{StaticResource NumberRangeSettingTemplate}" />
+                                    ContentTemplate="{StaticResource NumberRangeSettingTemplate}" Margin="0, 0, 0, 32" />
                     <ContentControl Content="{Binding SavingDelaySetting}"
-                                    ContentTemplate="{StaticResource NumberRangeSettingTemplate}" />
+                                    ContentTemplate="{StaticResource NumberRangeSettingTemplate}" Margin="0, 0, 0, 32" />
                     <ContentControl Content="{Binding DatabaseSizeSetting}"
-                                    ContentTemplate="{StaticResource NumberRangeSettingTemplate}" />
-                    <StackPanel Orientation="Horizontal" Margin="8">
+                                    ContentTemplate="{StaticResource NumberRangeSettingTemplate}" Margin="0, 0, 0, 32" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="8">
                         <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Forbidden]}"
                                 Margin="4" />
                         <ToggleButton
@@ -35,7 +35,7 @@
                         <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Allowed]}"
                                 Margin="4" />
                         <TextBlock Text="{Binding Localization[Window:Setting:Option:FilterMode:Label:End]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="400"
                                 Margin="0, 0, 0, 32">
@@ -67,10 +67,10 @@
                                     </StackPanel>
                                 </StackPanel>
                             </m:DialogHost.DialogContent>
-                            <Button Style="{DynamicResource MaterialDesignIconButton}"
+                            <Button Style="{DynamicResource MaterialDesignIconForegroundButton}"
                                     Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"
                                     Command="{x:Static m:DialogHost.OpenDialogCommand}"
-                                    Margin="8">
+                                    Height="32" Width="32" Margin="4">
                                 <m:PackIcon Kind="Plus" Height="16" Width="16" />
                             </Button>
                         </m:DialogHost>
@@ -89,19 +89,16 @@
                         </ItemsControl>
                     </StackPanel>
                     <Button Click="OnSaveClick" Content="{Binding Localization[Window:Setting:Option:Save]}"
-                            Width="250" HorizontalAlignment="Center" />
+                            HorizontalAlignment="Stretch" />
                 </StackPanel>
             </m:Card>
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
                        Text="{Binding Localization[Window:Setting:Action:Header]}" Padding="16" Margin="16" />
             <m:Card Padding="32" Margin="16">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="8">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Begin]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-
-                        <ContentControl Content="{Binding ClearSetting.Begin}"
-                                        ContentTemplate="{StaticResource DateTimePickerTemplate}"/>
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" />
 
                         <DatePicker x:Name="ClearSettingBeginDate" SelectedDate="{Binding ClearSetting.Begin}"
                                     Margin="8, 0" />
@@ -109,18 +106,19 @@
                                       Is24Hours="True" Margin="8, 0" />
 
                         <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Middle]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
-
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" />
+                        <!--TODO:FIXME: timePicker won't display selected time on default -->
                         <DatePicker x:Name="ClearSettingEndDate" SelectedDate="{Binding ClearSetting.End}"
                                     Margin="8, 0" />
                         <m:TimePicker x:Name="ClearSettingEndTime" SelectedTime="{Binding ClearSetting.End}"
                                       Is24Hours="True" Margin="8, 0" />
 
                         <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:End]}"
-                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" />
                     </StackPanel>
-                    <Button Click="OnClearClick" Content="{Binding ClearButtonLabel}" Margin="8, 16"
-                            Style="{DynamicResource MaterialDesignRaisedAccentButton}" />
+                    <!--TODO:FIXME: add separate text label for database size; -->
+                    <Button Click="OnClearClick" Content="{Binding ClearButtonLabel}"
+                            Style="{DynamicResource MaterialDesignRaisedAccentButton}" Margin="0, 8, 0, 0" />
                 </StackPanel>
             </m:Card>
         </StackPanel>

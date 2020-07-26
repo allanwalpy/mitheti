@@ -6,6 +6,7 @@ namespace Mitheti.Wpf.Models
     {
         public Dictionary<string, string> Localization { get; set; }
 
+        public bool IsLaunched { get; set; }
         public string IsLaunchedString { get; set; }
     }
 }

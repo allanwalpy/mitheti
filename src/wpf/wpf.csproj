@@ -77,10 +77,5 @@
     <ItemGroup>
         <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <Page Update="Views\Templates\DateTimePicker.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
-    </ItemGroup>
 
 </Project>
