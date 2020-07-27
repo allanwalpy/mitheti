@@ -15,7 +15,7 @@ namespace Mitheti.Wpf.Services
         public static readonly string[] DefaultIgnoreSections = {LocalizationSectionKey};
         public static readonly string[] AlwaysIgnoreSections = { App.LoggingSectionKey };
 
-        private ISizeLimitDatabaseService _sizeService { get; }
+        private readonly ISizeLimitDatabaseService _sizeService;
 
         public SettingsManager(ISizeLimitDatabaseService sizeService)
         {

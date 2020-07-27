@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Extensions.Configuration;
 using MaterialDesignThemes.Wpf;
 using Mitheti.Core;
@@ -108,7 +109,11 @@ namespace Mitheti.Wpf.ViewModels
         }
 
         public void DeleteFilterListItem(object sender, RoutedEventArgs args)
-            => FilterList.Remove((sender as Chip).Content as string);
+        {
+            if (!((sender as ContentControl)?.Content is string value)) return;
+
+            FilterList.Remove(value);
+        }
 
         public void AddFilterListItem(string value, DialogClosingEventArgs arg)
         {

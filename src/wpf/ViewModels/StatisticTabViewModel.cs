@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Humanizer;
-using Humanizer.Localisation;
 using Mitheti.Core;
 using Mitheti.Core.Services;
-using Mitheti.Wpf.Models;
+using Mitheti.Wpf.Models.Statistic;
 using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf.ViewModels
@@ -22,8 +19,8 @@ namespace Mitheti.Wpf.ViewModels
         private readonly IStatisticDatabaseService _statisticDatabase;
 
         public Dictionary<string, string> Localization { get; }
-        public ObservableCollection<TopAppModel> TopAppsData { get; }
-        public ObservableCollection<DayOfWeekModel> DayOfWeekData { get; }
+        public ObservableCollection<TopAppItemModel> TopAppsData { get; }
+        public ObservableCollection<DayOfWeekItemModel> DayOfWeekData { get; }
 
         public StatisticTabViewModel(ILocalizationService localization, IConfiguration config,
             IStatisticDatabaseService statisticDatabase)
@@ -32,10 +29,11 @@ namespace Mitheti.Wpf.ViewModels
             _config = config;
             _statisticDatabase = statisticDatabase;
 
-            DayOfWeekData = new ObservableCollection<DayOfWeekModel>();
-            TopAppsData = new ObservableCollection<TopAppModel>();
+            DayOfWeekData = new ObservableCollection<DayOfWeekItemModel>();
+            TopAppsData = new ObservableCollection<TopAppItemModel>();
 
-            UpdateInfo().ConfigureAwait(false);
+            PopulateDayOfWeek().ConfigureAwait(false);
+            PopulateTopApps().ConfigureAwait(false);
         }
 
         public async Task UpdateInfo() => await Task.WhenAll(PopulateDayOfWeek(), PopulateTopApps());
@@ -55,12 +53,15 @@ namespace Mitheti.Wpf.ViewModels
                 var duration = TimeSpan.FromMilliseconds(durations[dayOfWeek]);
                 var percent = percentages[dayOfWeek];
 
-                var item = new DayOfWeekModel
+                var item = new DayOfWeekItemModel
                 {
                     DayOfWeek = dayOfWeekNames[dayOfWeekNumber],
-                    Duration = HumanizeTimeSpan(duration),
-                    Percentage = percent,
-                    PercentageString = percent.ToString(Localization["Formats:Percentage"]),
+                    Duration = duration.HumanizeForStatistic(Localization[Extensions.LanguageCodeConfigKey]),
+                    Percent = new PercentModel
+                    {
+                        Value = percent,
+                        ValueString = percent.ToString(Localization["Formats:Percentage"])
+                    }
                 };
 
                 if (DayOfWeekData.Count <= i)
@@ -82,14 +83,18 @@ namespace Mitheti.Wpf.ViewModels
             for (var i = 0; i < durations.Count; i++)
             {
                 var item = durations[i];
+                var duration = TimeSpan.FromMilliseconds(item.Duration);
                 var percent = percentages[item.AppName];
 
-                var info = new TopAppModel
+                var info = new TopAppItemModel
                 {
                     AppName = item.AppName,
-                    Duration = HumanizeTimeSpan(TimeSpan.FromMilliseconds(item.Duration)),
-                    PercentageString = percent.ToString(Localization["Formats:Percentage"]),
-                    Percentage = percent
+                    Duration = duration.HumanizeForStatistic(Localization[Extensions.LanguageCodeConfigKey]),
+                    Percent = new PercentModel
+                    {
+                        Value = percent,
+                        ValueString = percent.ToString(Localization["Formats:Percentage"])
+                    }
                 };
 
                 if (TopAppsData.Count <= i)
@@ -102,14 +107,5 @@ namespace Mitheti.Wpf.ViewModels
                 }
             }
         }
-
-        private string HumanizeTimeSpan(TimeSpan timeSpan)
-            => timeSpan.Humanize(
-                precision: 2,
-                countEmptyUnits: true,
-                culture: new CultureInfo(Localization["Language:Code"]),
-                minUnit: TimeUnit.Second,
-                maxUnit: TimeUnit.Day,
-                toWords: false);
     }
 }

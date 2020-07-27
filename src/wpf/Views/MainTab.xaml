@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:local="clr-namespace:Mitheti.Wpf.Models"
              mc:Ignorable="d"
              Loaded="OnLoaded">

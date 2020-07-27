@@ -18,7 +18,7 @@
         <StackPanel Orientation="Vertical" d:DataContext="{d:DesignInstance local:SettingTabModel}">
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
                        Text="{Binding Localization[Window:Setting:Option:Header]}" Padding="16" Margin="16" />
-            <m:Card Padding="32" Margin="16">
+            <m:Card Padding="16" Margin="16">
                 <StackPanel Orientation="Vertical">
                     <ContentControl Content="{Binding TrackingDelaySetting}"
                                     ContentTemplate="{StaticResource NumberRangeSettingTemplate}" Margin="0, 0, 0, 32" />
@@ -94,7 +94,7 @@
             </m:Card>
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
                        Text="{Binding Localization[Window:Setting:Action:Header]}" Padding="16" Margin="16" />
-            <m:Card Padding="32" Margin="16">
+            <m:Card Padding="16" Margin="16">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Begin]}"

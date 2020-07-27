@@ -95,7 +95,7 @@ namespace Mitheti.Wpf
             Container = services.BuildServiceProvider();
         }
 
-        private static ILoggingBuilder SetLogging(ILoggingBuilder builder, IConfiguration config)
+        private static void SetLogging(ILoggingBuilder builder, IConfiguration config)
             => builder.ClearProviders()
                 .SetMinimumLevel(LogLevel.Trace)
                 .AddNLog(new NLogLoggingConfiguration(config.GetSection(LoggingSectionKey)));

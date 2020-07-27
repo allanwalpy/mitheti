@@ -111,7 +111,7 @@
                     "GithubLink": "страница github",
                     "PersonalLink": "персональная страница",
                     "SeparatorLink": "; ",
-                    "Name": "{0} aka {1}"
+                    "Name": " aka "
                 },
                 "License": {
                     "Header": "Лицензия",
