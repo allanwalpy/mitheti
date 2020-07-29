@@ -3,7 +3,6 @@ using System.Drawing;
 using Microsoft.Extensions.Logging;
 using Forms = System.Windows.Forms;
 using Mitheti.Core.Services;
-using Mitheti.Wpf.Views;
 
 namespace Mitheti.Wpf.Services
 {
@@ -13,33 +12,39 @@ namespace Mitheti.Wpf.Services
         public const string TrayIconOnFile = TrayIconBaseFile + ".on.ico";
         public const string TrayIconOffFile = TrayIconBaseFile + ".off.ico";
 
-        private readonly  ILogger<TrayManagerService> _logger;
+        private readonly ILogger<TrayManagerService> _logger;
         private readonly IWatcherControlService _watcherControl;
         private readonly ILocalizationService _localization;
 
-        private MainWindow _window;
         private Forms.NotifyIcon _tray;
 
-        public TrayManagerService(ILogger<TrayManagerService> logger, ILocalizationService localization, IWatcherControlService watcherControl)
+        public event EventHandler WindowShowing;
+        public event EventHandler WindowExiting;
+
+        public TrayManagerService(ILogger<TrayManagerService> logger, ILocalizationService localization,
+            IWatcherControlService watcherControl)
         {
             _watcherControl = watcherControl;
             _localization = localization;
             _logger = logger;
+
+            Initialize();
         }
 
-        public void Initialize(MainWindow window)
+        private void Initialize()
         {
-            _window = window;
             _tray = new Forms.NotifyIcon();
 
             _tray.MouseClick += OnTrayClick;
-            ChangeTray(window, new WatcherStatusEventArgs(false));
+
             _tray.Visible = true;
             _watcherControl.WatcherStatusChanged += ChangeTray;
 
             _tray.ContextMenuStrip = new Forms.ContextMenuStrip();
             _tray.ContextMenuStrip.Items.Add(_localization["Tray:Options:Show"]).Click += OnTrayClickShow;
             _tray.ContextMenuStrip.Items.Add(_localization["Tray:Options:Close"]).Click += OnTrayClickExit;
+
+            ChangeTray(null, new WatcherStatusEventArgs(false));
         }
 
         private void OnTrayClick(object? sender, Forms.MouseEventArgs args)
@@ -51,13 +56,9 @@ namespace Mitheti.Wpf.Services
             }
         }
 
-        private void OnTrayClickShow(object? sender, EventArgs args)
-        {
-            _window.Activate();
-            _window.Show();
-        }
+        private void OnTrayClickShow(object? sender, EventArgs args) => WindowShowing?.Invoke(sender, args);
 
-        private void OnTrayClickExit(object sender, EventArgs args) => _window.Exit();
+        private void OnTrayClickExit(object sender, EventArgs args) => WindowExiting?.Invoke(sender, args);
 
         private void ChangeTray(object sender, WatcherStatusEventArgs args)
             => _tray.Icon = new Icon(args.IsLaunched ? TrayIconOnFile : TrayIconOffFile);

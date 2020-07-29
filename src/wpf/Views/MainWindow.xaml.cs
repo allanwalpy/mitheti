@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using Mitheti.Wpf.Services;
 using Mitheti.Wpf.ViewModels;
@@ -21,7 +22,8 @@ namespace Mitheti.Wpf.Views
             Closing += HideWindow;
 
             _tray = tray;
-            _tray.Initialize(this);
+            _tray.WindowShowing += OnShow;
+            _tray.WindowExiting += OnExit;
         }
 
         private void HideWindow(object sender, CancelEventArgs args)
@@ -30,8 +32,18 @@ namespace Mitheti.Wpf.Views
             Hide();
         }
 
+        private void OnShow(object sender, EventArgs args)
+        {
+            Show();
+            Exit();
+        }
+
+        private void OnExit(object sender, EventArgs args) => Exit();
+
         internal void Exit()
         {
+            _tray.WindowShowing -= OnShow;
+            _tray.WindowExiting -= OnExit;
             _tray.Dispose();
 
             Closing -= HideWindow;
