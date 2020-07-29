@@ -35,11 +35,10 @@ namespace Mitheti.Wpf
         {
             _instanceMutex = new Mutex(true, $"Global\\{AppId}", out var isCreatedNew);
 
-            if (!isCreatedNew)
-            {
-                _instanceMutex = null;
-                Application.Current.Shutdown(ExitCodeAlreadyLaunched);
-            }
+            if (isCreatedNew) return;
+
+            _instanceMutex = null;
+            Application.Current.Shutdown(ExitCodeAlreadyLaunched);
         }
 
         private void OnStartup(object sender, StartupEventArgs args)

@@ -14,11 +14,15 @@
                     </TextBlock>
                     <StackPanel Orientation="Horizontal" Margin="8">
                         <TextBlock Style="{DynamicResource MaterialDesignBody2TextBlock}">
-                            <Hyperlink NavigateUri="{Binding GithubUrl}" Style="{DynamicResource MaterialDesignBody2Hyperlink}">
+                            <Hyperlink NavigateUri="{Binding GithubUrl}" CommandParameter="{Binding GithubUrl}"
+                                       Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ItemsControl}}, Path=DataContext.HyperlinkClick}"
+                                       Style="{DynamicResource MaterialDesignBody2Hyperlink}">
                                 <Run Text="{Binding Localization[Window:About:Contributor:GithubLink]}" />
                             </Hyperlink>
                             <Run Text="{Binding Localization[Window:About:Contributor:SeparatorLink]}" />
-                            <Hyperlink NavigateUri="{Binding PersonalUrl}" Style="{DynamicResource MaterialDesignBody2Hyperlink}">
+                            <Hyperlink NavigateUri="{Binding PersonalUrl}" CommandParameter="{Binding PersonalUrl}"
+                                       Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ItemsControl}}, Path=DataContext.HyperlinkClick}"
+                                       Style="{DynamicResource MaterialDesignBody2Hyperlink}">
                                 <Run Text="{Binding Localization[Window:About:Contributor:PersonalLink]}" />
                             </Hyperlink>
                         </TextBlock>

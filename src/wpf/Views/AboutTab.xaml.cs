@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Navigation;
-using Mitheti.Wpf.ViewModels;
+﻿using Mitheti.Wpf.ViewModels;
 
 namespace Mitheti.Wpf.Views
 {
@@ -11,12 +9,6 @@ namespace Mitheti.Wpf.Views
         {
             DataContext = viewModel;
             InitializeComponent();
-        }
-
-        private static void OpenInBrowser(object sender, RequestNavigateEventArgs args)
-        {
-            Process.Start(new ProcessStartInfo(args.Uri.AbsolutePath));
-            args.Handled = true;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Mitheti.Core.Services;
 using Mitheti.Wpf.Models;
 using Octokit;
@@ -18,6 +19,7 @@ namespace Mitheti.Wpf.ViewModels
         public string License { get; set; }
 
         public ObservableCollection<ContributorModel> Contributors { get; set; }
+        public ICommand HyperlinkClick => new HyperlinkCommand();
 
         public AboutTabViewModel(ILocalizationService localization)
         {
