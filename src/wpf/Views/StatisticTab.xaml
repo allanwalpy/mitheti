@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:lang="https://rasyidf.github.io/Rasyidf.Localization"
              xmlns:local="clr-namespace:Mitheti.Wpf.Models.Statistic"
              xmlns:model="clr-namespace:Mitheti.Wpf.Models"
              mc:Ignorable="d">
@@ -18,14 +19,14 @@
                   d:DataContext="{d:DesignInstance model:StatisticTabModel}">
         <StackPanel>
             <StackPanel Orientation="Vertical" Margin="16">
-                <TextBlock Text="{Binding Localization[Window:Statistic:DayOfWeek:Title]}"
+                <TextBlock Text="{lang:Tr Vid=Window:Statistic:DayOfWeek:Title, Uid=0}"
                            Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Padding="16" />
             </StackPanel>
             <m:Card Padding="16" Margin="16">
                 <ListView ItemsSource="{Binding DayOfWeekData}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:DayOfWeek]}">
+                            <GridViewColumn Header="{lang:Tr Vid=Window:Statistic:DayOfWeek:Header:DayOfWeek, Uid=0}">
                                 <GridViewColumn.CellTemplate>
                                     <ItemContainerTemplate d:DataContext="{d:DesignInstance local:DayOfWeekItemModel}">
                                         <TextBlock Text="{Binding DayOfWeek}"
@@ -34,7 +35,7 @@
                                     </ItemContainerTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:TimeSpan]}">
+                            <GridViewColumn Header="{lang:Tr Vid=Window:Statistic:DayOfWeek:Header:TimeSpan, Uid=0}">
                                 <GridViewColumn.CellTemplate>
                                     <ItemContainerTemplate d:DataContext="{d:DesignInstance local:DayOfWeekItemModel}">
                                         <TextBlock Text="{Binding Duration}"
@@ -43,8 +44,7 @@
                                     </ItemContainerTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn
-                                Header="{Binding Localization[Window:Statistic:DayOfWeek:Header:Percentage]}">
+                            <GridViewColumn Header="{lang:Tr Vid=Window:Statistic:DayOfWeek:Header:Percentage, Uid=0}">
                                 <GridViewColumn.CellTemplate>
                                     <ItemContainerTemplate d:DataContext="{d:DesignInstance local:DayOfWeekItemModel}">
                                         <ContentControl Content="{Binding Percent}"
@@ -58,7 +58,7 @@
                 </ListView>
             </m:Card>
             <StackPanel Orientation="Horizontal" Margin="16">
-                <TextBlock Text="{Binding Localization[Window:Statistic:TopApp:Title]}"
+                <TextBlock Text="{lang:Tr Vid=Window:Statistic:TopApp:Title, Uid=0}"
                            Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Padding="16" />
             </StackPanel>
             <m:Card Padding="16" Margin="16">
@@ -66,7 +66,7 @@
                           Style="{DynamicResource MaterialDesignListView}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="{Binding Localization[Window:Statistic:TopApp:Header:AppName]}">
+                            <GridViewColumn Header="{lang:Tr Vid=Window:Statistic:TopApp:Header:AppName, Uid=0}">
                                 <GridViewColumn.CellTemplate>
                                     <ItemContainerTemplate d:DataContext="{d:DesignInstance local:TopAppItemModel}">
                                         <TextBlock Text="{Binding AppName}"
@@ -75,7 +75,7 @@
                                     </ItemContainerTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="{Binding Localization[Window:Statistic:TopApp:Header:TimeSpan]}">
+                            <GridViewColumn Header="{lang:Tr Vid=Window:Statistic:TopApp:Header:TimeSpan, Uid=0}">
                                 <GridViewColumn.CellTemplate>
                                     <ItemContainerTemplate d:DataContext="{d:DesignInstance local:TopAppItemModel}">
                                         <TextBlock Text="{Binding Duration}"
@@ -84,7 +84,7 @@
                                     </ItemContainerTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="{Binding Localization[Window:Statistic:TopApp:Header:Percentage]}">
+                            <GridViewColumn Header="{lang:Tr Vid=Window:Statistic:TopApp:Header:Percentage, Uid=0}">
                                 <GridViewColumn.CellTemplate>
                                     <ItemContainerTemplate d:DataContext="{d:DesignInstance local:TopAppItemModel}">
                                         <ContentControl Content="{Binding Percent}"

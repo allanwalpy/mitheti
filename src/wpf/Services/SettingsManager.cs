@@ -10,10 +10,9 @@ namespace Mitheti.Wpf.Services
 {
     public class SettingsManager : ISettingsManager
     {
-        public const string DefaultFilename = Extensions.ConfigFile;
-        public const string LocalizationSectionKey = LocalizationService.SectionKey;
-        public static readonly string[] DefaultIgnoreSections = {LocalizationSectionKey};
-        public static readonly string[] AlwaysIgnoreSections = { App.LoggingSectionKey };
+        public const string DefaultFilename = Core.Services.Extensions.ConfigFile;
+        public static readonly string[] DefaultIgnoreSections = { };
+        public static readonly string[] AlwaysIgnoreSections = {App.LoggingSectionKey};
 
         private readonly ISizeLimitDatabaseService _sizeService;
 
@@ -54,7 +53,7 @@ namespace Mitheti.Wpf.Services
             => string.IsNullOrEmpty(sectionKey) ? record.Path : record.Path.Substring(sectionKey.Length + 1);
 
         public async Task SaveConfiguration(Dictionary<string, string> data, string filename = null)
-            => await File.WriteAllTextAsync(filename ?? DefaultFilename,JsonConvert.SerializeObject(data));
+            => await File.WriteAllTextAsync(filename ?? DefaultFilename, JsonConvert.SerializeObject(data));
 
         public long GetDatabaseSize() => _sizeService.GetSize();
     }

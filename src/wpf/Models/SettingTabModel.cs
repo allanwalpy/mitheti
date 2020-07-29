@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Mitheti.Core;
 
@@ -6,8 +5,6 @@ namespace Mitheti.Wpf.Models
 {
     public sealed class SettingTabModel
     {
-        public Dictionary<string, string> Localization { get; set; }
-
         public NumberRangeSetting TrackingDelaySetting { get; set; }
         public NumberRangeSetting SavingDelaySetting { get; set; }
         public NumberRangeSetting DatabaseSizeSetting { get; set; }

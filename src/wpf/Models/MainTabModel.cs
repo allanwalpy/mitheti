@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Mitheti.Wpf.Models
+﻿namespace Mitheti.Wpf.Models
 {
     public class MainTabModel
     {
-        public Dictionary<string, string> Localization { get; set; }
-
         public bool IsLaunched { get; set; }
         public string IsLaunchedString { get; set; }
     }

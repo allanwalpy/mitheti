@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,8 +22,6 @@ namespace Mitheti.Wpf.ViewModels
         private readonly IConfiguration _config;
         private readonly ISettingsManager _manager;
 
-        public Dictionary<string, string> Localization { get; }
-
         public NumberRangeSetting TrackingDelaySetting { get; set; }
         public NumberRangeSetting SavingDelaySetting { get; set; }
         public NumberRangeSetting DatabaseSizeSetting { get; set; }
@@ -33,9 +30,8 @@ namespace Mitheti.Wpf.ViewModels
         public TimePeriod ClearSetting { get; set; }
         public string ClearButtonLabel { get; set; }
 
-        public SettingTabViewModel(ILocalizationService localization, IConfiguration config, ISettingsManager manager)
+        public SettingTabViewModel(IConfiguration config, ISettingsManager manager)
         {
-            Localization = localization.Data;
             _config = config;
             _manager = manager;
 
@@ -45,17 +41,18 @@ namespace Mitheti.Wpf.ViewModels
         private void SetSettings()
         {
             //TODO:FIXME:all method;
-            const string templateBase = "Window:Setting:Option:{0}:";
-            const string settingLabel = templateBase + "Label";
-            const string valueLabel = templateBase + "Value:Label";
+            //TODO:FIXME:??;
+            const string keyBase = "Window:Setting:Option:";
+            const string settingEnd = ":Label";
+            const string valueEnd = ":Value:Label";
 
             TrackingDelaySetting = new NumberRangeSetting
             {
                 Value = _config.GetValue<int>(TrackingDelayConfigKey),
                 Min = WatcherService.MinDelay,
                 Max = WatcherService.MaxDelay,
-                SettingLabel = Localization[string.Format(settingLabel, "TrackingDelay")],
-                ValueLabel = Localization[string.Format(valueLabel, "TrackingDelay")]
+                SettingLabel = $"{keyBase}TrackingDelay{settingEnd}".Translate(),
+                ValueLabel = $"{keyBase}TrackingDelay{valueEnd}".Translate()
             };
 
             SavingDelaySetting = new NumberRangeSetting
@@ -63,8 +60,8 @@ namespace Mitheti.Wpf.ViewModels
                 Value = _config.GetValue<int>(SavingDelayConfigKey),
                 Min = SavingService.MinDelay,
                 Max = SavingService.MaxDelay,
-                SettingLabel = Localization[string.Format(settingLabel, "SavingDelay")],
-                ValueLabel = Localization[string.Format(valueLabel, "SavingDelay")]
+                SettingLabel = $"{keyBase}SavingDelay{settingEnd}".Translate(),
+                ValueLabel = $"{keyBase}SavingDelay{valueEnd}".Translate()
             };
 
             DatabaseSizeSetting = new NumberRangeSetting
@@ -72,8 +69,8 @@ namespace Mitheti.Wpf.ViewModels
                 Value = _config.GetValue<int>(DatabaseSizeConfigKey),
                 Min = SizeLimitDatabaseService.MinSize,
                 Max = SizeLimitDatabaseService.MaxSize,
-                SettingLabel = Localization[string.Format(settingLabel, "DatabaseSize")],
-                ValueLabel = Localization[string.Format(valueLabel, "DatabaseSize")]
+                SettingLabel = $"{keyBase}DatabaseSize{settingEnd}".Translate(),
+                ValueLabel = $"{keyBase}DatabaseSize{valueEnd}".Translate()
             };
 
             ClearSetting = new TimePeriod
@@ -127,15 +124,15 @@ namespace Mitheti.Wpf.ViewModels
 
         private string GetDatabaseSizeString()
         {
-            var bytes = Localization["Window:Setting:Action:Clear:Info:Bytes"];
+            var bytes = "Window:Setting:Action:Clear:Info:Bytes".Translate();
             var size = _manager.GetDatabaseSize() / int.Parse(bytes);
-            return string.Format(Localization["Window:Setting:Action:Clear:Info:Label"], size);
+            return string.Format("Window:Setting:Action:Clear:Info:Label".Translate(), size);
         }
 
         public void UpdateClearButtonLabel()
         {
             var size = GetDatabaseSizeString();
-            ClearButtonLabel = string.Format(Localization["Window:Setting:Action:Clear:Button"], size);
+            ClearButtonLabel = string.Format("Window:Setting:Action:Clear:Button".Translate(), size);
         }
     }
 }

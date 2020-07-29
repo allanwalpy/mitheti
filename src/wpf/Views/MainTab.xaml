@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:lang="https://rasyidf.github.io/Rasyidf.Localization"
              xmlns:local="clr-namespace:Mitheti.Wpf.Models"
              mc:Ignorable="d"
              Loaded="OnLoaded">
@@ -23,7 +24,7 @@
                            HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <Button Grid.Column="1" x:Name="LauncherButton" Click="OnLauncherClick"
                         HorizontalAlignment="Right" VerticalAlignment="Center" Margin="8" Height="48">
-                    <TextBlock Text="{Binding Localization[Window:Main:Button:Launcher:Undefined]}"
+                    <TextBlock Text="{lang:Tr Vid=Window:Main:Button:Launcher:Undefined, Uid=0}"
                                Style="{DynamicResource MaterialDesignHeadline4TextBlock}" />
                 </Button>
             </Grid>
@@ -31,7 +32,7 @@
         <Button Grid.Row="1" Click="OnExitClick" Style="{DynamicResource MaterialDesignRaisedAccentButton}"
                 VerticalAlignment="Bottom" Margin="8" Padding="8" Height="48">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Localization[Window:Main:Button:Exit]}"
+                <TextBlock Text="{lang:Tr Vid=Window:Main:Button:Exit, Uid=0}"
                            Style="{DynamicResource MaterialDesignHeadline5TextBlock}" />
                 <m:PackIcon Kind="Shutdown" Width="32" Height="32" Margin="8, 0" />
             </StackPanel>

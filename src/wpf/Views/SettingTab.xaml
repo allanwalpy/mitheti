@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:lang="https://rasyidf.github.io/Rasyidf.Localization"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:Mitheti.Wpf.Models"
              mc:Ignorable="d">
@@ -17,7 +18,7 @@
     <ScrollViewer>
         <StackPanel Orientation="Vertical" d:DataContext="{d:DesignInstance local:SettingTabModel}">
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
-                       Text="{Binding Localization[Window:Setting:Option:Header]}" Padding="16" Margin="16" />
+                       Text="{lang:Tr Vid=Window:Setting:Option:Header, Uid=0}" Padding="16" Margin="16" />
             <m:Card Padding="16" Margin="16">
                 <StackPanel Orientation="Vertical">
                     <ContentControl Content="{Binding TrackingDelaySetting}"
@@ -27,29 +28,28 @@
                     <ContentControl Content="{Binding DatabaseSizeSetting}"
                                     ContentTemplate="{StaticResource NumberRangeSettingTemplate}" Margin="0, 0, 0, 32" />
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="8">
-                        <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Forbidden]}"
+                        <m:Chip Content="{lang:Tr Vid=Window:Setting:Option:FilterMode:Label:Forbidden, Uid=0}"
                                 Margin="4" />
                         <ToggleButton
                             Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
                             IsChecked="{Binding FilterMode}" />
-                        <m:Chip Content="{Binding Localization[Window:Setting:Option:FilterMode:Label:Allowed]}"
+                        <m:Chip Content="{lang:Tr Vid=Window:Setting:Option:FilterMode:Label:Allowed, Uid=0}"
                                 Margin="4" />
-                        <TextBlock Text="{Binding Localization[Window:Setting:Option:FilterMode:Label:End]}"
+                        <TextBlock Text="{lang:Tr Vid=Window:Setting:Option:FilterMode:Label:End, Uid=0}"
                                    Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="400"
-                                Margin="0, 0, 0, 32">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="400" Margin="0, 0, 0, 32">
                         <m:DialogHost DialogClosing="Option_FilterList_OnDialogClosing" HorizontalAlignment="Center"
                                       VerticalAlignment="Center">
                             <m:DialogHost.DialogContent>
                                 <StackPanel Margin="16">
                                     <TextBlock
-                                        Text="{Binding Localization[Window:Setting:Option:FilterList:Add:Dialog:Label]}" />
+                                        Text="{lang:Tr Vid=Window:Setting:Option:FilterList:Add:Dialog:Label, Uid=0}" />
                                     <TextBox Margin="0, 8, 0, 0" HorizontalAlignment="Stretch"
                                              x:Name="FilterListAddTextBox" />
                                     <StackPanel Orientation="Horizontal">
                                         <Button
-                                            Content="{Binding Localization[Window:Setting:Option:FilterList:Add:Dialog:Accept]}"
+                                            Content="{lang:Tr Vid=Window:Setting:Option:FilterList:Add:Dialog:Accept, Uid=0}"
                                             Style="{DynamicResource MaterialDesignFlatButton}" IsDefault="True"
                                             Margin="0, 8, 8, 0" Command="m:DialogHost.CloseDialogCommand">
                                             <Button.CommandParameter>
@@ -57,7 +57,7 @@
                                             </Button.CommandParameter>
                                         </Button>
                                         <Button
-                                            Content="{Binding Localization[Window:Setting:Option:FilterList:Add:Dialog:Cancel]}"
+                                            Content="{lang:Tr Vid=Window:Setting:Option:FilterList:Add:Dialog:Cancel, Uid=0}"
                                             Style="{DynamicResource MaterialDesignFlatButton}" IsCancel="True"
                                             Margin="0, 8, 8, 0" Command="m:DialogHost.CloseDialogCommand">
                                             <Button.CommandParameter>
@@ -88,16 +88,16 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
-                    <Button Click="OnSaveClick" Content="{Binding Localization[Window:Setting:Option:Save]}"
+                    <Button Click="OnSaveClick" Content="{lang:Tr Vid=Window:Setting:Option:Save, Uid=0}"
                             HorizontalAlignment="Stretch" />
                 </StackPanel>
             </m:Card>
             <TextBlock Style="{DynamicResource MaterialDesignHeadline5TextBlock}"
-                       Text="{Binding Localization[Window:Setting:Action:Header]}" Padding="16" Margin="16" />
+                       Text="{lang:Tr Vid=Window:Setting:Action:Header, Uid=0}" Padding="16" Margin="16" />
             <m:Card Padding="16" Margin="16">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Begin]}"
+                        <TextBlock Text="{lang:Tr Vid=Window:Setting:Action:Clear:Label:Begin, Uid=0}"
                                    Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" />
 
                         <DatePicker x:Name="ClearSettingBeginDate" SelectedDate="{Binding ClearSetting.Begin}"
@@ -105,7 +105,7 @@
                         <m:TimePicker x:Name="ClearSettingBeginTime" SelectedTime="{Binding ClearSetting.Begin}"
                                       Is24Hours="True" Margin="8, 0" />
 
-                        <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:Middle]}"
+                        <TextBlock Text="{lang:Tr Vid=Window:Setting:Action:Clear:Label:Middle, Uid=0}"
                                    Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" />
                         <!--TODO:FIXME: timePicker won't display selected time on default -->
                         <DatePicker x:Name="ClearSettingEndDate" SelectedDate="{Binding ClearSetting.End}"
@@ -113,7 +113,7 @@
                         <m:TimePicker x:Name="ClearSettingEndTime" SelectedTime="{Binding ClearSetting.End}"
                                       Is24Hours="True" Margin="8, 0" />
 
-                        <TextBlock Text="{Binding Localization[Window:Setting:Action:Clear:Label:End]}"
+                        <TextBlock Text="{lang:Tr Vid=Window:Setting:Action:Clear:Label:End, Uid=0}"
                                    Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" />
                     </StackPanel>
                     <!--TODO:FIXME: add separate text label for database size; -->

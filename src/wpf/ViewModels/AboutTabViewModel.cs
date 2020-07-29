@@ -1,34 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Mitheti.Core.Services;
 using Mitheti.Wpf.Models;
 using Octokit;
-using Mitheti.Wpf.Services;
 
 namespace Mitheti.Wpf.ViewModels
 {
     public class AboutTabViewModel
     {
         private const string Token = "MjU4MjkxNmVkNDc1YzZmZWU4MTYxZTZmOTYwODMxNzY3NDdkM2I4Ng==";
-
-        public Dictionary<string, string> Localization { get; }
         public string License { get; set; }
 
         public ObservableCollection<ContributorModel> Contributors { get; set; }
         public ICommand HyperlinkClick => new HyperlinkCommand();
 
-        public AboutTabViewModel(ILocalizationService localization)
+        public AboutTabViewModel()
         {
-            Localization = localization.Data;
 
-            License = string.Format(Localization["Window:About:License:Template"],
-                Localization["Window:About:License:Main"],
-                Localization["Window:About:License:Uses"],
-                string.Join(Localization["Window:About:License:Attributes:Separator"], localization.Config.GetList<string>("Window:About:License:Attributes")));
+            License = string.Format("Window:About:License:Template".Translate(),
+                "Window:About:License:Main".Translate(),
+                "Window:About:License:Uses".Translate(),
+                "Window:About:License:Attributes".Translate());
             Contributors = new ObservableCollection<ContributorModel>();
 
             PopulateContributors().ConfigureAwait(false);
@@ -53,9 +47,7 @@ namespace Mitheti.Wpf.ViewModels
                     Login = user.Login,
                     AvatarUrl = user.AvatarUrl,
                     GithubUrl = profile,
-                    PersonalUrl = user.Blog ?? profile,
-                    //TODO:FIXME: >_> V_V <_<;
-                    Localization = Localization
+                    PersonalUrl = user.Blog ?? profile
                 });
             }
         }

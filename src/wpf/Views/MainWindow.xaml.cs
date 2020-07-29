@@ -12,13 +12,13 @@ namespace Mitheti.Wpf.Views
     {
         private readonly ITrayManagerService _tray;
 
-        public MainWindow(ILocalizationService localization, MainWindowViewModel viewModel, ITrayManagerService tray)
+        public MainWindow(MainWindowViewModel viewModel, ITrayManagerService tray)
         {
             DataContext = viewModel;
             InitializeComponent();
             viewModel.SetTabs(TabControl);
 
-            Title = localization[$"Window:Title"];
+            Title = "Window:Title".Translate();
             Closing += HideWindow;
 
             _tray = tray;

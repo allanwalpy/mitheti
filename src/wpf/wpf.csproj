@@ -43,7 +43,6 @@
     <!-- additional files; -->
     <ItemGroup>
         <Content Include="./Resources/**" CopyToOutputDirectory="Always" />
-        <Content Include="./localization.json" CopyToOutputDirectory="Always" />
         <Content Include="./logging.json" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
@@ -71,6 +70,7 @@
         <PackageReference Include="Newtonsoft.Json" Version="12.0.*" />
         <PackageReference Include="NLog" Version="4.*" />
         <PackageReference Include="NLog.Web.AspNetCore" Version="4.*" />
+        <PackageReference Include="Rasyidf.Localization" Version="0.5.3" />
     </ItemGroup>
 
     <!-- inner solution dependancy; -->

@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,6 +10,7 @@ using Mitheti.Wpf.Services;
 using Mitheti.Wpf.ViewModels;
 using Mitheti.Wpf.Views;
 using NLog.Extensions.Logging;
+using Rasyidf.Localization;
 
 namespace Mitheti.Wpf
 {
@@ -20,9 +22,10 @@ namespace Mitheti.Wpf
     public partial class App
     {
         public const string AppId = "fbffa2ce-2f82-4945-84b1-9d9ba04dc90c";
-        public const string LocalizationFile = "localization.json";
+        public const string LocalizationDirectory = "Resources";
         public const string LoggingConfigFile = "logging.json";
         public const string LoggingSectionKey = "NLog";
+        public const string LangUid = "0";
 
         //? see https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499- ;
         public const int ExitCodeAlreadyLaunched = 101;
@@ -36,7 +39,6 @@ namespace Mitheti.Wpf
             _instanceMutex = new Mutex(true, $"Global\\{AppId}", out var isCreatedNew);
 
             if (isCreatedNew) return;
-
             _instanceMutex = null;
             Application.Current.Shutdown(ExitCodeAlreadyLaunched);
         }
@@ -69,9 +71,14 @@ namespace Mitheti.Wpf
             services.AddSingleton(config);
             services.AddCoreServices();
 
+            //? localization;
+            //TODO:add config for language;
+            //TODO:add language chooser to settings tab;
+            //TODO:TMP: temporary solution with 3rd party library?;
+            LocalizationService.Current.Initialize(Path.Join(Directory.GetCurrentDirectory(), LocalizationDirectory), "ru-RU");
+
             //? main services;
             services.AddSingleton<ISettingsManager, SettingsManager>();
-            services.AddSingleton<ILocalizationService, LocalizationService>();
 
             //? viewModels;
             services.AddSingleton<MainWindowViewModel>();
@@ -102,7 +109,6 @@ namespace Mitheti.Wpf
         private static IConfiguration GetConfig()
             => new ConfigurationBuilder()
                 .AddCoreConfiguration(isReload: true) //? for setting tab, to reload on settings change;
-                .AddJsonFile(LocalizationFile, false, false)
                 .AddJsonFile(LoggingConfigFile, false, false)
                 .Build();
     }

@@ -14,18 +14,15 @@ namespace Mitheti.Wpf.Services
 
         private readonly ILogger<TrayManagerService> _logger;
         private readonly IWatcherControlService _watcherControl;
-        private readonly ILocalizationService _localization;
 
         private Forms.NotifyIcon _tray;
 
         public event EventHandler WindowShowing;
         public event EventHandler WindowExiting;
 
-        public TrayManagerService(ILogger<TrayManagerService> logger, ILocalizationService localization,
-            IWatcherControlService watcherControl)
+        public TrayManagerService(ILogger<TrayManagerService> logger, IWatcherControlService watcherControl)
         {
             _watcherControl = watcherControl;
-            _localization = localization;
             _logger = logger;
 
             Initialize();
@@ -41,8 +38,8 @@ namespace Mitheti.Wpf.Services
             _watcherControl.WatcherStatusChanged += ChangeTray;
 
             _tray.ContextMenuStrip = new Forms.ContextMenuStrip();
-            _tray.ContextMenuStrip.Items.Add(_localization["Tray:Options:Show"]).Click += OnTrayClickShow;
-            _tray.ContextMenuStrip.Items.Add(_localization["Tray:Options:Close"]).Click += OnTrayClickExit;
+            _tray.ContextMenuStrip.Items.Add("Tray:Options:Show".Translate()).Click += OnTrayClickShow;
+            _tray.ContextMenuStrip.Items.Add("Tray:Options:Close".Translate()).Click += OnTrayClickExit;
 
             ChangeTray(null, new WatcherStatusEventArgs(false));
         }
